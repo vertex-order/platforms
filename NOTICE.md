@@ -18,8 +18,6 @@ Each section carries:
 - **Shown as** — the legend entry's full `name`.
 - **Asset** — the Bootstrap Icons glyph, the image file under
   `site/images/platforms/`, or a plain text label.
-- **Root source** — the origin site; omitted when the exact URL already
-  makes the source obvious.
 - **Exact URL** — the specific page the asset came from.
 - **License** — the terms it is used under.
 - **Attribution** — the person or organisation the source credits (and that the licence requires you to name, when it does).
@@ -120,7 +118,6 @@ this project: **Vertex Industries, with help from the community**, licensed
 
 - **Shown as:** Epic Games Store
 - **Asset:** `images/platforms/epic-games.svg`
-- **Root source:** https://simpleicons.org/
 - **Exact URL:** https://simpleicons.org/?q=Epic%20Games
 - **License:** Fair use; [CC0 1.0 Universal](https://github.com/simple-icons/simple-icons/blob/develop/LICENSE.md)
 - **Attribution:** [Epic Games](https://wikipedia.org/wiki/Epic_Games); [Simple Icons contributors](https://github.com/simple-icons/simple-icons)
@@ -251,9 +248,12 @@ this project: **Vertex Industries, with help from the community**, licensed
 
 - **Shown as:** MSX2
 - **Asset:** `images/platforms/msx2.png`
-- **Exact URL:** https://retro-type.com/msx/logos/MSX2_Logo_300DPI_1080P.png
-- **License:** Fair use; Unknown
-- **Attribution:** [Microsoft](https://wikipedia.org/wiki/Microsoft)
+- **Exact URL:** https://forums.launchbox-app.com/files/file/3402-v2-platform-logos-professionally-redrawn-official-versions-new-bigbox-defaults/
+- **Filename:** 161689446_v2.1_SVGs_(vector)_(FullSet)_(Created_By_Dan_Patrick)/v2.1_SVGs_(vector)_(Full Set)_(Created_By_Dan_Patrick)/Dark - Just Black/Computers/Microsoft MSX2_-14.svg
+- **License:** Fair use; Public domain (typographic wordmark); Trademark
+- **Attribution:** [Microsoft](https://wikipedia.org/wiki/Microsoft); [Dan Patrick](https://forums.launchbox-app.com/profile/85709-dan-patrick/)
+- **Source note:** Asset is Dan Patrick's hand-drawn redraw (v2.1.0, Feb 2023), not the official mark. Used under his stated terms — free use, credit appreciated, "NEVER to be sold." Informal permission, not a formal licence.
+- **Alternative:** https://www.msxblue.com/manual/hbf700_c.htm
 
 ### NEC PC-8801mkII SR
 
