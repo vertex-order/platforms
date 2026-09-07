@@ -235,9 +235,9 @@ this project: **Vertex Industries, with help from the community**, licensed
 
 - **Shown as:** MSX
 - **Asset:** `images/platforms/msx.svg`
-- **Exact URL:** https://wikipedia.org/wiki/MSX#/media/File:MSX-Logo.svg
-- **License:** Fair use; [Public Domain](https://commons.wikimedia.org/wiki/File:MSX-Logo.svg?uselang=en#Licensing)
-- **Attribution:** Unknown Author
+- **Exact URL:** https://commons.wikimedia.org/wiki/File:MSX-Logo.svg
+- **License:** Fair use; [Public Domain](https://commons.wikimedia.org/wiki/File:MSX-Logo.svg); [Trademarked](https://commons.wikimedia.org/wiki/File:MSX-Logo.svg)
+- **Attribution:** [Microsoft](https://wikipedia.org/wiki/Microsoft)
 
 ### MSX2
 
@@ -245,7 +245,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **Asset:** `images/platforms/msx2.png`
 - **Exact URL:** https://retro-type.com/msx/logos/MSX2_Logo_300DPI_1080P.png
 - **License:** Fair use; Unknown
-- **Attribution:** Unknown
+- **Attribution:** [Microsoft](https://wikipedia.org/wiki/Microsoft)
 
 ### NEC PC-8801mkII SR
 
@@ -318,18 +318,18 @@ this project: **Vertex Industries, with help from the community**, licensed
 ### Nintendo Switch
 
 - **Shown as:** Nintendo Switch
-- **Asset:** `bi bi-nintendo-switch` (Bootstrap Icons glyph)
-- **Exact URL:** https://icons.getbootstrap.com/icons/nintendo-switch/
-- **License:** Fair use; [MIT](https://github.com/twbs/bootstrap/blob/main/LICENSE)
-- **Attribution:** [Nintendo](https://wikipedia.org/wiki/Nintendo); [Bootstrap Icons](https://icons.getbootstrap.com/)
+- **Asset:** `images/platforms/switch.svg`
+- **Exact URL:** https://commons.wikimedia.org/wiki/File:Nintendo_Switch_2_logo.svg
+- **License:** Fair use; [Public Domain](https://commons.wikimedia.org/wiki/File:Nintendo_Switch_2_logo.svg); [Trademarked](https://commons.wikimedia.org/wiki/File:Nintendo_Switch_2_logo.svg)
+- **Attribution:** [Nintendo](https://wikipedia.org/wiki/Nintendo)
 
 ### Nintendo Switch 2
 
 - **Shown as:** Nintendo Switch 2
-- **Asset:** `images/platforms/switch-2.png`
-- **Exact URL:** https://tenor.com/en-GB/view/nintendo-switch-2-logo-gif-11446850045596362419
-- **License:** Fair use; Unknown
-- **Attribution:** [Nintendo](https://wikipedia.org/wiki/Nintendo); Uploader [COFFEE_Drinker](https://tenor.com/users/coffee_drinker)
+- **Asset:** `images/platforms/switch-2.svg`
+- **Exact URL:** https://commons.wikimedia.org/wiki/File:Nintendo_Switch_2_logo.svg
+- **License:** Fair use; [Trademarked](https://commons.wikimedia.org/wiki/File:Nintendo_Switch_2_logo.svg)
+- **Attribution:** [Nintendo](https://wikipedia.org/wiki/Nintendo)
 
 ### Nintendo Wii
 
