@@ -259,7 +259,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 ### Nintendo 3DS
 
 - **Shown as:** Nintendo 3DS
-- **Asset:** `images/platforms/3ds.svg`
+- **Asset:** `images/platforms/nintendo-3ds.svg`
 - **Exact URL:** https://commons.wikimedia.org/wiki/File:Nintendo_3DS_logo.svg
 - **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:Nintendo_3DS_logo.svg); [Trademark](https://commons.wikimedia.org/wiki/File:Nintendo_3DS_logo.svg)
 - **Attribution:** [Nintendo](https://wikipedia.org/wiki/Nintendo)
@@ -307,7 +307,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 ### Nintendo GameCube
 
 - **Shown as:** Nintendo GameCube
-- **Asset:** `images/platforms/gamecube.svg`
+- **Asset:** `images/platforms/nintendo-gamecube.svg`
 - **Exact URL:** https://wikipedia.org/wiki/GameCube#/media/File:Nintendo_Gamecube_Logo.svg
 - **License:** [Fair use](https://wikipedia.org/wiki/File:Nintendo_Gamecube_Logo.svg)
 - **Attribution:** [Nintendo](https://wikipedia.org/wiki/Nintendo)
@@ -323,7 +323,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 ### Nintendo Switch
 
 - **Shown as:** Nintendo Switch
-- **Asset:** `images/platforms/switch.svg`
+- **Asset:** `images/platforms/nintendo-switch.svg`
 - **Exact URL:** https://commons.wikimedia.org/wiki/File:Nintendo_Switch_2_logo.svg
 - **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:Nintendo_Switch_2_logo.svg); [Trademark](https://commons.wikimedia.org/wiki/File:Nintendo_Switch_2_logo.svg)
 - **Attribution:** [Nintendo](https://wikipedia.org/wiki/Nintendo)
@@ -332,7 +332,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 ### Nintendo Switch 2
 
 - **Shown as:** Nintendo Switch 2
-- **Asset:** `images/platforms/switch-2.svg`
+- **Asset:** `images/platforms/nintendo-switch-2.svg`
 - **Exact URL:** https://commons.wikimedia.org/wiki/File:Nintendo_Switch_2_logo.svg
 - **License:** Fair use; [Trademark](https://commons.wikimedia.org/wiki/File:Nintendo_Switch_2_logo.svg)
 - **Attribution:** [Nintendo](https://wikipedia.org/wiki/Nintendo)
@@ -363,7 +363,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 ### PlayStation (PSone)
 
 - **Shown as:** PlayStation
-- **Asset:** `images/platforms/ps1.svg`
+- **Asset:** `images/platforms/playstation1.svg`
 - **Exact URL:** https://breezewiki.com/playstation/wiki/File:PS1_Icon.svg
 - **License:** [Fair use](https://breezewiki.com/playstation/wiki/File:PS1_Icon.svg)
 - **Attribution:** [Sony](https://wikipedia.org/wiki/Sony); Uploader [VeldinX](https://breezewiki.com/playstation/wiki/User:VeldinX)
@@ -372,7 +372,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 ### PlayStation 2
 
 - **Shown as:** PlayStation 2
-- **Asset:** `images/platforms/ps2.svg`
+- **Asset:** `images/platforms/playstation2.svg`
 - **Exact URL:** https://breezewiki.com/playstation/wiki/File:PS2_Icon.svg
 - **License:** [Fair use](https://breezewiki.com/playstation/wiki/File:PS2_Icon.svg)
 - **Attribution:** [Sony](https://wikipedia.org/wiki/Sony); Uploader [VeldinX](https://breezewiki.com/playstation/wiki/User:VeldinX)
@@ -381,7 +381,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 ### PlayStation 3
 
 - **Shown as:** PlayStation 3
-- **Asset:** `images/platforms/ps3.svg`
+- **Asset:** `images/platforms/playstation3.svg`
 - **Exact URL:** https://breezewiki.com/playstation/wiki/File:PS3_Icon.svg
 - **License:** [Fair use](https://breezewiki.com/playstation/wiki/File:PS3_Icon.svg)
 - **Attribution:** [Sony](https://wikipedia.org/wiki/Sony); Uploader [VeldinX](https://breezewiki.com/playstation/wiki/User:VeldinX)
@@ -390,7 +390,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 ### PlayStation 4
 
 - **Shown as:** PlayStation 4
-- **Asset:** `images/platforms/ps4.svg`
+- **Asset:** `images/platforms/playstation4.svg`
 - **Exact URL:** https://breezewiki.com/playstation/wiki/File:PS4_Icon.svg
 - **License:** [Fair use](https://breezewiki.com/playstation/wiki/File:PS4_Icon.svg)
 - **Attribution:** [Sony](https://wikipedia.org/wiki/Sony); Uploader [VeldinX](https://breezewiki.com/playstation/wiki/User:VeldinX)
@@ -399,7 +399,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 ### PlayStation 5
 
 - **Shown as:** PlayStation 5
-- **Asset:** `images/platforms/ps5.svg`
+- **Asset:** `images/platforms/playstation5.svg`
 - **Exact URL:** https://breezewiki.com/playstation/wiki/File:PS5_Icon.svg
 - **License:** [Fair use](https://breezewiki.com/playstation/wiki/File:PS5_Icon.svg)
 - **Attribution:** [Sony](https://wikipedia.org/wiki/Sony); Uploader [VeldinX](https://breezewiki.com/playstation/wiki/User:VeldinX)
@@ -415,7 +415,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 ### PlayStation Plus
 
 - **Shown as:** PlayStation Plus
-- **Asset:** `images/platforms/ps-plus.svg`
+- **Asset:** `images/platforms/playstation-plus.svg`
 - **Exact URL:** https://breezewiki.com/playstation/wiki/File:PS_Plus_Icon.svg
 - **License:** [Fair use](https://breezewiki.com/playstation/wiki/File:PS_Plus_Icon.svg)
 - **Attribution:** [Sony](https://wikipedia.org/wiki/Sony); Uploader [VeldinX](https://breezewiki.com/playstation/wiki/User:VeldinX)
@@ -425,7 +425,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 ### PlayStation Portable (PSP)
 
 - **Shown as:** PlayStation Portable
-- **Asset:** `images/platforms/psp.svg`
+- **Asset:** `images/platforms/playstation-portable.svg`
 - **Exact URL:** https://breezewiki.com/playstation/wiki/File:PSP_Icon.svg
 - **License:** [Fair use](https://breezewiki.com/playstation/wiki/File:PSP_Icon.svg)
 - **Attribution:** [Sony](https://wikipedia.org/wiki/Sony); Uploader [VeldinX](https://breezewiki.com/playstation/wiki/User:VeldinX)
@@ -434,7 +434,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 ### PlayStation Vita
 
 - **Shown as:** PlayStation Vita
-- **Asset:** `images/platforms/ps-vita.svg`
+- **Asset:** `images/platforms/playstation-vita.svg`
 - **Exact URL:** https://breezewiki.com/playstation/wiki/File:PS_Vita_Icon.svg
 - **License:** [Fair use](https://breezewiki.com/playstation/wiki/File:PS_Vita_Icon.svg)
 - **Attribution:** [Sony](https://wikipedia.org/wiki/Sony); Uploader [VeldinX](https://breezewiki.com/playstation/wiki/User:VeldinX)
@@ -443,7 +443,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 ### PlayStation VR
 
 - **Shown as:** PlayStation VR
-- **Asset:** `images/platforms/ps4.svg` (with `VR` suffix)
+- **Asset:** `images/platforms/playstation4.svg` (with `VR` suffix)
 - **Exact URL:** https://breezewiki.com/playstation/wiki/File:PS4_Icon.svg
 - **License:** [Fair use](https://breezewiki.com/playstation/wiki/File:PS4_Icon.svg)
 - **Attribution:** [Sony](https://wikipedia.org/wiki/Sony); Uploader [VeldinX](https://breezewiki.com/playstation/wiki/User:VeldinX)
@@ -463,7 +463,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 ### SNES
 
 - **Shown as:** Super Nintendo Entertainment System
-- **Asset:** `images/platforms/snes.png`
+- **Asset:** `images/platforms/nintendo-snes.png`
 - **Exact URL:** https://seeklogo.com/vector-logo/323735/super-nintendo
 - **License:** Fair use; Unknown
 - **Attribution:** [Nintendo](https://wikipedia.org/wiki/Nintendo); [Seeklogo](https://seeklogo.com/)
@@ -471,7 +471,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 ### SNES Classic Edition
 
 - **Shown as:** Super Nintendo Entertainment System Classic Edition
-- **Asset:** `images/platforms/snes.png` (with `c` suffix)
+- **Asset:** `images/platforms/nintendo-snes.png` (with `c` suffix)
 - **Exact URL:** https://seeklogo.com/vector-logo/323735/super-nintendo
 - **License:** Fair use; Unknown
 - **Attribution:** [Nintendo](https://wikipedia.org/wiki/Nintendo); [Seeklogo](https://seeklogo.com/)
