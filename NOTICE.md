@@ -368,10 +368,10 @@ this project: **Vertex Industries, with help from the community**, licensed
 
 - **Shown as:** PlayStation
 - **Asset:** `images/platforms/playstation1.svg`
-- **Exact URL:** https://breezewiki.com/playstation/wiki/File:PS1_Icon.svg
-- **License:** [Fair use](https://breezewiki.com/playstation/wiki/File:PS1_Icon.svg)
-- **Attribution:** [Sony](https://wikipedia.org/wiki/Sony); Uploader [VeldinX](https://breezewiki.com/playstation/wiki/User:VeldinX)
-- **Source note:** via Breezewiki — mirror of Fandom; content CC BY-SA
+- **Exact URL:** https://commons.wikimedia.org/wiki/File:PSone_logo.svg
+- **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:PSone_logo.svg); [Trademark](https://commons.wikimedia.org/wiki/File:PSone_logo.svg)
+- **Attribution:** [Sony](https://wikipedia.org/wiki/Sony)
+- **Modification:** Cropped from the source logo.
 
 ### PlayStation 2
 
