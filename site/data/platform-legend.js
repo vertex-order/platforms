@@ -35,7 +35,7 @@ window.PLATFORM_LEGEND = [
     { text: 'NES', fontSize: '21.5px', name: 'Nintendo Entertainment System (Physical)' },
     { text: 'FC', fontSize: '21.5px', name: 'Nintendo Famicom (Physical; Japan Only)', jpTag: true },
     { iconImg: 'images/platforms/3ds.png', iconSize: 20.8, imgStyle: 'width: auto; height: 20.8px; filter: brightness(0) saturate(100%) invert(80%) sepia(15%) saturate(200%) hue-rotate(195deg);', name: 'Nintendo 3DS (Physical; Digital)' },
-    { iconImg: 'images/platforms/nintendo-ds.png', iconSize: 23.5, imgStyle: 'width: auto; height: 23.5px; filter: brightness(0) saturate(100%) invert(80%) sepia(15%) saturate(200%) hue-rotate(195deg);', name: 'Nintendo DS (Physical; DSi Digital)' },
+    { iconImg: 'images/platforms/nintendo-ds.svg', iconSize: 20.8, imgStyle: 'width: auto; height: 20.8px; filter: brightness(0) saturate(100%) invert(80%) sepia(15%) saturate(200%) hue-rotate(195deg);', name: 'Nintendo DS (Physical; DSi Digital)' },
     { iconImg: 'images/platforms/gba.png', iconSize: 54.5, imgStyle: 'width: auto; height: 54.5px; filter: brightness(0) saturate(100%) invert(80%) sepia(15%) saturate(200%) hue-rotate(195deg);', name: 'Game Boy Advance (Physical)' },
     { iconImg: 'images/platforms/game-boy.png', iconSize: 32, imgStyle: 'width: auto; height: 32px; filter: brightness(0) saturate(100%) invert(80%) sepia(15%) saturate(200%) hue-rotate(195deg);', name: 'Nintendo Game Boy (Physical)' },
     { iconImg: 'images/platforms/ouya.png', iconSize: 32, imgStyle: 'width: auto; height: 32px; filter: brightness(0) saturate(100%) invert(80%) sepia(15%) saturate(200%) hue-rotate(195deg);', name: 'Ouya' },

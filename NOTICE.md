@@ -236,7 +236,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **Shown as:** MSX
 - **Asset:** `images/platforms/msx.svg`
 - **Exact URL:** https://commons.wikimedia.org/wiki/File:MSX-Logo.svg
-- **License:** Fair use; [Public Domain](https://commons.wikimedia.org/wiki/File:MSX-Logo.svg); [Trademarked](https://commons.wikimedia.org/wiki/File:MSX-Logo.svg)
+- **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:MSX-Logo.svg); [Trademark](https://commons.wikimedia.org/wiki/File:MSX-Logo.svg)
 - **Attribution:** [Microsoft](https://wikipedia.org/wiki/Microsoft)
 
 ### MSX2
@@ -265,10 +265,10 @@ this project: **Vertex Industries, with help from the community**, licensed
 ### Nintendo DS
 
 - **Shown as:** Nintendo DS
-- **Asset:** `images/platforms/nintendo-ds.png`
-- **Exact URL:** https://www.steamgriddb.com/icon/39894
-- **License:** Fair use; [Personal, non-commerical](https://www.steamgriddb.com/terms)
-- **Attribution:** [Nintendo](https://wikipedia.org/wiki/Nintendo); Uploader [riefu24](https://www.steamgriddb.com/profile/76561198274324627)
+- **Asset:** `images/platforms/nintendo-ds.svg`
+- **Exact URL:** https://commons.wikimedia.org/wiki/File:Nintendo_DS_Logo.svg
+- **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:Nintendo_DS_Logo.svg); [Trademark](https://commons.wikimedia.org/wiki/File:Nintendo_DS_Logo.svg)
+- **Attribution:** [Nintendo](https://wikipedia.org/wiki/Nintendo)
 
 ### Nintendo Entertainment System
 
@@ -320,7 +320,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **Shown as:** Nintendo Switch
 - **Asset:** `images/platforms/switch.svg`
 - **Exact URL:** https://commons.wikimedia.org/wiki/File:Nintendo_Switch_2_logo.svg
-- **License:** Fair use; [Public Domain](https://commons.wikimedia.org/wiki/File:Nintendo_Switch_2_logo.svg); [Trademarked](https://commons.wikimedia.org/wiki/File:Nintendo_Switch_2_logo.svg)
+- **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:Nintendo_Switch_2_logo.svg); [Trademark](https://commons.wikimedia.org/wiki/File:Nintendo_Switch_2_logo.svg)
 - **Attribution:** [Nintendo](https://wikipedia.org/wiki/Nintendo)
 
 ### Nintendo Switch 2
@@ -328,7 +328,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **Shown as:** Nintendo Switch 2
 - **Asset:** `images/platforms/switch-2.svg`
 - **Exact URL:** https://commons.wikimedia.org/wiki/File:Nintendo_Switch_2_logo.svg
-- **License:** Fair use; [Trademarked](https://commons.wikimedia.org/wiki/File:Nintendo_Switch_2_logo.svg)
+- **License:** Fair use; [Trademark](https://commons.wikimedia.org/wiki/File:Nintendo_Switch_2_logo.svg)
 - **Attribution:** [Nintendo](https://wikipedia.org/wiki/Nintendo)
 
 ### Nintendo Wii
