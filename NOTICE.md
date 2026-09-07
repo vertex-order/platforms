@@ -449,11 +449,12 @@ this project: **Vertex Industries, with help from the community**, licensed
 
 - **Shown as:** PlayStation Vita
 - **Asset:** `images/platforms/playstation-vita.svg`
-- **Exact URL:** https://breezewiki.com/playstation/wiki/File:PS_Vita_Icon.svg
-- **License:** [Fair use](https://breezewiki.com/playstation/wiki/File:PS_Vita_Icon.svg)
-- **Attribution:** [Sony](https://wikipedia.org/wiki/Sony); Uploader [VeldinX](https://breezewiki.com/playstation/wiki/User:VeldinX)
-- **Source note:** via Breezewiki — mirror of Fandom; content CC BY-SA
+- **Exact URL:** https://commons.wikimedia.org/wiki/File:PlayStation_Vita_logo.svg
+- **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:PlayStation_Vita_logo.svg); [Trademark](https://commons.wikimedia.org/wiki/File:PlayStation_Vita_logo.svg)
+- **Attribution:** [Sony](https://wikipedia.org/wiki/Sony)
+- **Modification:** Cropped from the source logo. 
 - **Alternative:** https://simpleicons.org/?q=vita
+- **Alternative:** https://breezewiki.com/playstation/wiki/File:PS_Vita_Icon.svg
 
 ### PlayStation VR
 
