@@ -61,10 +61,11 @@ this project: **Vertex Industries, with help from the community**, licensed
 ### Arcade
 
 - **Shown as:** Arcade
-- **Asset:** `images/platforms/arcade.png`
-- **Exact URL:** https://www.flaticon.com/free-icon/arcade-machine_5751515
-- **License:** [Free with attribution and limitations](https://www.flaticon.com/)
-- **Attribution:** [shmai](https://www.flaticon.com/authors/shmai) from [Flaticon.com](https://Flaticon.com)
+- **Asset:** `images/platforms/arcade.svg`
+- **Exact URL:** original to this project
+- **License:** CC BY-NC-SA 4.0
+- **Attribution:** Vertex Industries, with help from the community
+
 
 ### Blu-ray
 
@@ -135,8 +136,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 
 - **Shown as:** Fan Audiobook
 - **Asset:** `images/platforms/fan-audiobook.svg`
-- **Root source:** original to this project
-- **Exact URL:** `site/images/platforms/fan-audiobook.svg`
+- **Exact URL:** original to this project
 - **License:** CC BY-NC-SA 4.0
 - **Attribution:** Vertex Industries, with help from the community
 
@@ -144,8 +144,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 
 - **Shown as:** Fan game movie video
 - **Asset:** `images/platforms/fan-movie.svg`
-- **Root source:** original to this project
-- **Exact URL:** `site/images/platforms/fan-movie.svg`
+- **Exact URL:** original to this project
 - **License:** CC BY-NC-SA 4.0
 - **Attribution:** Vertex Industries, with help from the community
 
@@ -153,8 +152,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 
 - **Shown as:** Fan playthrough video
 - **Asset:** `images/platforms/fan-playthrough.svg`
-- **Root source:** original to this project
-- **Exact URL:** `site/images/platforms/fan-playthrough.svg`
+- **Exact URL:** original to this project
 - **License:** CC BY-NC-SA 4.0
 - **Attribution:** Vertex Industries, with help from the community
 
@@ -162,8 +160,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 
 - **Shown as:** Fan story recap video
 - **Asset:** `images/platforms/fan-recap.svg`
-- **Root source:** original to this project
-- **Exact URL:** `site/images/platforms/fan-recap.svg`
+- **Exact URL:** original to this project
 - **License:** CC BY-NC-SA 4.0
 - **Attribution:** Vertex Industries, with help from the community
 
@@ -171,8 +168,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 
 - **Shown as:** Fan Translation
 - **Asset:** `images/platforms/fan-translation.svg`
-- **Root source:** original to this project
-- **Exact URL:** `site/images/platforms/fan-translation.svg`
+- **Exact URL:** original to this project
 - **License:** CC BY-NC-SA 4.0
 - **Attribution:** Vertex Industries, with help from the community
 
