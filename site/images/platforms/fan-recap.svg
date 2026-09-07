@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 46 38" width="46" height="38">
+  <g fill="none" stroke="#cfd3e5" stroke-width="1.6" stroke-linecap="round">
+    <circle cx="23" cy="12" r="8.5"></circle>
+    <path d="M23 7.5 v4.5 l3.5 2.5"></path>
+  </g>
+  <text x="23" y="34" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="700" letter-spacing="0.3" fill="#cfd3e5" text-anchor="middle">RECAP</text>
+</svg>

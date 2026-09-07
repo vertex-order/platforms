@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+
+<sc-if value="{{ linked }}" hint-placeholder-val="{{ false }}">
+  <a href="{{ href }}" target="_blank" rel="noopener" title="{{ itemName }}" style="display: flex; align-items: center; flex-shrink: 0; color: var(--color-neutral-300); opacity: 0.85; position: relative;" style-hover="opacity: 1; color: var(--color-accent-300);">
+    <span style="display: flex; align-items: center; flex-shrink: 0; opacity: {{ contentOpacity }};">
+      <sc-if value="{{ iconImg }}" hint-placeholder-val="{{ false }}"><img src="{{ iconImg }}" alt="{{ itemName }}" width="{{ iconSize }}" height="{{ iconSize }}" style="flex-shrink: 0; max-width: none; {{ imgStyle }}"></sc-if>
+      <sc-if value="{{ icon }}" hint-placeholder-val="{{ false }}"><i class="{{ icon }}" style="font-size: 16px;"></i></sc-if>
+      <sc-if value="{{ text }}" hint-placeholder-val="{{ false }}"><span style="font-size: 10.8px; padding: 1px 4px; line-height: 1.4;">{{ text }}</span></sc-if>
+      <sc-if value="{{ suffix }}" hint-placeholder-val="{{ false }}"><span style="font-size: 10.8px; margin-left: 3px;">{{ suffix }}</span></sc-if>
+      <sc-if value="{{ jpTag }}" hint-placeholder-val="{{ false }}"><span style="font-size: 10.8px; font-style: italic; font-variant: small-caps; padding-left: 1px;">(jp)</span></sc-if>
+      <sc-if value="{{ nonJpTag }}" hint-placeholder-val="{{ false }}"><span style="font-size: 10.8px; font-style: italic; font-variant: small-caps; padding-left: 1px;">(non-jp)</span></sc-if>
+    </span>
+    <sc-if value="{{ terminated }}" hint-placeholder-val="{{ false }}"><span style="position: absolute; left: -2px; right: -2px; top: 50%; height: 1px; background: {{ strikeColor }}; transform: rotate(-10deg);"></span></sc-if>
+  </a>
+</sc-if>
+<sc-if value="{{ unlinkedDefault }}" hint-placeholder-val="{{ true }}">
+  <span title="{{ itemName }}" style="display: flex; align-items: center; flex-shrink: 0; color: var(--color-neutral-300); opacity: 0.85; position: relative;">
+    <span style="display: flex; align-items: center; flex-shrink: 0; opacity: {{ contentOpacity }};">
+      <sc-if value="{{ prefix }}" hint-placeholder-val="{{ false }}"><span style="font-size: 11px; margin-right: 2px;">{{ prefix }}</span></sc-if>
+      <sc-if value="{{ iconImg }}" hint-placeholder-val="{{ false }}"><img src="{{ iconImg }}" alt="{{ itemName }}" width="{{ iconSize }}" height="{{ iconSize }}" style="flex-shrink: 0; max-width: none; {{ imgStyle }}"></sc-if>
+      <sc-if value="{{ icon }}" hint-placeholder-val="{{ false }}"><i class="{{ icon }}" style="font-size: 16px;"></i></sc-if>
+      <sc-if value="{{ text }}" hint-placeholder-val="{{ false }}"><span style="font-size: 10.8px; padding: 1px 4px; line-height: 1.4;">{{ text }}</span></sc-if>
+      <sc-if value="{{ suffix }}" hint-placeholder-val="{{ false }}"><span style="font-size: 10.8px; margin-left: 3px;">{{ suffix }}</span></sc-if>
+      <sc-if value="{{ jpTag }}" hint-placeholder-val="{{ false }}"><span style="font-size: 10.8px; font-style: italic; font-variant: small-caps; padding-left: 1px;">(jp)</span></sc-if>
+      <sc-if value="{{ nonJpTag }}" hint-placeholder-val="{{ false }}"><span style="font-size: 10.8px; font-style: italic; font-variant: small-caps; padding-left: 1px;">(non-jp)</span></sc-if>
+    </span>
+    <sc-if value="{{ terminated }}" hint-placeholder-val="{{ false }}"><span style="position: absolute; left: -2px; right: -2px; top: 50%; height: 1px; background: {{ strikeColor }}; transform: rotate(-10deg);"></span></sc-if>
+  </span>
+</sc-if>
+<sc-if value="{{ unlinkedMuted }}" hint-placeholder-val="{{ false }}">
+  <span title="{{ itemName }}" style="display: flex; align-items: center; flex-shrink: 0; color: var(--color-neutral-300); position: relative;">
+    <span style="display: flex; align-items: center; flex-shrink: 0; opacity: {{ contentOpacity }};">
+      <sc-if value="{{ iconImg }}" hint-placeholder-val="{{ false }}"><img src="{{ iconImg }}" alt="{{ itemName }}" width="{{ iconSize }}" height="{{ iconSize }}" style="flex-shrink: 0; max-width: none; {{ imgStyle }}"></sc-if>
+      <sc-if value="{{ icon }}" hint-placeholder-val="{{ false }}"><i class="{{ icon }}" style="font-size: 16px;"></i></sc-if>
+      <sc-if value="{{ text }}" hint-placeholder-val="{{ false }}"><span style="font-size: 10.8px; padding: 1px 4px; line-height: 1.4;">{{ text }}</span></sc-if>
+      <sc-if value="{{ suffix }}" hint-placeholder-val="{{ false }}"><span style="font-size: 10.8px; margin-left: 3px;">{{ suffix }}</span></sc-if>
+      <sc-if value="{{ jpTag }}" hint-placeholder-val="{{ false }}"><span style="font-size: 10.8px; font-style: italic; font-variant: small-caps; padding-left: 1px;">(jp)</span></sc-if>
+      <sc-if value="{{ nonJpTag }}" hint-placeholder-val="{{ false }}"><span style="font-size: 10.8px; font-style: italic; font-variant: small-caps; padding-left: 1px;">(non-jp)</span></sc-if>
+    </span>
+    <sc-if value="{{ terminated }}" hint-placeholder-val="{{ false }}"><span style="position: absolute; left: -2px; right: -2px; top: 50%; height: 1px; background: {{ strikeColor }}; transform: rotate(-10deg);"></span></sc-if>
+  </span>
+</sc-if>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 24, &quot;height&quot;: 20}, &quot;href&quot;: {&quot;editor&quot;: null, &quot;default&quot;: null, &quot;tsType&quot;: &quot;string | null&quot;}, &quot;itemName&quot;: {&quot;editor&quot;: null, &quot;default&quot;: &quot;&quot;, &quot;tsType&quot;: &quot;string&quot;}, &quot;prefix&quot;: {&quot;editor&quot;: null, &quot;default&quot;: null, &quot;tsType&quot;: &quot;string | null&quot;}, &quot;iconImg&quot;: {&quot;editor&quot;: null, &quot;default&quot;: null, &quot;tsType&quot;: &quot;string | null&quot;}, &quot;icon&quot;: {&quot;editor&quot;: null, &quot;default&quot;: null, &quot;tsType&quot;: &quot;string | null&quot;}, &quot;iconSize&quot;: {&quot;editor&quot;: null, &quot;default&quot;: 16, &quot;tsType&quot;: &quot;number&quot;}, &quot;imgStyle&quot;: {&quot;editor&quot;: null, &quot;default&quot;: &quot;&quot;, &quot;tsType&quot;: &quot;string&quot;}, &quot;text&quot;: {&quot;editor&quot;: null, &quot;default&quot;: null, &quot;tsType&quot;: &quot;string | null&quot;}, &quot;suffix&quot;: {&quot;editor&quot;: null, &quot;default&quot;: null, &quot;tsType&quot;: &quot;string | null&quot;}, &quot;jpTag&quot;: {&quot;editor&quot;: null, &quot;default&quot;: false, &quot;tsType&quot;: &quot;boolean&quot;}, &quot;nonJpTag&quot;: {&quot;editor&quot;: null, &quot;default&quot;: false, &quot;tsType&quot;: &quot;boolean&quot;}, &quot;contentOpacity&quot;: {&quot;editor&quot;: null, &quot;default&quot;: 1, &quot;tsType&quot;: &quot;number&quot;}, &quot;terminated&quot;: {&quot;editor&quot;: null, &quot;default&quot;: false, &quot;tsType&quot;: &quot;boolean&quot;}, &quot;strikeColor&quot;: {&quot;editor&quot;: null, &quot;default&quot;: &quot;var(--color-neutral-500)&quot;, &quot;tsType&quot;: &quot;string&quot;}, &quot;muted&quot;: {&quot;editor&quot;: null, &quot;default&quot;: false, &quot;tsType&quot;: &quot;boolean&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const linked = !!this.props.href;
+    const muted = !!this.props.muted;
+    return {
+      linked,
+      unlinkedDefault: !linked && !muted,
+      unlinkedMuted: !linked && muted,
+    };
+  }
+}
+</script>
+</body>
+</html>

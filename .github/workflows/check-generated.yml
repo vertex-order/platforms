@@ -1,0 +1,27 @@
+# Fail a PR whose generated site/components.js is out of step with the
+# sibling site/*.dc.html sources. The pre-commit hook normally keeps them in
+# sync; this catches commits made without the hook (web UI, --no-verify,
+# design-tool sync). Fix: run `just build` (or python3 scripts/bundle-components.py)
+# and commit site/components.js.
+name: Check generated files
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  components-js:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Regenerate components.js
+        run: python3 scripts/bundle-components.py
+
+      - name: Fail if it changed
+        run: |
+          if ! git diff --exit-code -- site/components.js; then
+            echo "::error::site/components.js is stale. Run 'just build' and commit the result."
+            exit 1
+          fi

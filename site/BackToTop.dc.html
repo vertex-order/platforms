@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/nocturne-dd511f00-0314-498c-83ef-49f001a371b0/styles.css">
+<script src="_ds/nocturne-dd511f00-0314-498c-83ef-49f001a371b0/_ds_bundle.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+</helmet>
+<sc-if value="{{ visible }}" hint-placeholder-val="{{ false }}">
+  <div style="position: fixed; bottom: var(--space-4); left: 0; right: 0; z-index: 10; max-width: {{ contentWidthPx }}; margin: 0 auto; padding: 0 var(--space-4); display: flex; justify-content: flex-end; pointer-events: none;">
+    <button onClick="{{ scrollToTop }}" title="Back to top" style="pointer-events: auto; width: 40px; height: 40px; flex-shrink: 0; border-radius: var(--radius-md); border: 1px solid var(--color-divider); background: var(--color-surface); color: var(--color-divider); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: color .15s; margin-right: {{ rightOffsetPx }};" style-hover="color: var(--color-neutral-500);">
+      <i class="bi bi-arrow-up" style="font-size: 16px;"></i>
+    </button>
+  </div>
+</sc-if>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:200,&quot;height&quot;:80},&quot;contentWidth&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:760,&quot;tsType&quot;:&quot;number&quot;,&quot;min&quot;:320,&quot;max&quot;:1400,&quot;unit&quot;:&quot;px&quot;},&quot;rightOffset&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:-78,&quot;tsType&quot;:&quot;number&quot;,&quot;min&quot;:-200,&quot;max&quot;:50,&quot;unit&quot;:&quot;px&quot;},&quot;threshold&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:260,&quot;tsType&quot;:&quot;number&quot;,&quot;min&quot;:0,&quot;max&quot;:2000,&quot;unit&quot;:&quot;px&quot;}}">
+class Component extends DCLogic {
+  state = { visible: false };
+  componentDidMount() {
+    this._onScroll = () => {
+      const threshold = this.props.threshold ?? 260;
+      const visible = window.scrollY > threshold;
+      if (visible !== this.state.visible) this.setState({ visible });
+    };
+    window.addEventListener('scroll', this._onScroll, { passive: true });
+    this._onScroll();
+  }
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this._onScroll);
+  }
+  renderVals() {
+    const contentWidth = this.props.contentWidth ?? 760;
+    const rightOffset = this.props.rightOffset ?? -78;
+    return {
+      visible: this.state.visible,
+      contentWidthPx: contentWidth + 'px',
+      rightOffsetPx: rightOffset + 'px',
+      scrollToTop: () => window.scrollTo({ top: 0, behavior: 'smooth' }),
+    };
+  }
+}
+</script>
+</body>
+</html>
