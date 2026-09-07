@@ -522,10 +522,10 @@ this project: **Vertex Industries, with help from the community**, licensed
 
 - **Shown as:** WonderSwan Color
 - **Asset:** `images/platforms/wonderswan.svg`
-- **Root source:** https://seeklogo.com/
-- **Exact URL:** https://seeklogo.com/vector-logo/384317/wonderswan
-- **License:** Fair use; Unknown
-- **Attribution:** [Bandai](https://wikipedia.org/wiki/Bandai); [Seeklogo](https://seeklogo.com/)
+- **Exact URL:** https://commons.wikimedia.org/wiki/File:WonderSwan_logo.svg
+- **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:WonderSwan_logo.svg); [Trademark](https://commons.wikimedia.org/wiki/File:WonderSwan_logo.svg)
+- **Attribution:** [Bandai](https://wikipedia.org/wiki/Bandai)
+- **Modification:** Cropped from the source logo.
 
 ### Xbox 360
 
