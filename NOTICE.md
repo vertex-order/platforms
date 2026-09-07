@@ -362,10 +362,11 @@ this project: **Vertex Industries, with help from the community**, licensed
 ### Ouya
 
 - **Shown as:** Ouya
-- **Asset:** `images/platforms/ouya.png`
-- **Exact URL:** https://blog.gamecraft.org/2013/12/10/ouya-at-first-glance/
-- **License:** Fair use; Unknown
-- **Attribution:** [Ouya](https://wikipedia.org/wiki/Ouya); Uploader [Gregg](https://blog.gamecraft.org/author/gregg/)
+- **Asset:** `images/platforms/ouya.svg`
+- **Exact URL:** https://web.archive.org/web/20190130182213/https://www.ouya.tv/wp-content/themes/ouya/images/homepage-bkg.png
+- **License:** Fair use; Public domain; Trademark
+- **Attribution:** [Ouya](https://wikipedia.org/wiki/Ouya)
+- **Modification:** Traced from official png and made solid Ouya orange based on their other OUYA official png logo on their site. Side-effect removed the noise from this asset.
 
 ### PlayStation (PSone)
 
