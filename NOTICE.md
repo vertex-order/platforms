@@ -387,10 +387,9 @@ this project: **Vertex Industries, with help from the community**, licensed
 
 - **Shown as:** PlayStation 3
 - **Asset:** `images/platforms/playstation3.svg`
-- **Exact URL:** https://breezewiki.com/playstation/wiki/File:PS3_Icon.svg
-- **License:** [Fair use](https://breezewiki.com/playstation/wiki/File:PS3_Icon.svg)
-- **Attribution:** [Sony](https://wikipedia.org/wiki/Sony); Uploader [VeldinX](https://breezewiki.com/playstation/wiki/User:VeldinX)
-- **Source note:** via Breezewiki — mirror of Fandom; content CC BY-SA
+- **Exact URL:** https://commons.wikimedia.org/wiki/File:PlayStation_3_Logo.svg
+- **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:PlayStation_3_Logo.svg); [Trademark](https://commons.wikimedia.org/wiki/File:PlayStation_3_Logo.svg)
+- **Attribution:** [Sony](https://wikipedia.org/wiki/Sony)
 - **Alternative:** https://simpleicons.org/?q=playstation3
 
 ### PlayStation 4
