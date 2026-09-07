@@ -70,10 +70,11 @@ this project: **Vertex Industries, with help from the community**, licensed
 ### Blu-ray
 
 - **Shown as:** Blu-ray
-- **Asset:** `images/platforms/blu-ray.png`
-- **Exact URL:** https://www.flaticon.com/free-icon/blu-ray-logo_1179
-- **License:** Fair use; [Free with attribution and limitations](https://www.flaticon.com/)
-- **Attribution:** [Blu-ray Disc Association](https://wikipedia.org/wiki/Blu-ray_Disc_Association); [Magnific](https://www.flaticon.com/authors/magnific) from [Flaticon.com](https://Flaticon.com)
+- **Asset:** `images/platforms/blu-ray.svg`
+- **Exact URL:** https://commons.wikimedia.org/wiki/File:Blu-ray_Disc.svg
+- **License:** Fair use; [Trademark](https://commons.wikimedia.org/wiki/File:Blu-ray_Disc.svg)
+- **Attribution:** [Blu-ray Disc Association](https://wikipedia.org/wiki/Blu-ray_Disc_Association)
+- **Modifications:** Crop from source.
 
 ### Book
 
@@ -502,11 +503,11 @@ this project: **Vertex Industries, with help from the community**, licensed
 ### UltraHD Blu-ray
 
 - **Shown as:** UltraHD Blu-ray
-- **Asset:** `images/platforms/blu-ray.png` (with `U` prefix)
-- **Exact URL:** https://www.flaticon.com/free-icon/blu-ray-logo_1179
-- **License:** Fair use; [Free with attribution and limitations](https://www.flaticon.com/)
-- **Attribution:** [Blu-ray Disc Association](https://wikipedia.org/wiki/Blu-ray_Disc_Association); [Magnific](https://www.flaticon.com/authors/magnific) from [Flaticon.com](https://Flaticon.com)
-- **Modification:** Hybrid mark — the `U` prefix text was added before the source icon to distinguish this platform.
+- **Asset:** `images/platforms/blu-ray.svg` (with `U` prefix)
+- **Exact URL:** https://commons.wikimedia.org/wiki/File:Blu-ray_Disc.svg
+- **License:** Fair use; [Trademark](https://commons.wikimedia.org/wiki/File:Blu-ray_Disc.svg)
+- **Attribution:** [Blu-ray Disc Association](https://wikipedia.org/wiki/Blu-ray_Disc_Association)
+- **Modification:** Cropped from the source logo. Hybrid mark — the `U` prefix text was added before the icon to distinguish this platform.
 
 ### VHS Tapes
 
