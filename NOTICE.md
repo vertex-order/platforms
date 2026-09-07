@@ -23,6 +23,7 @@ Each section carries:
 - **Exact URL** — the specific page the asset came from.
 - **License** — the terms it is used under.
 - **Attribution** — the person or organisation the source credits (and that the licence requires you to name, when it does).
+- **Modification** — how the asset was altered from the source before use (cropped, recoloured, …), when it was. A uniform tonal filter alone (greyscale, mono, invert) is not recorded — it preserves the design. Reassigning which elements carry which colour *is* recorded: that is an editorial change to the mark.
 
 Text-label entries (`DVD`, `Wii U`, …) render as type, not an asset — no
 attribution needed. Any icon not credited on the project page is original to
@@ -182,6 +183,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **Exact URL:** https://commons.wikimedia.org/wiki/File:Game_Boy_Advance_logo.svg
 - **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:Game_Boy_Advance_logo.svg); [Trademark](https://commons.wikimedia.org/wiki/File:Game_Boy_Advance_logo.svg)
 - **Attribution:** [Nintendo](https://wikipedia.org/wiki/Nintendo)
+- **Modification:** Cropped each word down to its first letter to make the "GBA" acronym; slanted and extended the G to match the B's slant now that the letters sit together.
 
 ### GOG
 
@@ -261,6 +263,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **Exact URL:** https://commons.wikimedia.org/wiki/File:Nintendo_3DS_logo.svg
 - **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:Nintendo_3DS_logo.svg); [Trademark](https://commons.wikimedia.org/wiki/File:Nintendo_3DS_logo.svg)
 - **Attribution:** [Nintendo](https://wikipedia.org/wiki/Nintendo)
+- **Modification:** Cropped from the source logo.
 
 ### Nintendo DS
 
@@ -269,6 +272,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **Exact URL:** https://commons.wikimedia.org/wiki/File:Nintendo_DS_Logo.svg
 - **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:Nintendo_DS_Logo.svg); [Trademark](https://commons.wikimedia.org/wiki/File:Nintendo_DS_Logo.svg)
 - **Attribution:** [Nintendo](https://wikipedia.org/wiki/Nintendo)
+- **Modification:** Cropped from the source logo.
 
 ### Nintendo Entertainment System
 
@@ -298,6 +302,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **Exact URL:** https://commons.wikimedia.org/wiki/File:Game_Boy_Advance_logo.svg
 - **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:Game_Boy_Advance_logo.svg); [Trademark](https://commons.wikimedia.org/wiki/File:Game_Boy_Advance_logo.svg)
 - **Attribution:** [Nintendo](https://wikipedia.org/wiki/Nintendo)
+- **Modification:** Cropped each word down to its first letter to make the "GB" acronym; slanted and extended the G to match the B's slant now that the letters sit together.
 
 ### Nintendo GameCube
 
@@ -306,6 +311,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **Exact URL:** https://wikipedia.org/wiki/GameCube#/media/File:Nintendo_Gamecube_Logo.svg
 - **License:** [Fair use](https://wikipedia.org/wiki/File:Nintendo_Gamecube_Logo.svg)
 - **Attribution:** [Nintendo](https://wikipedia.org/wiki/Nintendo)
+- **Modification:** Cropped from the source logo.
 
 ### Nintendo NES Classic Edition
 
@@ -321,6 +327,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **Exact URL:** https://commons.wikimedia.org/wiki/File:Nintendo_Switch_2_logo.svg
 - **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:Nintendo_Switch_2_logo.svg); [Trademark](https://commons.wikimedia.org/wiki/File:Nintendo_Switch_2_logo.svg)
 - **Attribution:** [Nintendo](https://wikipedia.org/wiki/Nintendo)
+- **Modification:** Cropped from the source logo.
 
 ### Nintendo Switch 2
 
@@ -329,6 +336,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **Exact URL:** https://commons.wikimedia.org/wiki/File:Nintendo_Switch_2_logo.svg
 - **License:** Fair use; [Trademark](https://commons.wikimedia.org/wiki/File:Nintendo_Switch_2_logo.svg)
 - **Attribution:** [Nintendo](https://wikipedia.org/wiki/Nintendo)
+- **Modification:** Cropped from the source logo.
 
 ### Nintendo Wii
 
@@ -412,6 +420,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **License:** [Fair use](https://breezewiki.com/playstation/wiki/File:PS_Plus_Icon.svg)
 - **Attribution:** [Sony](https://wikipedia.org/wiki/Sony); Uploader [VeldinX](https://breezewiki.com/playstation/wiki/User:VeldinX)
 - **Source note:** via Breezewiki — mirror of Fandom; content CC BY-SA
+- **Modification:** Recoloured to the site theme — not a flat greyscale filter; the original's colour groups were reassigned (which elements share a shade changed) to keep the mark legible in the theme palette.
 
 ### PlayStation Portable (PSP)
 
@@ -439,6 +448,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **License:** [Fair use](https://breezewiki.com/playstation/wiki/File:PS4_Icon.svg)
 - **Attribution:** [Sony](https://wikipedia.org/wiki/Sony); Uploader [VeldinX](https://breezewiki.com/playstation/wiki/User:VeldinX)
 - **Source note:** via Breezewiki — mirror of Fandom; content CC BY-SA
+- **Modification:** Hybrid mark — the `VR` suffix text was added after the source icon to distinguish this platform.
 
 ### Sharp X1
 
@@ -465,6 +475,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **Exact URL:** https://seeklogo.com/vector-logo/323735/super-nintendo
 - **License:** Fair use; Unknown
 - **Attribution:** [Nintendo](https://wikipedia.org/wiki/Nintendo); [Seeklogo](https://seeklogo.com/)
+- **Modification:** Hybrid mark — the `c` suffix text was added after the source logo to distinguish this platform.
 
 ### Steam
 
@@ -481,6 +492,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **Exact URL:** https://www.flaticon.com/free-icon/blu-ray-logo_1179
 - **License:** Fair use; [Free with attribution and limitations](https://www.flaticon.com/)
 - **Attribution:** [Blu-ray Disc Association](https://wikipedia.org/wiki/Blu-ray_Disc_Association); [Magnific](https://www.flaticon.com/authors/magnific) from [Flaticon.com](https://Flaticon.com)
+- **Modification:** Hybrid mark — the `U` prefix text was added before the source icon to distinguish this platform.
 
 ### VHS Tapes
 
@@ -521,6 +533,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **Exact URL:** https://icons.getbootstrap.com/icons/xbox/
 - **License:** Fair use; [MIT](https://github.com/twbs/bootstrap/blob/main/LICENSE)
 - **Attribution:** [Microsoft](https://wikipedia.org/wiki/Microsoft); [Bootstrap Icons](https://icons.getbootstrap.com/)
+- **Modification:** Hybrid mark — the `360` suffix text was added after the glyph to distinguish this platform.
 
 ### Xbox Cloud
 
@@ -529,6 +542,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **Exact URL:** https://icons.getbootstrap.com/icons/xbox/
 - **License:** Fair use; [MIT](https://github.com/twbs/bootstrap/blob/main/LICENSE)
 - **Attribution:** [Microsoft](https://wikipedia.org/wiki/Microsoft); [Bootstrap Icons](https://icons.getbootstrap.com/)
+- **Modification:** Hybrid mark — the `Cloud` suffix text was added after the glyph to distinguish this platform.
 
 ### Xbox One
 
@@ -537,6 +551,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **Exact URL:** https://icons.getbootstrap.com/icons/xbox/
 - **License:** Fair use; [MIT](https://github.com/twbs/bootstrap/blob/main/LICENSE)
 - **Attribution:** [Microsoft](https://wikipedia.org/wiki/Microsoft); [Bootstrap Icons](https://icons.getbootstrap.com/)
+- **Modification:** Hybrid mark — the `One` suffix text was added after the glyph to distinguish this platform.
 
 ### Xbox Series X/S
 
@@ -545,6 +560,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **Exact URL:** https://icons.getbootstrap.com/icons/xbox/
 - **License:** Fair use; [MIT](https://github.com/twbs/bootstrap/blob/main/LICENSE)
 - **Attribution:** [Microsoft](https://wikipedia.org/wiki/Microsoft); [Bootstrap Icons](https://icons.getbootstrap.com/)
+- **Modification:** Hybrid mark — the `X/S` suffix text was added after the glyph to distinguish this platform.
 
 ### Youtube
 
