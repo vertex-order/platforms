@@ -454,11 +454,9 @@ this project: **Vertex Industries, with help from the community**, licensed
 
 - **Shown as:** Sharp X1
 - **Asset:** `images/platforms/sharp-x1.svg`
-- **Root source:** https://logo.wine/
-- **Exact URL:** https://www.logo.wine/logo/X1_(computer)
-- **License:** Fair use; [Non-commerical](https://www.logo.wine/terms)
-- **Attribution:** [Sharp](https://wikipedia.org/wiki/Sharp_Corporation); [Logo Wine](https://www.logo.wine)
-- **Alternative:** https://wikipedia.org/wiki/Sharp_X1#/media/File:Sharp_X1_logo.svg
+- **Exact URL:** https://commons.wikimedia.org/wiki/File:Sharp_X1_logo.svg
+- **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:Sharp_X1_logo.svg) [Trademark](https://commons.wikimedia.org/wiki/File:Sharp_X1_logo.svg)
+- **Attribution:** [Sharp](https://wikipedia.org/wiki/Sharp_Corporation)
 
 ### SNES
 
