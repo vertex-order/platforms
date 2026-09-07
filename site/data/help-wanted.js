@@ -3,7 +3,7 @@
 window.HELP_WANTED_ITEMS = [
   "Cleaner, permissively-licensed (ideally CC0) replacements for low-res or off-brand icons",
   "Replace icons with unknown or unclear licensing: Mobile Phones, MSX2, Ouya, SNES, WonderSwan",
-  "Replace icons that are non-commercial only: Game Boy Advance, Nintendo 3DS",
+  "Replace icons that are non-commercial only: Game Boy Advance",
   "Replace icons licensed for editorial use only: Windows Phone",
   "Replace PNG-only icons with a scalable source: Game Boy, Apple Arcade, Arcade, Blu-ray, UltraHD Blu-ray",
   "Real icons for platforms currently shown as text labels (Wii, Wii U, NES, Famicom, PlayStation Classic, PC-8801, DVD, LD, CD, VHS)",

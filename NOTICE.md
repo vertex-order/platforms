@@ -257,10 +257,10 @@ this project: **Vertex Industries, with help from the community**, licensed
 ### Nintendo 3DS
 
 - **Shown as:** Nintendo 3DS
-- **Asset:** `images/platforms/3ds.png`
-- **Exact URL:** https://www.steamgriddb.com/icon/100303
-- **License:** Fair use; [Personal, non-commerical](https://www.steamgriddb.com/terms)
-- **Attribution:** [Nintendo](https://wikipedia.org/wiki/Nintendo); Uploader [Lumpy_117](https://www.steamgriddb.com/profile/76561198039456592)
+- **Asset:** `images/platforms/3ds.svg`
+- **Exact URL:** https://commons.wikimedia.org/wiki/File:Nintendo_3DS_logo.svg
+- **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:Nintendo_3DS_logo.svg); [Trademark](https://commons.wikimedia.org/wiki/File:Nintendo_3DS_logo.svg)
+- **Attribution:** [Nintendo](https://wikipedia.org/wiki/Nintendo)
 
 ### Nintendo DS
 
