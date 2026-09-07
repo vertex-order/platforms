@@ -49,6 +49,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **Exact URL:** https://icons.getbootstrap.com/icons/android2/
 - **License:** Fair use; [MIT](https://github.com/twbs/bootstrap/blob/main/LICENSE)
 - **Attribution:** [Google](https://wikipedia.org/wiki/Google); [Bootstrap Icons](https://icons.getbootstrap.com/)
+- **Alternative:** https://simpleicons.org/?q=android
 
 ### Apple Arcade
 
@@ -57,7 +58,8 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **Exact URL:** https://icons8.com/icon/9Oy5N3CNV3Y1/apple-arcade
 - **License:** Fair use; [Free license with attribution and limitation](https://icons8.com/license)
 - **Attribution:** [Apple](https://wikipedia.org/wiki/Apple_Inc.); [Icons8](https://icons8.com)
-- **Alternative:** Filled, other styles; from same source
+- **Alternative:** Filled, other styles; from same source. 
+- **Alternative:** https://simpleicons.org/?q=apple%20arcade
 
 ### Arcade
 
@@ -90,6 +92,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **Exact URL:** https://icons.getbootstrap.com/icons/browser-chrome/
 - **License:** Fair use; [MIT](https://github.com/twbs/bootstrap/blob/main/LICENSE)
 - **Attribution:** [Google](https://wikipedia.org/wiki/Google); [Bootstrap Icons](https://icons.getbootstrap.com/)
+- **Alternative:** https://simpleicons.org/?q=google%20chrome
 
 ### Compact Disc
 
@@ -200,6 +203,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **Exact URL:** https://icons.getbootstrap.com/icons/apple/
 - **License:** Fair use; [MIT](https://github.com/twbs/bootstrap/blob/main/LICENSE)
 - **Attribution:** [Apple](https://wikipedia.org/wiki/Apple_Inc.); [Bootstrap Icons](https://icons.getbootstrap.com/)
+- **Alternative:** https://simpleicons.org/?q=ios
 
 ### Laserdisk
 
@@ -215,6 +219,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **Exact URL:** https://iconscout.com/free-icon/free-linux-logo-icon_458331
 - **License:** Fair use; [MIT](https://opensource.org/license/MIT)
 - **Attribution:** [Linux](https://wikipedia.org/wiki/Linux); [Vorillaz](https://iconscout.com/contributors/vorillaz/icons) from [iconscout.com](https://iconscout.com)
+- **Alternative:** https://simpleicons.org/?q=linux
 
 ### macOS
 
@@ -224,6 +229,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **License:** Fair use; [Free license with attribution and limitation](https://icons8.com/license)
 - **Attribution:** [Apple](https://wikipedia.org/wiki/Apple_Inc.); [Icons8](https://icons8.com)
 - **Alternative:** Outlined, other styles; from same source
+- **Alternative:** https://simpleicons.org/?q=macos
 
 ### Mobile Phones
 
@@ -255,6 +261,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **Asset:** text label `PC-8801mkII SR` — no external asset
 - **License:** Fair use
 - **Attribution:** [NEC](https://wikipedia.org/wiki/NEC)
+- **Alternative:** https://simpleicons.org/?q=NEC
 
 ### Nintendo 3DS
 
@@ -377,6 +384,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **License:** [Fair use](https://breezewiki.com/playstation/wiki/File:PS2_Icon.svg)
 - **Attribution:** [Sony](https://wikipedia.org/wiki/Sony); Uploader [VeldinX](https://breezewiki.com/playstation/wiki/User:VeldinX)
 - **Source note:** via Breezewiki — mirror of Fandom; content CC BY-SA
+- **Alternative:** https://simpleicons.org/?q=playstation2
 
 ### PlayStation 3
 
@@ -386,6 +394,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **License:** [Fair use](https://breezewiki.com/playstation/wiki/File:PS3_Icon.svg)
 - **Attribution:** [Sony](https://wikipedia.org/wiki/Sony); Uploader [VeldinX](https://breezewiki.com/playstation/wiki/User:VeldinX)
 - **Source note:** via Breezewiki — mirror of Fandom; content CC BY-SA
+- **Alternative:** https://simpleicons.org/?q=playstation3
 
 ### PlayStation 4
 
@@ -395,6 +404,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **License:** [Fair use](https://breezewiki.com/playstation/wiki/File:PS4_Icon.svg)
 - **Attribution:** [Sony](https://wikipedia.org/wiki/Sony); Uploader [VeldinX](https://breezewiki.com/playstation/wiki/User:VeldinX)
 - **Source note:** via Breezewiki — mirror of Fandom; content CC BY-SA
+- **Alternative:** https://simpleicons.org/?q=playstation4
 
 ### PlayStation 5
 
@@ -404,6 +414,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **License:** [Fair use](https://breezewiki.com/playstation/wiki/File:PS5_Icon.svg)
 - **Attribution:** [Sony](https://wikipedia.org/wiki/Sony); Uploader [VeldinX](https://breezewiki.com/playstation/wiki/User:VeldinX)
 - **Source note:** via Breezewiki — mirror of Fandom; content CC BY-SA
+- **Alternative:** https://simpleicons.org/?q=playstation5
 
 ### PlayStation Classic
 
@@ -430,6 +441,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **License:** [Fair use](https://breezewiki.com/playstation/wiki/File:PSP_Icon.svg)
 - **Attribution:** [Sony](https://wikipedia.org/wiki/Sony); Uploader [VeldinX](https://breezewiki.com/playstation/wiki/User:VeldinX)
 - **Source note:** via Breezewiki — mirror of Fandom; content CC BY-SA
+- **Alternative:** https://simpleicons.org/?q=psp
 
 ### PlayStation Vita
 
@@ -439,6 +451,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **License:** [Fair use](https://breezewiki.com/playstation/wiki/File:PS_Vita_Icon.svg)
 - **Attribution:** [Sony](https://wikipedia.org/wiki/Sony); Uploader [VeldinX](https://breezewiki.com/playstation/wiki/User:VeldinX)
 - **Source note:** via Breezewiki — mirror of Fandom; content CC BY-SA
+- **Alternative:** https://simpleicons.org/?q=vita
 
 ### PlayStation VR
 
@@ -483,6 +496,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **Exact URL:** https://icons.getbootstrap.com/icons/steam/
 - **License:** Fair use; [MIT](https://github.com/twbs/bootstrap/blob/main/LICENSE)
 - **Attribution:** [Valve](https://wikipedia.org/wiki/Valve_Corporation); [Bootstrap Icons](https://icons.getbootstrap.com/)
+- **Alternative:** https://simpleicons.org/?q=steam
 
 ### UltraHD Blu-ray
 
@@ -568,3 +582,4 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **Exact URL:** https://icons.getbootstrap.com/icons/youtube/
 - **License:** Fair use; [MIT](https://github.com/twbs/bootstrap/blob/main/LICENSE)
 - **Attribution:** [Google](https://wikipedia.org/wiki/Google); [Bootstrap Icons](https://icons.getbootstrap.com/)
+- **Alternative:** https://simpleicons.org/?q=youtube
