@@ -2,7 +2,6 @@
 // module) so it loads over file:// like the other data/*.js files.
 window.HELP_WANTED_ITEMS = [
   "Cleaner, permissively-licensed (ideally CC0) replacements for low-res or off-brand icons",
-  "Replace icons with unknown or unclear licensing: Mobile Phones",
   "Replace icons without an explicit license: MSX2",
   "Replace icons licensed for editorial use only: Windows Phone",
   "Real icons for platforms currently shown as text labels (CD, DVD, Famicom, LD, NES, NES Classic, PC-8801, PlayStation Classic, VHS, Wii, Wii U)",

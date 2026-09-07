@@ -228,9 +228,9 @@ this project: **Vertex Industries, with help from the community**, licensed
 
 - **Shown as:** Mobile Phones
 - **Asset:** `images/platforms/mobile-phone.svg`
-- **Exact URL:** https://icons-for-free.com/old+phone+icon-1320185952729953043/
-- **License:** Unknown
-- **Attribution:** [First Styles](https://icons-for-free.com/icons-author-First+Styles/)
+- **Exact URL:** original to this project
+- **License:** CC BY-NC-SA 4.0
+- **Attribution:** Vertex Industries, with help from the community
 
 ### MSX
 
