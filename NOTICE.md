@@ -377,10 +377,10 @@ this project: **Vertex Industries, with help from the community**, licensed
 
 - **Shown as:** PlayStation 2
 - **Asset:** `images/platforms/playstation2.svg`
-- **Exact URL:** https://breezewiki.com/playstation/wiki/File:PS2_Icon.svg
-- **License:** [Fair use](https://breezewiki.com/playstation/wiki/File:PS2_Icon.svg)
-- **Attribution:** [Sony](https://wikipedia.org/wiki/Sony); Uploader [VeldinX](https://breezewiki.com/playstation/wiki/User:VeldinX)
-- **Source note:** via Breezewiki — mirror of Fandom; content CC BY-SA
+- **Exact URL:** https://commons.wikimedia.org/wiki/File:PlayStation_2_logo.svg
+- **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:PlayStation_2_logo.svg); [Trademark](https://commons.wikimedia.org/wiki/File:PlayStation_2_logo.svg)
+- **Attribution:** [Sony](https://wikipedia.org/wiki/Sony)
+- **Modification:** Cropped from the source logo. Line thickened a smidge for small rendering size visbility.
 - **Alternative:** https://simpleicons.org/?q=playstation2
 
 ### PlayStation 3
