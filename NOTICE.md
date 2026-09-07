@@ -463,19 +463,20 @@ this project: **Vertex Industries, with help from the community**, licensed
 ### SNES
 
 - **Shown as:** Super Nintendo Entertainment System
-- **Asset:** `images/platforms/nintendo-snes.png`
-- **Exact URL:** https://seeklogo.com/vector-logo/323735/super-nintendo
-- **License:** Fair use; Unknown
-- **Attribution:** [Nintendo](https://wikipedia.org/wiki/Nintendo); [Seeklogo](https://seeklogo.com/)
+- **Asset:** `images/platforms/nintendo-snes.svg`
+- **Exact URL:** https://commons.wikimedia.org/wiki/File:Nintendo_Super_Famicom_logo.svg
+- **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:Nintendo_Super_Famicom_logo.svg); [Trademark](https://commons.wikimedia.org/wiki/File:Nintendo_Super_Famicom_logo.svg)
+- **Attribution:** [Nintendo](https://wikipedia.org/wiki/Nintendo)
+- **Modification:** Cropped from the source logo.
 
 ### SNES Classic Edition
 
 - **Shown as:** Super Nintendo Entertainment System Classic Edition
-- **Asset:** `images/platforms/nintendo-snes.png` (with `c` suffix)
-- **Exact URL:** https://seeklogo.com/vector-logo/323735/super-nintendo
-- **License:** Fair use; Unknown
-- **Attribution:** [Nintendo](https://wikipedia.org/wiki/Nintendo); [Seeklogo](https://seeklogo.com/)
-- **Modification:** Hybrid mark — the `c` suffix text was added after the source logo to distinguish this platform.
+- **Asset:** `images/platforms/nintendo-snes.svg` (with `c` suffix)
+- **Exact URL:** https://commons.wikimedia.org/wiki/File:Nintendo_Super_Famicom_logo.svg
+- **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:Nintendo_Super_Famicom_logo.svg); [Trademark](https://commons.wikimedia.org/wiki/File:Nintendo_Super_Famicom_logo.svg)
+- **Attribution:** [Nintendo](https://wikipedia.org/wiki/Nintendo)
+- **Modification:** Cropped from the source logo. Hybrid mark — the `c` suffix text was added after the logo to distinguish this platform.
 
 ### Steam
 
