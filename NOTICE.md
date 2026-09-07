@@ -178,10 +178,10 @@ this project: **Vertex Industries, with help from the community**, licensed
 ### Game Boy Advance
 
 - **Shown as:** Game Boy Advance
-- **Asset:** `images/platforms/gba.png`
-- **Exact URL:** https://www.steamgriddb.com/icon/39897
-- **License:** Fair use; [Personal, non-commerical](https://www.steamgriddb.com/terms)
-- **Attribution:** [Nintendo](https://wikipedia.org/wiki/Nintendo); Uploader [riefu24](https://www.steamgriddb.com/profile/76561198274324627)
+- **Asset:** `images/platforms/nintendo-game-boy-advance.svg`
+- **Exact URL:** https://commons.wikimedia.org/wiki/File:Game_Boy_Advance_logo.svg
+- **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:Game_Boy_Advance_logo.svg); [Trademark](https://commons.wikimedia.org/wiki/File:Game_Boy_Advance_logo.svg)
+- **Attribution:** [Nintendo](https://wikipedia.org/wiki/Nintendo)
 
 ### GOG
 
@@ -294,11 +294,10 @@ this project: **Vertex Industries, with help from the community**, licensed
 ### Nintendo Game Boy
 
 - **Shown as:** Nintendo Game Boy
-- **Asset:** `images/platforms/game-boy.png`
-- **Exact URL:** https://icons8.com/icon/NrnGYJBvivu3/gameboy
-- **License:** Fair use; [Free license with attribution and limitation](https://icons8.com/license)
-- **Attribution:** [Nintendo](https://wikipedia.org/wiki/Nintendo); [Icons8](https://icons8.com)
-- **Alternative:** Other styles; from same source
+- **Asset:** `images/platforms/nintendo-game-boy.svg`
+- **Exact URL:** https://commons.wikimedia.org/wiki/File:Game_Boy_Advance_logo.svg
+- **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:Game_Boy_Advance_logo.svg); [Trademark](https://commons.wikimedia.org/wiki/File:Game_Boy_Advance_logo.svg)
+- **Attribution:** [Nintendo](https://wikipedia.org/wiki/Nintendo)
 
 ### Nintendo GameCube
 
