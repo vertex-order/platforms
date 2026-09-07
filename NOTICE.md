@@ -396,10 +396,10 @@ this project: **Vertex Industries, with help from the community**, licensed
 
 - **Shown as:** PlayStation 4
 - **Asset:** `images/platforms/playstation4.svg`
-- **Exact URL:** https://breezewiki.com/playstation/wiki/File:PS4_Icon.svg
-- **License:** [Fair use](https://breezewiki.com/playstation/wiki/File:PS4_Icon.svg)
-- **Attribution:** [Sony](https://wikipedia.org/wiki/Sony); Uploader [VeldinX](https://breezewiki.com/playstation/wiki/User:VeldinX)
-- **Source note:** via Breezewiki — mirror of Fandom; content CC BY-SA
+- **Exact URL:** https://commons.wikimedia.org/wiki/File:PlayStation_4_logo_and_wordmark.svg
+- **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:PlayStation_4_logo_and_wordmark.svg); [Trademark](https://commons.wikimedia.org/wiki/File:PlayStation_4_logo_and_wordmark.svg)
+- **Attribution:** [Sony](https://wikipedia.org/wiki/Sony)
+- **Modification:** Cropped from the source logo.
 - **Alternative:** https://simpleicons.org/?q=playstation4
 
 ### PlayStation 5
@@ -453,11 +453,11 @@ this project: **Vertex Industries, with help from the community**, licensed
 
 - **Shown as:** PlayStation VR
 - **Asset:** `images/platforms/playstation4.svg` (with `VR` suffix)
-- **Exact URL:** https://breezewiki.com/playstation/wiki/File:PS4_Icon.svg
-- **License:** [Fair use](https://breezewiki.com/playstation/wiki/File:PS4_Icon.svg)
-- **Attribution:** [Sony](https://wikipedia.org/wiki/Sony); Uploader [VeldinX](https://breezewiki.com/playstation/wiki/User:VeldinX)
-- **Source note:** via Breezewiki — mirror of Fandom; content CC BY-SA
-- **Modification:** Hybrid mark — the `VR` suffix text was added after the source icon to distinguish this platform.
+- **Exact URL:** https://commons.wikimedia.org/wiki/File:PlayStation_4_logo_and_wordmark.svg
+- **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:PlayStation_4_logo_and_wordmark.svg); [Trademark](https://commons.wikimedia.org/wiki/File:PlayStation_4_logo_and_wordmark.svg)
+- **Attribution:** [Sony](https://wikipedia.org/wiki/Sony)
+- **Modification:** Cropped from the source logo. Hybrid mark — the `VR` suffix text was added after the icon to distinguish this platform.
+- **Alternative:** https://simpleicons.org/?q=playstation4
 
 ### Sharp X1
 

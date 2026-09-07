@@ -81,7 +81,7 @@ a:hover { color: var(--color-accent); text-decoration: underline; }
       <div style="position: relative; display: flex; flex-wrap: wrap; align-content: flex-start; row-gap: 16px; column-gap: 16px;">
         <sc-for list="{{ platformLegend }}" as="pl" hint-placeholder-count="30">
           <span data-legend-item="{{ pl.name }}" style="display: flex; align-items: center; justify-content: center; height: 68px; flex: 0 0 auto;">
-            <dc-import name="ZoomedPlatformIcon" item-name="{{ pl.name }}" prefix="{{ pl.prefix }}" icon-img="{{ pl.iconImg }}" icon="{{ pl.icon }}" icon-size="{{ pl.iconSize }}" img-style="{{ pl.imgStyle }}" text="{{ pl.text }}" font-size="{{ pl.fontSize }}" suffix="{{ pl.suffix }}" jp-tag="{{ pl.jpTag }}" non-jp-tag="{{ pl.nonJpTag }}" hint-size="auto,40px" style="display: flex;"></dc-import>
+            <dc-import name="ZoomedPlatformIcon" item-name="{{ pl.name }}" prefix="{{ pl.prefix }}" icon-img="{{ pl.iconImg }}" icon="{{ pl.icon }}" icon-size="{{ pl.iconSize }}" suffix-font-size="{{ pl.suffixFontSize }}" suffix-small-caps="{{ pl.suffixSmallCaps }}" img-style="{{ pl.imgStyle }}" text="{{ pl.text }}" font-size="{{ pl.fontSize }}" suffix="{{ pl.suffix }}" jp-tag="{{ pl.jpTag }}" non-jp-tag="{{ pl.nonJpTag }}" hint-size="auto,40px" style="display: flex;"></dc-import>
           </span>
         </sc-for>
       </div>
@@ -91,7 +91,7 @@ a:hover { color: var(--color-accent); text-decoration: underline; }
     <div style="margin: 0 0 var(--space-8);">
       <span style="display: flex; flex-wrap: wrap; align-items: center; gap: 6px;">
         <sc-for list="{{ platformLegendActual }}" as="pl" hint-placeholder-count="30">
-<dc-import name="PlatformIcon" item-name="{{ pl.name }}" prefix="{{ pl.prefix }}" icon-img="{{ pl.iconImg }}" icon="{{ pl.icon }}" icon-size="{{ pl.iconSize }}" img-style="{{ pl.imgStyle }}" text="{{ pl.text }}" suffix="{{ pl.suffix }}" jp-tag="{{ pl.jpTag }}" non-jp-tag="{{ pl.nonJpTag }}" hint-size="auto,20px" style="display: flex;"></dc-import>
+<dc-import name="PlatformIcon" item-name="{{ pl.name }}" prefix="{{ pl.prefix }}" icon-img="{{ pl.iconImg }}" icon="{{ pl.icon }}" icon-size="{{ pl.iconSize }}" suffix-font-size="{{ pl.suffixFontSize }}" suffix-small-caps="{{ pl.suffixSmallCaps }}" img-style="{{ pl.imgStyle }}" text="{{ pl.text }}" suffix="{{ pl.suffix }}" jp-tag="{{ pl.jpTag }}" non-jp-tag="{{ pl.nonJpTag }}" hint-size="auto,20px" style="display: flex;"></dc-import>
 </sc-for>
       </span>
     </div>
@@ -102,7 +102,7 @@ a:hover { color: var(--color-accent); text-decoration: underline; }
 
     <h3 style="font-family: var(--font-heading); font-weight: 500; font-size: 14px; letter-spacing: 0.06em; color: var(--color-neutral-400); margin: 0 0 var(--space-2);">CREDITS</h3>
     <p style="color: var(--color-neutral-500); font-size: 12px; line-height: 1.7; margin: 0;">
-      Icons from <a href="https://icons8.com" target="_blank" rel="noopener">Icons8</a> (macOS), <a href="https://breezewiki.com/playstation" target="_blank" rel="noopener">PlayStation Wiki</a> (via Breezewiki; PS4, PS5, PS4 VR, PSP, PS Vita, PS Plus), <a href="https://favpng.com/png_view/windows-phone-icon-free-vector-windows-phone-mobile-phones-microsoft-windows-png/jnzqb8hT" target="_blank" rel="noopener">favpng.com</a> (Windows Phone), <a href="https://icons-for-free.com/" target="_blank" rel="noopener">Icons for Free</a> (Mobile Phones). See <a href="https://github.com/vertex-order/platforms/blob/main/NOTICE.md" target="_blank" rel="noopener">NOTICE</a> for icons.
+      Icons from <a href="https://icons8.com" target="_blank" rel="noopener">Icons8</a> (macOS), <a href="https://breezewiki.com/playstation" target="_blank" rel="noopener">PlayStation Wiki</a> (via Breezewiki; PS5, PSP, PS Vita, PS Plus), <a href="https://favpng.com/png_view/windows-phone-icon-free-vector-windows-phone-mobile-phones-microsoft-windows-png/jnzqb8hT" target="_blank" rel="noopener">favpng.com</a> (Windows Phone), <a href="https://icons-for-free.com/" target="_blank" rel="noopener">Icons for Free</a> (Mobile Phones). See <a href="https://github.com/vertex-order/platforms/blob/main/NOTICE.md" target="_blank" rel="noopener">NOTICE</a> for icons.
     </p>
     <p style="color: var(--color-neutral-600); font-size: 11px; margin: var(--space-3) 0 0;">&copy; {{ copyrightYearsStr }} Vertex Industries, with help from the community. Content licensed <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener" style="color: var(--color-neutral-500);">CC BY-NC-SA 4.0</a>.</p>
   </div>
@@ -123,6 +123,10 @@ function toPageSize(pl) {
     imgStyle: typeof pl.imgStyle === 'string'
       ? pl.imgStyle.replace(/(width|height):\s*([\d.]+)px/g, (_, prop, n) => prop + ': ' + (Math.round(parseFloat(n) / 2 * 100) / 100) + 'px')
       : pl.imgStyle,
+    suffixFontSize: typeof pl.suffixFontSize === 'string'
+      ? pl.suffixFontSize.replace(/([\d.]+)px/, (_, n) => (Math.round(parseFloat(n) / 2 * 100) / 100) + 'px')
+      : pl.suffixFontSize,
+    suffixSmallCaps: pl.suffixSmallCaps,
   };
 }
 class Component extends DCLogic {
