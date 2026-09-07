@@ -5,8 +5,9 @@ window.HELP_WANTED_ITEMS = [
   "Replace icons with unknown or unclear licensing: Mobile Phones",
   "Replace icons without an explicit license: MSX2",
   "Replace icons licensed for editorial use only: Windows Phone",
-  "Real icons for platforms currently shown as text labels (Wii, Wii U, NES, NES Classic, Famicom, PlayStation Classic, PC-8801, DVD, LD, CD, VHS)",
-  "Dedicated icons for variants currently drawn as a base icon plus a text tag (Xbox 360 / One / Series / Cloud, PS VR, SNES Classic, UltraHD Blu-ray)",
+  "Real icons for platforms currently shown as text labels (CD, DVD, Famicom, LD, NES, NES Classic, PC-8801, PlayStation Classic, VHS, Wii, Wii U)",
+  "Dedicated icons for variants currently drawn as a base icon plus a text tag (PS VR, SNES Classic, UltraHD Blu-ray, Xbox 360 / One / Series / Cloud)",
   "Light-mode filter tuning for icons that sit wrong on the light palette",
   "Optical-size passes where an icon reads larger or smaller than its neighbours at page size",
+  "Replace icons with one that's more legible at small sizes: Arcade, PS Plus",
 ];

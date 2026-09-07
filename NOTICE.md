@@ -423,11 +423,11 @@ this project: **Vertex Industries, with help from the community**, licensed
 
 - **Shown as:** PlayStation Plus
 - **Asset:** `images/platforms/playstation-plus.svg`
-- **Exact URL:** https://breezewiki.com/playstation/wiki/File:PS_Plus_Icon.svg
-- **License:** [Fair use](https://breezewiki.com/playstation/wiki/File:PS_Plus_Icon.svg)
-- **Attribution:** [Sony](https://wikipedia.org/wiki/Sony); Uploader [VeldinX](https://breezewiki.com/playstation/wiki/User:VeldinX)
-- **Source note:** via Breezewiki — mirror of Fandom; content CC BY-SA
-- **Modification:** Recoloured to the site theme — not a flat greyscale filter; the original's colour groups were reassigned (which elements share a shade changed) to keep the mark legible in the theme palette.
+- **Exact URL:** https://commons.wikimedia.org/wiki/File:PlayStation_Plus_second_logo_and_wordmark.svg
+- **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:PlayStation_Plus_second_logo_and_wordmark.svg); [Trademark](https://commons.wikimedia.org/wiki/File:PlayStation_Plus_second_logo_and_wordmark.svg)
+- **Attribution:** [Sony](https://wikipedia.org/wiki/Sony)
+- **Modification:** Cropped from the source logo. Recolored to stand out against site theme and at smaller sizes.
+- **Alternative:** https://breezewiki.com/playstation/wiki/File:PS_Plus_Icon.svg
 
 ### PlayStation Portable (PSP)
 
