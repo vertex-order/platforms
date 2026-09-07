@@ -13,7 +13,7 @@ window.PLATFORM_LEGEND = [
     { icon: 'bi bi-xbox', suffix: 'One', name: 'Xbox One (Physical; Digital; Enhanced; Xbox One X Enhanced; 360 Compatibility)' },
     { icon: 'bi bi-xbox', suffix: '360', name: 'Xbox 360 (Physical; Xbox Live Arcade)' },
     { icon: 'bi bi-xbox', suffix: 'Cloud', name: 'Xbox Cloud' },
-    { iconImg: 'images/platforms/playstation5.svg', iconSize: 18, imgStyle: 'width: auto; height: 18px; filter: brightness(0) saturate(100%) invert(80%) sepia(15%) saturate(200%) hue-rotate(195deg);', name: 'PlayStation 5 (Physical; Digital; PS4 Compatibility; Pro Enhanced)' },
+    { iconImg: 'images/platforms/playstation5.svg', iconSize: 16.09, imgStyle: 'width: auto; height: 16.09px; filter: brightness(0) saturate(100%) invert(80%) sepia(15%) saturate(200%) hue-rotate(195deg);', name: 'PlayStation 5 (Physical; Digital; PS4 Compatibility; Pro Enhanced)' },
     { iconImg: 'images/platforms/playstation4.svg', iconSize: 16.09, imgStyle: 'width: auto; height: 16.09px; filter: brightness(0) saturate(100%) invert(80%) sepia(15%) saturate(200%) hue-rotate(195deg);', suffix: 'vr', suffixSmallCaps: true, name: 'PlayStation VR' },
     { iconImg: 'images/platforms/playstation4.svg', iconSize: 16.09, imgStyle: 'width: auto; height: 16.09px; filter: brightness(0) saturate(100%) invert(80%) sepia(15%) saturate(200%) hue-rotate(195deg);', name: 'PlayStation 4 (Physical; Digital)' },
     { iconImg: 'images/platforms/playstation3.svg', iconSize: 16.11, imgStyle: 'width: auto; height: 16.11px; filter: brightness(0) saturate(100%) invert(80%) sepia(15%) saturate(200%) hue-rotate(195deg);', name: 'PlayStation 3 (Physical; Digital; PSone Compatibility; PS2 Compatibility)' },
