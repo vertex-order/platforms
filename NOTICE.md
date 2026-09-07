@@ -372,6 +372,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:PSone_logo.svg); [Trademark](https://commons.wikimedia.org/wiki/File:PSone_logo.svg)
 - **Attribution:** [Sony](https://wikipedia.org/wiki/Sony)
 - **Modification:** Cropped from the source logo.
+- **Alternative:** https://breezewiki.com/playstation/wiki/File:PS1_Icon.svg
 
 ### PlayStation 2
 
@@ -382,6 +383,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **Attribution:** [Sony](https://wikipedia.org/wiki/Sony)
 - **Modification:** Cropped from the source logo. Line thickened a smidge for small rendering size visbility.
 - **Alternative:** https://simpleicons.org/?q=playstation2
+- **Alternative:** https://breezewiki.com/playstation/wiki/File:PS2_Icon.svg
 
 ### PlayStation 3
 
@@ -391,6 +393,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:PlayStation_3_Logo.svg); [Trademark](https://commons.wikimedia.org/wiki/File:PlayStation_3_Logo.svg)
 - **Attribution:** [Sony](https://wikipedia.org/wiki/Sony)
 - **Alternative:** https://simpleicons.org/?q=playstation3
+- **Alternative:** https://breezewiki.com/playstation/wiki/File:PS3_Icon.svg
 
 ### PlayStation 4
 
@@ -401,6 +404,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **Attribution:** [Sony](https://wikipedia.org/wiki/Sony)
 - **Modification:** Cropped from the source logo.
 - **Alternative:** https://simpleicons.org/?q=playstation4
+- **Alternative:** https://breezewiki.com/playstation/wiki/File:PS4_Icon.svg
 
 ### PlayStation 5
 
@@ -411,6 +415,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **Attribution:** [Sony](https://wikipedia.org/wiki/Sony)
 - **Modification:** Cropped from the source logo.
 - **Alternative:** https://simpleicons.org/?q=playstation5
+- **Alternative:** https://breezewiki.com/playstation/wiki/File:PS5_Icon.svg
 
 ### PlayStation Classic
 
@@ -433,11 +438,12 @@ this project: **Vertex Industries, with help from the community**, licensed
 
 - **Shown as:** PlayStation Portable
 - **Asset:** `images/platforms/playstation-portable.svg`
-- **Exact URL:** https://breezewiki.com/playstation/wiki/File:PSP_Icon.svg
-- **License:** [Fair use](https://breezewiki.com/playstation/wiki/File:PSP_Icon.svg)
-- **Attribution:** [Sony](https://wikipedia.org/wiki/Sony); Uploader [VeldinX](https://breezewiki.com/playstation/wiki/User:VeldinX)
-- **Source note:** via Breezewiki — mirror of Fandom; content CC BY-SA
+- **Exact URL:** https://commons.wikimedia.org/wiki/File:PSP_Logo.svg
+- **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:PSP_Logo.svg); [Trademark](https://commons.wikimedia.org/wiki/File:PSP_Logo.svg)
+- **Attribution:** [Sony](https://wikipedia.org/wiki/Sony)
+- **Modification:** Cropped from the source logo. Line thickened a smidge for small rendering size visbility.
 - **Alternative:** https://simpleicons.org/?q=psp
+- **Alternative:** https://breezewiki.com/playstation/wiki/File:PSP_Icon.svg
 
 ### PlayStation Vita
 
@@ -458,6 +464,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **Attribution:** [Sony](https://wikipedia.org/wiki/Sony)
 - **Modification:** Cropped from the source logo. Hybrid mark — the `VR` suffix text was added after the icon to distinguish this platform.
 - **Alternative:** https://simpleicons.org/?q=playstation4
+- **Alternative:** https://breezewiki.com/playstation/wiki/File:PS4_Icon.svg
 
 ### Sharp X1
 
