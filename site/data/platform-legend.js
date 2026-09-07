@@ -48,7 +48,7 @@ window.PLATFORM_LEGEND = [
     { icon: 'bi bi-browser-chrome', name: 'Browser' },
     { icon: 'bi bi-android2', name: 'Android' },
     { icon: 'bi bi-apple', name: 'iOS' },
-    { iconImg: 'images/platforms/apple-arcade.png', iconSize: 32, imgStyle: 'width: auto; height: 32px; filter: brightness(0) saturate(100%) invert(80%) sepia(15%) saturate(200%) hue-rotate(195deg);', name: 'Apple Arcade' },
+    { iconImg: 'images/platforms/apple-arcade.svg', iconSize: 32, imgStyle: 'width: auto; height: 32px; filter: brightness(0) saturate(100%) invert(80%) sepia(15%) saturate(200%) hue-rotate(195deg);', name: 'Apple Arcade' },
     { icon: 'bi bi-amazon', name: 'Amazon App Store' },
     { icon: 'bi bi-facebook', name: 'Facebook (Messenger)' },
     { iconImg: 'images/platforms/windows-phone.png', iconSize: 34.5, imgStyle: 'width: auto; height: 34.5px; filter: brightness(0) saturate(100%) invert(80%) sepia(15%) saturate(200%) hue-rotate(195deg);', name: 'Windows Phone' },

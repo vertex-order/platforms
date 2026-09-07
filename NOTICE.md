@@ -52,12 +52,11 @@ this project: **Vertex Industries, with help from the community**, licensed
 ### Apple Arcade
 
 - **Shown as:** Apple Arcade
-- **Asset:** `images/platforms/apple-arcade.png`
-- **Exact URL:** https://icons8.com/icon/9Oy5N3CNV3Y1/apple-arcade
-- **License:** Fair use; [Free license with attribution and limitation](https://icons8.com/license)
-- **Attribution:** [Apple](https://wikipedia.org/wiki/Apple_Inc.); [Icons8](https://icons8.com)
-- **Alternative:** Filled, other styles; from same source. 
-- **Alternative:** https://simpleicons.org/?q=apple%20arcade
+- **Asset:** `images/platforms/apple-arcade.svg`
+- **Exact URL:** https://simpleicons.org/?q=apple%20arcade
+- **License:** Fair use; [CC0 1.0 Universal](https://github.com/simple-icons/simple-icons/blob/develop/LICENSE.md)
+- **Attribution:** [Apple](https://wikipedia.org/wiki/Apple_Inc.); [Simple Icons contributors](https://github.com/simple-icons/simple-icons)
+- **Alternative:** https://icons8.com/icon/9Oy5N3CNV3Y1/apple-arcade
 
 ### Arcade
 
