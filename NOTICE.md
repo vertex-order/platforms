@@ -223,6 +223,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **Exact URL:** https://en.wikipedia.org/wiki/File:MacOS_original_logo.svg
 - **License:** Fair use; [Trademark](https://en.wikipedia.org/wiki/File:MacOS_original_logo.svg)
 - **Attribution:** [Apple](https://wikipedia.org/wiki/Apple_Inc.)
+- **Modifications:** Crop from source, colors for visibility.
 - **Alternative:** https://commons.wikimedia.org/wiki/File:MacOS_wordmark_(2017).svg
 - **Alternative:** https://commons.wikimedia.org/wiki/File:Finder_Icon_macOS_Tahoe.png
 - **Alternative:** https://commons.wikimedia.org/wiki/File:Mac_OS-based_free_icon.svg
