@@ -100,9 +100,11 @@ this project: **Vertex Industries, with help from the community**, licensed
 ### Compact Disc
 
 - **Shown as:** Compact Disc
-- **Asset:** text label `CD` — no external asset
-- **License:** Fair use
+- **Asset:** `images/platforms/compact-disc.svg`
+- **Exact URL:** https://commons.wikimedia.org/wiki/File:Compact_Disc_wordmark.svg
+- **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:Compact_Disc_wordmark.svg); [Trademark](https://commons.wikimedia.org/wiki/File:Compact_Disc_wordmark.svg)
 - **Attribution:** [Compact disc](https://wikipedia.org/wiki/Compact_disc)
+- **Modifications:** Filled in "disc" for legibility at small sizes.
 
 ### Digital Streaming
 
