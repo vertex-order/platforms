@@ -81,7 +81,7 @@ a:hover { color: var(--color-accent); text-decoration: underline; }
       <div style="position: relative; display: flex; flex-wrap: wrap; align-content: flex-start; row-gap: 16px; column-gap: 16px;">
         <sc-for list="{{ platformLegend }}" as="pl" hint-placeholder-count="30">
           <span data-legend-item="{{ pl.name }}" style="display: flex; align-items: center; justify-content: center; height: 68px; flex: 0 0 auto;">
-            <dc-import name="ZoomedPlatformIcon" item-name="{{ pl.name }}" prefix="{{ pl.prefix }}" icon-img="{{ pl.iconImg }}" icon="{{ pl.icon }}" icon-size="{{ pl.iconSize }}" suffix-font-size="{{ pl.suffixFontSize }}" suffix-small-caps="{{ pl.suffixSmallCaps }}" img-style="{{ pl.imgStyle }}" text="{{ pl.text }}" font-size="{{ pl.fontSize }}" suffix="{{ pl.suffix }}" jp-tag="{{ pl.jpTag }}" non-jp-tag="{{ pl.nonJpTag }}" hint-size="auto,40px" style="display: flex;"></dc-import>
+            <dc-import name="ZoomedPlatformIcon" item-name="{{ pl.name }}" prefix="{{ pl.prefix }}" icon-img="{{ pl.iconImg }}" icon="{{ pl.icon }}" icon-size="{{ pl.iconSize }}" suffix-font-size="{{ pl.suffixFontSize }}" suffix-small-caps="{{ pl.suffixSmallCaps }}" suffix-offset-y="{{ pl.suffixOffsetY }}" img-style="{{ pl.imgStyle }}" text="{{ pl.text }}" font-size="{{ pl.fontSize }}" suffix="{{ pl.suffix }}" jp-tag="{{ pl.jpTag }}" non-jp-tag="{{ pl.nonJpTag }}" hint-size="auto,40px" style="display: flex;"></dc-import>
           </span>
         </sc-for>
       </div>
@@ -91,7 +91,7 @@ a:hover { color: var(--color-accent); text-decoration: underline; }
     <div style="margin: 0 0 var(--space-8);">
       <span style="display: flex; flex-wrap: wrap; align-items: center; gap: 6px;">
         <sc-for list="{{ platformLegendActual }}" as="pl" hint-placeholder-count="30">
-<dc-import name="PlatformIcon" item-name="{{ pl.name }}" prefix="{{ pl.prefix }}" icon-img="{{ pl.iconImg }}" icon="{{ pl.icon }}" icon-size="{{ pl.iconSize }}" suffix-font-size="{{ pl.suffixFontSize }}" suffix-small-caps="{{ pl.suffixSmallCaps }}" img-style="{{ pl.imgStyle }}" text="{{ pl.text }}" suffix="{{ pl.suffix }}" jp-tag="{{ pl.jpTag }}" non-jp-tag="{{ pl.nonJpTag }}" hint-size="auto,20px" style="display: flex;"></dc-import>
+<dc-import name="PlatformIcon" item-name="{{ pl.name }}" prefix="{{ pl.prefix }}" icon-img="{{ pl.iconImg }}" icon="{{ pl.icon }}" icon-size="{{ pl.iconSize }}" suffix-font-size="{{ pl.suffixFontSize }}" suffix-small-caps="{{ pl.suffixSmallCaps }}" suffix-offset-y="{{ pl.suffixOffsetY }}" img-style="{{ pl.imgStyle }}" text="{{ pl.text }}" suffix="{{ pl.suffix }}" jp-tag="{{ pl.jpTag }}" non-jp-tag="{{ pl.nonJpTag }}" hint-size="auto,20px" style="display: flex;"></dc-import>
 </sc-for>
       </span>
     </div>

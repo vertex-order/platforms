@@ -44,7 +44,7 @@ window.PLATFORM_LEGEND = [
     { iconImg: 'images/platforms/msx2.svg', iconSize: 25.85, imgStyle: 'width: auto; height: 25.85px; filter: brightness(0) saturate(100%) invert(80%) sepia(15%) saturate(200%) hue-rotate(195deg);', name: 'MSX2 (Physical; Japan Only)', jpTag: true },
     { iconImg: 'images/platforms/msx.svg', iconSize: 25.45, imgStyle: 'width: auto; height: 25.45px; filter: brightness(0) saturate(100%) invert(80%) sepia(15%) saturate(200%) hue-rotate(195deg);', name: 'MSX (Physical; Japan Only)', jpTag: true },
     { iconImg: 'images/platforms/sharp-x1.svg', iconSize: 20.5, imgStyle: 'width: auto; height: 20.5px; filter: brightness(0) saturate(100%) invert(80%) sepia(15%) saturate(200%) hue-rotate(195deg);', name: 'Sharp X1 (Physical; Japan Only)', jpTag: true },
-    { text: 'PC-8801mkII SR', fontSize: '15px', name: 'NEC PC-8801mkII SR (Physical; Japan Only)', jpTag: true },
+    { iconImg: 'images/platforms/pc8801.svg', iconSize: 15, imgStyle: 'width: auto; height: 15px; filter: brightness(0) saturate(100%) invert(80%) sepia(15%) saturate(200%) hue-rotate(195deg);', suffix: 'mkII SR', suffixFontSize: '13px', suffixOffsetY: 1, name: 'NEC PC-8801mkII SR (Physical; Japan Only)', jpTag: true },
     { icon: 'bi bi-browser-chrome', name: 'Browser' },
     { icon: 'bi bi-android2', name: 'Android' },
     { icon: 'bi bi-apple', name: 'iOS' },

@@ -260,7 +260,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **Shown as:** MSX2
 - **Asset:** `images/platforms/msx2.png`
 - **Exact URL:** https://forums.launchbox-app.com/files/file/3402-v2-platform-logos-professionally-redrawn-official-versions-new-bigbox-defaults/
-- **Filename:** 161689446_v2.1_SVGs_(vector)_(FullSet)_(Created_By_Dan_Patrick)/v2.1_SVGs_(vector)_(Full Set)_(Created_By_Dan_Patrick)/Dark - Just Black/Computers/Microsoft MSX2_-14.svg
+- **Filename:** v2.1_SVGs_(vector)_(Full Set)_(Created_By_Dan_Patrick)/Dark - Just Black/Computers/Microsoft MSX2_-14.svg
 - **License:** Fair use; Public domain (typographic wordmark); Trademark
 - **Attribution:** [Microsoft](https://wikipedia.org/wiki/Microsoft); [Dan Patrick](https://forums.launchbox-app.com/profile/85709-dan-patrick/)
 - **Source note:** Asset is Dan Patrick's hand-drawn redraw (v2.1.0, Feb 2023), not the official mark. Used under his stated terms — free use, credit appreciated, "NEVER to be sold." Informal permission, not a formal licence.
@@ -269,9 +269,13 @@ this project: **Vertex Industries, with help from the community**, licensed
 ### NEC PC-8801mkII SR
 
 - **Shown as:** NEC PC-8801mkII SR
-- **Asset:** text label `PC-8801mkII SR` — no external asset
-- **License:** Fair use
-- **Attribution:** [NEC](https://wikipedia.org/wiki/NEC)
+- **Asset:** `images/platforms/pc8801.png`
+- **Exact URL:** https://forums.launchbox-app.com/files/file/3402-v2-platform-logos-professionally-redrawn-official-versions-new-bigbox-defaults/
+- **Filename:** v2.1_SVGs_(vector)_(Full%20Set)_(Created_By_Dan_Patrick)/Dark%20-%20Color/Computers/NEC%20PC-8801-03.svg
+- **License:** Fair use; Public domain (typographic wordmark); Trademark; [Similar](https://commons.wikimedia.org/wiki/File:PC8800_logo.svg)
+- **Attribution:** [NEC](https://en.wikipedia.org/wiki/NEC); [Dan Patrick](https://forums.launchbox-app.com/profile/85709-dan-patrick/)
+- **Source note:** Asset is Dan Patrick's hand-drawn redraw (v2.1.0, Feb 2023), not the official mark. Used under his stated terms — free use, credit appreciated, "NEVER to be sold." Informal permission, not a formal licence.
+- **Alternative:** https://commons.wikimedia.org/wiki/File:PC8800_logo.svg (shortened to PC-88)
 - **Alternative:** https://simpleicons.org/?q=NEC
 
 ### Nintendo 3DS
