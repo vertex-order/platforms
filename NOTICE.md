@@ -320,7 +320,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **Exact URL:** https://wikipedia.org/wiki/GameCube#/media/File:Nintendo_Gamecube_Logo.svg
 - **License:** [Fair use](https://wikipedia.org/wiki/File:Nintendo_Gamecube_Logo.svg)
 - **Attribution:** [Nintendo](https://wikipedia.org/wiki/Nintendo)
-- **Modification:** Cropped from the source logo.
+- **Modification:** Cropped from the source logo. Made faces more readable at small sizes.
 
 ### Nintendo NES Classic Edition
 
