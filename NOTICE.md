@@ -350,9 +350,11 @@ this project: **Vertex Industries, with help from the community**, licensed
 ### Nintendo Wii
 
 - **Shown as:** Nintendo Wii
-- **Asset:** text label `Wii` — no external asset
-- **License:** Fair use
+- **Asset:** `images/platforms/nintendo-wii.svg`
+- **Exact URL:** https://commons.wikimedia.org/wiki/File:Wii.svg
+- **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:Wii.svg); [Trademark](https://commons.wikimedia.org/wiki/File:Wii.svg)
 - **Attribution:** [Nintendo](https://wikipedia.org/wiki/Nintendo)
+- **Modification:** Cropped from the source logo.
 
 ### Nintendo Wii U
 
