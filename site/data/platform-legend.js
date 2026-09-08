@@ -30,7 +30,7 @@ window.PLATFORM_LEGEND = [
     { iconImg: 'images/platforms/nintendo-gamecube.svg', iconSize: 37, imgStyle: 'width: auto; height: 37px; filter: brightness(0) saturate(100%) invert(80%) sepia(15%) saturate(200%) hue-rotate(195deg);', name: 'Nintendo GameCube (Physical)' },
     { iconImg: 'images/platforms/nintendo-snes.svg', iconSize: 28.5, imgStyle: 'width: auto; height: 28.5px; filter: grayscale(100%);', suffix: 'c', name: 'Super Nintendo Entertainment System (SNES) Classic Edition' },
     { iconImg: 'images/platforms/nintendo-snes.svg', iconSize: 28.5, imgStyle: 'width: auto; height: 28.5px; filter: grayscale(100%);', name: 'Super Nintendo Entertainment System (SNES) (Physical)' },
-    { text: 'NESc', fontSize: '21.5px', name: 'Nintendo NES Classic Edition' },
+    { iconImg: 'images/platforms/nintendo-nes-classic-edition.svg', iconSize: 21.97, imgStyle: 'width: auto; height: 21.97px; filter: brightness(0) saturate(100%) invert(80%) sepia(15%) saturate(200%) hue-rotate(195deg);', name: 'Nintendo NES Classic Edition' },
     { text: 'NES / FC', fontSize: '18.5px', name: 'Nintendo Entertainment System (NES / FC) (Physical)' },
     { text: 'NES', fontSize: '21.5px', name: 'Nintendo Entertainment System (Physical)' },
     { text: 'FC', fontSize: '21.5px', name: 'Nintendo Famicom (Physical; Japan Only)', jpTag: true },

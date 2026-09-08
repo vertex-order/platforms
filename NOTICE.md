@@ -325,9 +325,11 @@ this project: **Vertex Industries, with help from the community**, licensed
 ### Nintendo NES Classic Edition
 
 - **Shown as:** Nintendo NES Classic Edition
-- **Asset:** text label `NESc` — no external asset
-- **License:** Fair use
+- **Asset:** `images/platforms/nintendo-nes-classic-edition.svg`
+- **Exact URL:** https://commons.wikimedia.org/wiki/File:NES_Classic_Edition_logo_NA.svg
+- **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:NES_Classic_Edition_logo_NA.svg); [Trademark](https://commons.wikimedia.org/wiki/File:NES_Classic_Edition_logo_NA.svg)
 - **Attribution:** [Nintendo](https://wikipedia.org/wiki/Nintendo)
+- **Modification:** Cropped "NES" and the "C" from Classic to form "NES C".
 
 ### Nintendo Switch
 
