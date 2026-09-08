@@ -2,6 +2,10 @@
 
 # NOTICE — third-party assets
 
+© 2026 Vertex Industries, with help from the community. Content licensed [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/).
+
+Not affiliated with any of the below brands or companies. Icons considered fair use and only used for communicating historical platform availability at a glance.
+
 The authoritative record of third-party parts used in this project.
 
 ## Icons
@@ -272,7 +276,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **Exact URL:** https://commons.wikimedia.org/wiki/File:Nintendo_3DS_logo.svg
 - **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:Nintendo_3DS_logo.svg); [Trademark](https://commons.wikimedia.org/wiki/File:Nintendo_3DS_logo.svg)
 - **Attribution:** [Nintendo](https://wikipedia.org/wiki/Nintendo)
-- **Modification:** Cropped from the source logo.
+- **Modification:** Cropped from the source icon.
 
 ### Nintendo DS
 
@@ -281,28 +285,32 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **Exact URL:** https://commons.wikimedia.org/wiki/File:Nintendo_DS_Logo.svg
 - **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:Nintendo_DS_Logo.svg); [Trademark](https://commons.wikimedia.org/wiki/File:Nintendo_DS_Logo.svg)
 - **Attribution:** [Nintendo](https://wikipedia.org/wiki/Nintendo)
-- **Modification:** Cropped from the source logo.
+- **Modification:** Cropped from the source icon.
 
 ### Nintendo Entertainment System
 
 - **Shown as:** Nintendo Entertainment System
-- **Asset:** text label `NES` — no external asset
-- **License:** Fair use
+- **Asset:** `images/platforms/nintendo-nes.svg`
+- **Exact URL:** https://commons.wikimedia.org/wiki/File:NES_logo.svg
+- **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:NES_logo.svg); [Trademark](https://commons.wikimedia.org/wiki/File:NES_logo.svg)
 - **Attribution:** [Nintendo](https://wikipedia.org/wiki/Nintendo)
+- **Modification:** Cropped each word down to its first letter to make the "NES" acronym.
 
 ### Nintendo Entertainment System (NES / FC)
 
 - **Shown as:** Nintendo Entertainment System
-- **Asset:** text label `NES / FC` — no external asset
-- **License:** Fair use
+- **Asset:** `images/platforms/nintendo-nes-fc.svg`
+- **License:** Fair use; Public domain; trademark
 - **Attribution:** [Nintendo](https://wikipedia.org/wiki/Nintendo)
+- **Modification:** Combined our Nintendo Entertainment System icon with a forward slash and our Nintendo Famicom icon. See those entries for source on each part.
 
 ### Nintendo Famicom
 
-- **Shown as:** Nintendo Famicom
-- **Asset:** text label `FC` — no external asset
-- **License:** Fair use
+- **Asset:** `images/platforms/nintendo-fc.svg`
+- **Exact URL:** https://commons.wikimedia.org/wiki/File:Family_Computer_logo.svg
+- **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:Family_Computer_logo.svg); [Trademark](https://commons.wikimedia.org/wiki/File:Family_Computer_logo.svg)
 - **Attribution:** [Nintendo](https://wikipedia.org/wiki/Nintendo)
+- **Modification:** Cropped each word down to its first letter to make the "FC" acronym.
 
 ### Nintendo Game Boy
 
@@ -320,7 +328,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **Exact URL:** https://wikipedia.org/wiki/GameCube#/media/File:Nintendo_Gamecube_Logo.svg
 - **License:** [Fair use](https://wikipedia.org/wiki/File:Nintendo_Gamecube_Logo.svg)
 - **Attribution:** [Nintendo](https://wikipedia.org/wiki/Nintendo)
-- **Modification:** Cropped from the source logo. Made faces more readable at small sizes.
+- **Modification:** Cropped from the source icon. Made faces more readable at small sizes.
 
 ### Nintendo NES Classic Edition
 
@@ -338,7 +346,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **Exact URL:** https://commons.wikimedia.org/wiki/File:Nintendo_Switch_2_logo.svg
 - **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:Nintendo_Switch_2_logo.svg); [Trademark](https://commons.wikimedia.org/wiki/File:Nintendo_Switch_2_logo.svg)
 - **Attribution:** [Nintendo](https://wikipedia.org/wiki/Nintendo)
-- **Modification:** Cropped from the source logo.
+- **Modification:** Cropped from the source icon.
 
 ### Nintendo Switch 2
 
@@ -347,7 +355,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **Exact URL:** https://commons.wikimedia.org/wiki/File:Nintendo_Switch_2_logo.svg
 - **License:** Fair use; [Trademark](https://commons.wikimedia.org/wiki/File:Nintendo_Switch_2_logo.svg)
 - **Attribution:** [Nintendo](https://wikipedia.org/wiki/Nintendo)
-- **Modification:** Cropped from the source logo.
+- **Modification:** Cropped from the source icon.
 
 ### Nintendo Wii
 
@@ -356,7 +364,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **Exact URL:** https://commons.wikimedia.org/wiki/File:Wii.svg
 - **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:Wii.svg); [Trademark](https://commons.wikimedia.org/wiki/File:Wii.svg)
 - **Attribution:** [Nintendo](https://wikipedia.org/wiki/Nintendo)
-- **Modification:** Cropped from the source logo.
+- **Modification:** Cropped from the source icon.
 
 ### Nintendo Wii U
 
@@ -365,7 +373,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **Exact URL:** https://commons.wikimedia.org/wiki/File:WiiU.svg
 - **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:WiiU.svg); [Trademark](https://commons.wikimedia.org/wiki/File:WiiU.svg)
 - **Attribution:** [Nintendo](https://wikipedia.org/wiki/Nintendo)
-- **Modification:** Cropped from the source logo.
+- **Modification:** Cropped from the source icon.
 
 ### Ouya
 
@@ -374,7 +382,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **Exact URL:** https://web.archive.org/web/20190130182213/https://www.ouya.tv/wp-content/themes/ouya/images/homepage-bkg.png
 - **License:** Fair use; Public domain; Trademark
 - **Attribution:** [Ouya](https://wikipedia.org/wiki/Ouya)
-- **Modification:** Traced from official png and made solid Ouya orange based on their other OUYA official png logo on their site. Side-effect removed the noise from this asset.
+- **Modification:** Traced from official png and made solid Ouya orange based on their other OUYA official png icon on their site. Side-effect removed the noise from this asset.
 
 ### PlayStation (PSone)
 
@@ -383,7 +391,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **Exact URL:** https://commons.wikimedia.org/wiki/File:PSone_logo.svg
 - **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:PSone_logo.svg); [Trademark](https://commons.wikimedia.org/wiki/File:PSone_logo.svg)
 - **Attribution:** [Sony](https://wikipedia.org/wiki/Sony)
-- **Modification:** Cropped from the source logo.
+- **Modification:** Cropped from the source icon.
 - **Alternative:** https://breezewiki.com/playstation/wiki/File:PS1_Icon.svg
 
 ### PlayStation 2
@@ -393,7 +401,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **Exact URL:** https://commons.wikimedia.org/wiki/File:PlayStation_2_logo.svg
 - **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:PlayStation_2_logo.svg); [Trademark](https://commons.wikimedia.org/wiki/File:PlayStation_2_logo.svg)
 - **Attribution:** [Sony](https://wikipedia.org/wiki/Sony)
-- **Modification:** Cropped from the source logo. Line thickened a smidge for small rendering size visbility.
+- **Modification:** Cropped from the source icon. Line thickened a smidge for small rendering size visbility.
 - **Alternative:** https://simpleicons.org/?q=playstation2
 - **Alternative:** https://breezewiki.com/playstation/wiki/File:PS2_Icon.svg
 
@@ -414,7 +422,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **Exact URL:** https://commons.wikimedia.org/wiki/File:PlayStation_4_logo_and_wordmark.svg
 - **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:PlayStation_4_logo_and_wordmark.svg); [Trademark](https://commons.wikimedia.org/wiki/File:PlayStation_4_logo_and_wordmark.svg)
 - **Attribution:** [Sony](https://wikipedia.org/wiki/Sony)
-- **Modification:** Cropped from the source logo.
+- **Modification:** Cropped from the source icon.
 - **Alternative:** https://simpleicons.org/?q=playstation4
 - **Alternative:** https://breezewiki.com/playstation/wiki/File:PS4_Icon.svg
 
@@ -425,7 +433,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **Exact URL:** https://commons.wikimedia.org/wiki/File:PlayStation_5_logo_and_wordmark.svg
 - **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:PlayStation_5_logo_and_wordmark.svg); [Trademark](https://commons.wikimedia.org/wiki/File:PlayStation_5_logo_and_wordmark.svg)
 - **Attribution:** [Sony](https://wikipedia.org/wiki/Sony)
-- **Modification:** Cropped from the source logo.
+- **Modification:** Cropped from the source icon.
 - **Alternative:** https://simpleicons.org/?q=playstation5
 - **Alternative:** https://breezewiki.com/playstation/wiki/File:PS5_Icon.svg
 
@@ -445,7 +453,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **Exact URL:** https://commons.wikimedia.org/wiki/File:PlayStation_Plus_second_logo_and_wordmark.svg
 - **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:PlayStation_Plus_second_logo_and_wordmark.svg); [Trademark](https://commons.wikimedia.org/wiki/File:PlayStation_Plus_second_logo_and_wordmark.svg)
 - **Attribution:** [Sony](https://wikipedia.org/wiki/Sony)
-- **Modification:** Cropped from the source logo. Recolored to stand out against site theme and at smaller sizes.
+- **Modification:** Cropped from the source icon. Recolored to stand out against site theme and at smaller sizes.
 - **Alternative:** https://breezewiki.com/playstation/wiki/File:PS_Plus_Icon.svg
 
 ### PlayStation Portable (PSP)
@@ -455,7 +463,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **Exact URL:** https://commons.wikimedia.org/wiki/File:PSP_Logo.svg
 - **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:PSP_Logo.svg); [Trademark](https://commons.wikimedia.org/wiki/File:PSP_Logo.svg)
 - **Attribution:** [Sony](https://wikipedia.org/wiki/Sony)
-- **Modification:** Cropped from the source logo. Line thickened a smidge for small rendering size visbility.
+- **Modification:** Cropped from the source icon. Line thickened a smidge for small rendering size visbility.
 - **Alternative:** https://simpleicons.org/?q=psp
 - **Alternative:** https://breezewiki.com/playstation/wiki/File:PSP_Icon.svg
 
@@ -466,7 +474,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **Exact URL:** https://commons.wikimedia.org/wiki/File:PlayStation_Vita_logo.svg
 - **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:PlayStation_Vita_logo.svg); [Trademark](https://commons.wikimedia.org/wiki/File:PlayStation_Vita_logo.svg)
 - **Attribution:** [Sony](https://wikipedia.org/wiki/Sony)
-- **Modification:** Cropped from the source logo. 
+- **Modification:** Cropped from the source icon. 
 - **Alternative:** https://simpleicons.org/?q=vita
 - **Alternative:** https://breezewiki.com/playstation/wiki/File:PS_Vita_Icon.svg
 
@@ -477,7 +485,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **Exact URL:** https://commons.wikimedia.org/wiki/File:PlayStation_4_logo_and_wordmark.svg
 - **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:PlayStation_4_logo_and_wordmark.svg); [Trademark](https://commons.wikimedia.org/wiki/File:PlayStation_4_logo_and_wordmark.svg)
 - **Attribution:** [Sony](https://wikipedia.org/wiki/Sony)
-- **Modification:** Cropped from the source logo. Hybrid mark — the `VR` suffix text was added after the icon to distinguish this platform.
+- **Modification:** Cropped from the source icon. Hybrid mark — the `VR` suffix text was added after the icon to distinguish this platform.
 - **Alternative:** https://simpleicons.org/?q=playstation4
 - **Alternative:** https://breezewiki.com/playstation/wiki/File:PS4_Icon.svg
 
@@ -496,7 +504,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **Exact URL:** https://commons.wikimedia.org/wiki/File:Nintendo_Super_Famicom_logo.svg
 - **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:Nintendo_Super_Famicom_logo.svg); [Trademark](https://commons.wikimedia.org/wiki/File:Nintendo_Super_Famicom_logo.svg)
 - **Attribution:** [Nintendo](https://wikipedia.org/wiki/Nintendo)
-- **Modification:** Cropped from the source logo.
+- **Modification:** Cropped from the source icon.
 
 ### SNES Classic Edition
 
@@ -505,7 +513,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **Exact URL:** https://commons.wikimedia.org/wiki/File:Nintendo_Super_Famicom_logo.svg
 - **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:Nintendo_Super_Famicom_logo.svg); [Trademark](https://commons.wikimedia.org/wiki/File:Nintendo_Super_Famicom_logo.svg)
 - **Attribution:** [Nintendo](https://wikipedia.org/wiki/Nintendo)
-- **Modification:** Cropped from the source logo. Hybrid mark — the `c` suffix text was added after the logo to distinguish this platform.
+- **Modification:** Cropped from the source icon. Hybrid mark — the `c` suffix text was added after the icon to distinguish this platform.
 
 ### Steam
 
@@ -523,7 +531,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **Exact URL:** https://commons.wikimedia.org/wiki/File:Blu-ray_Disc.svg
 - **License:** Fair use; [Trademark](https://commons.wikimedia.org/wiki/File:Blu-ray_Disc.svg)
 - **Attribution:** [Blu-ray Disc Association](https://wikipedia.org/wiki/Blu-ray_Disc_Association)
-- **Modification:** Cropped from the source logo. Hybrid mark — the `U` prefix text was added before the icon to distinguish this platform.
+- **Modification:** Cropped from the source icon. Hybrid mark — the `U` prefix text was added before the icon to distinguish this platform.
 
 ### VHS Tapes
 
@@ -555,7 +563,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **Exact URL:** https://commons.wikimedia.org/wiki/File:WonderSwan_logo.svg
 - **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:WonderSwan_logo.svg); [Trademark](https://commons.wikimedia.org/wiki/File:WonderSwan_logo.svg)
 - **Attribution:** [Bandai](https://wikipedia.org/wiki/Bandai)
-- **Modification:** Cropped from the source logo.
+- **Modification:** Cropped from the source icon.
 
 ### Xbox 360
 
