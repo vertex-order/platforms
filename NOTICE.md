@@ -207,12 +207,14 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **Alternative:** https://simpleicons.org/?q=ios
 
 
-### Laserdisk
+### LaserDisc
 
-- **Shown as:** Laserdisk
-- **Asset:** text label `LD` — no external asset
-- **License:** Fair use
+- **Shown as:** LaserDisc
+- **Asset:** `images/platforms/laserdisc.svg`
+- **Exact URL:** https://commons.wikimedia.org/wiki/File:LaserDisc_logo.svg
+- **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:LaserDisc_logo.svg); [Trademark](https://commons.wikimedia.org/wiki/File:LaserDisc_logo.svg)
 - **Attribution:** [LaserDisc](https://wikipedia.org/wiki/LaserDisc)
+- **Modification:** Cropped each word down to its first letter to make the "LD" acronym.
 
 ### Linux
 

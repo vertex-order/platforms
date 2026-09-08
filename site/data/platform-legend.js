@@ -57,7 +57,7 @@ window.PLATFORM_LEGEND = [
     { iconImg: 'images/platforms/blu-ray.svg', iconSize: 20.28, imgStyle: 'width: auto; height: 20.28px; filter: brightness(0) saturate(100%) invert(80%) sepia(15%) saturate(200%) hue-rotate(195deg);', name: 'Blu-ray' },
     { icon: 'bi bi-cast', name: 'Digital Streaming' },
     { iconImg: 'images/platforms/dvd.svg', iconSize: 20.28, imgStyle: 'width: auto; height: 20.28px; filter: brightness(0) saturate(100%) invert(80%) sepia(15%) saturate(200%) hue-rotate(195deg);', name: 'DVD' },
-    { text: 'LD', fontSize: '21.5px', name: 'Laserdisk' },
+    { iconImg: 'images/platforms/laserdisc.svg', iconSize: 20.28, imgStyle: 'width: auto; height: 20.28px; filter: brightness(0) saturate(100%) invert(80%) sepia(15%) saturate(200%) hue-rotate(195deg);', name: 'LaserDisc' },
     { iconImg: 'images/platforms/compact-disc.svg', iconSize: 20.28, imgStyle: 'width: auto; height: 20.28px; filter: brightness(0) saturate(100%) invert(80%) sepia(15%) saturate(200%) hue-rotate(195deg);', name: 'Compact Disc (CD)' },
     { iconImg: 'images/platforms/vhs.svg', iconSize: 20.28, imgStyle: 'width: auto; height: 20.28px; filter: brightness(0) saturate(100%) invert(80%) sepia(15%) saturate(200%) hue-rotate(195deg);', name: 'VHS Tapes' },
     { icon: 'bi bi-book', name: 'Book' },
