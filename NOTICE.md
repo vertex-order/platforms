@@ -229,8 +229,8 @@ this project: **Vertex Industries, with help from the community**, licensed
 
 - **Shown as:** macOS
 - **Asset:** `images/platforms/macos.svg`
-- **Exact URL:** https://en.wikipedia.org/wiki/File:MacOS_original_logo.svg
-- **License:** Fair use; [Trademark](https://en.wikipedia.org/wiki/File:MacOS_original_logo.svg)
+- **Exact URL:** https://wikipedia.org/wiki/File:MacOS_original_logo.svg
+- **License:** Fair use; [Trademark](https://wikipedia.org/wiki/File:MacOS_original_logo.svg)
 - **Attribution:** [Apple](https://wikipedia.org/wiki/Apple_Inc.)
 - **Modifications:** Crop from source, colors for visibility.
 - **Alternative:** https://commons.wikimedia.org/wiki/File:MacOS_wordmark_(2017).svg
@@ -273,7 +273,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **Exact URL:** https://forums.launchbox-app.com/files/file/3402-v2-platform-logos-professionally-redrawn-official-versions-new-bigbox-defaults/
 - **Filename:** v2.1_SVGs_(vector)_(Full%20Set)_(Created_By_Dan_Patrick)/Dark%20-%20Color/Computers/NEC%20PC-8801-03.svg
 - **License:** Fair use; Public domain (typographic wordmark); Trademark; [Similar](https://commons.wikimedia.org/wiki/File:PC8800_logo.svg)
-- **Attribution:** [NEC](https://en.wikipedia.org/wiki/NEC); [Dan Patrick](https://forums.launchbox-app.com/profile/85709-dan-patrick/)
+- **Attribution:** [NEC](https://wikipedia.org/wiki/NEC); [Dan Patrick](https://forums.launchbox-app.com/profile/85709-dan-patrick/)
 - **Source note:** Asset is Dan Patrick's hand-drawn redraw (v2.1.0, Feb 2023), not the official mark. Used under his stated terms — free use, credit appreciated, "NEVER to be sold." Informal permission, not a formal licence.
 - **Alternative:** https://commons.wikimedia.org/wiki/File:PC8800_logo.svg (shortened to PC-88)
 - **Alternative:** https://simpleicons.org/?q=NEC
@@ -536,11 +536,11 @@ this project: **Vertex Industries, with help from the community**, licensed
 ### UltraHD Blu-ray
 
 - **Shown as:** UltraHD Blu-ray
-- **Asset:** `images/platforms/blu-ray.svg` (with `U` prefix)
-- **Exact URL:** https://commons.wikimedia.org/wiki/File:Blu-ray_Disc.svg
-- **License:** Fair use; [Trademark](https://commons.wikimedia.org/wiki/File:Blu-ray_Disc.svg)
+- **Asset:** `images/platforms/blu-ray-ultra-hd.svg`
+- **Exact URL:** https://wikipedia.org/wiki/File:Ultra_HD_Blu-ray_(logo).svg
+- **License:** Fair use; [Public domain](https://wikipedia.org/wiki/File:Ultra_HD_Blu-ray_(logo).svg); Trademark
 - **Attribution:** [Blu-ray Disc Association](https://wikipedia.org/wiki/Blu-ray_Disc_Association)
-- **Modification:** Cropped from the source icon. Hybrid mark — the `U` prefix text was added before the icon to distinguish this platform.
+- **Modification:** Cropped from the source icon to just the `U`, slanted, and added to the Blu-ray icon attributed elsewhere to distinguish this platform.
 
 ### VHS Tapes
 
