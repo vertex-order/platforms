@@ -196,7 +196,9 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **Exact URL:** https://icons.getbootstrap.com/icons/apple/
 - **License:** Fair use; [MIT](https://github.com/twbs/bootstrap/blob/main/LICENSE)
 - **Attribution:** [Apple](https://wikipedia.org/wiki/Apple_Inc.); [Bootstrap Icons](https://icons.getbootstrap.com/)
+- **Alternative:** https://commons.wikimedia.org/wiki/File:IOS_wordmark_(2017).svg
 - **Alternative:** https://simpleicons.org/?q=ios
+
 
 ### Laserdisk
 
@@ -218,11 +220,14 @@ this project: **Vertex Industries, with help from the community**, licensed
 
 - **Shown as:** macOS
 - **Asset:** `images/platforms/macos.svg`
-- **Exact URL:** https://icons8.com/icon/122988/mac-logo
-- **License:** Fair use; [Free license with attribution and limitation](https://icons8.com/license)
-- **Attribution:** [Apple](https://wikipedia.org/wiki/Apple_Inc.); [Icons8](https://icons8.com)
-- **Alternative:** Outlined, other styles; from same source
+- **Exact URL:** https://en.wikipedia.org/wiki/File:MacOS_original_logo.svg
+- **License:** Fair use; [Trademark](https://en.wikipedia.org/wiki/File:MacOS_original_logo.svg)
+- **Attribution:** [Apple](https://wikipedia.org/wiki/Apple_Inc.)
+- **Alternative:** https://commons.wikimedia.org/wiki/File:MacOS_wordmark_(2017).svg
+- **Alternative:** https://commons.wikimedia.org/wiki/File:Finder_Icon_macOS_Tahoe.png
+- **Alternative:** https://commons.wikimedia.org/wiki/File:Mac_OS-based_free_icon.svg
 - **Alternative:** https://simpleicons.org/?q=macos
+- **Alternative:** https://icons8.com/icon/122988/mac-logo
 
 ### Mobile Phones
 

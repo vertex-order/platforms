@@ -4,7 +4,7 @@
 // site/data/platform-legend.js (javascript —  (ECMAScript))
 window.PLATFORM_LEGEND = [
     { icon: 'bi bi-windows', name: 'Windows (PC; Handheld; Digital)' },
-    { iconImg: 'images/platforms/macos.svg', iconSize: 44, imgStyle: 'width: auto; height: 44px; filter: brightness(0) saturate(100%) invert(80%) sepia(15%) saturate(200%) hue-rotate(195deg);', name: 'macOS' },
+    { iconImg: 'images/platforms/macos.svg', iconSize: 33, imgStyle: 'width: auto; height: 33px; filter: brightness(0) saturate(100%) invert(80%) sepia(15%) saturate(200%) hue-rotate(195deg);', name: 'macOS' },
     { iconImg: 'images/platforms/linux.svg', iconSize: 40, imgStyle: 'width: auto; height: 40px; filter: brightness(0) saturate(100%) invert(80%) sepia(15%) saturate(200%) hue-rotate(195deg);', name: 'Linux' },
     { iconImg: 'images/platforms/gog.svg', iconSize: 33.5, imgStyle: 'width: auto; height: 33.5px;', name: 'GOG (PC)' },
     { icon: 'bi bi-steam', name: 'Steam (PC; Handheld)' },
