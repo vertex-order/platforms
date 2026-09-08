@@ -27,7 +27,7 @@ Each section carries:
 - **Attribution** — the person or organisation the source credits (and that the licence requires you to name, when it does).
 - **Modification** — how the asset was altered from the source before use (cropped, recoloured, …), when it was. A uniform tonal filter alone (greyscale, mono, invert) is not recorded — it preserves the design. Reassigning which elements carry which colour *is* recorded: that is an editorial change to the mark.
 
-Text-label entries (`DVD`, `Wii U`, …) render as type, not an asset — no
+Text-label entries render as type, not an asset — no
 attribution needed. Any icon not credited on the project page is original to
 this project: **Vertex Industries, with help from the community**, licensed
 **CC BY-NC-SA 4.0**.
@@ -117,8 +117,9 @@ this project: **Vertex Industries, with help from the community**, licensed
 ### DVD
 
 - **Shown as:** DVD
-- **Asset:** text label `DVD` — no external asset
-- **License:** Fair use
+- **Asset:** `images/platforms/dvd.svg`
+- **Exact URL:** https://commons.wikimedia.org/wiki/File:DVD_logo.svg
+- **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:DVD_logo.svg); [Trademark](https://commons.wikimedia.org/wiki/File:DVD_logo.svg)
 - **Attribution:** [DVD](https://wikipedia.org/wiki/DVD)
 
 ### Epic Games Store
