@@ -539,8 +539,9 @@ this project: **Vertex Industries, with help from the community**, licensed
 ### VHS Tapes
 
 - **Shown as:** VHS Tapes
-- **Asset:** text label `VHS` — no external asset
-- **License:** Fair use
+- **Asset:** `images/platforms/vhs.svg`
+- **Exact URL:** https://commons.wikimedia.org/wiki/File:VHS_logo.svg
+- **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:VHS_logo.svg); [Trademark](https://commons.wikimedia.org/wiki/File:VHS_logo.svg)
 - **Attribution:** [VHS](https://wikipedia.org/wiki/VHS)
 
 ### Windows
