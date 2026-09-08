@@ -529,10 +529,10 @@ this project: **Vertex Industries, with help from the community**, licensed
 ### Windows Phone
 
 - **Shown as:** Windows Phone
-- **Asset:** `images/platforms/windows-phone.png`
-- **Exact URL:** https://favpng.com/png_view/windows-phone-icon-free-vector-windows-phone-mobile-phones-microsoft-windows-png/jnzqb8hT
-- **License:** Fair use; Editorial use
-- **Attribution:** [Microsoft](https://wikipedia.org/wiki/Microsoft)
+- **Asset:** `images/platforms/windows-phone.svg`
+- **Exact URL:** original to this project
+- **License:** CC BY-NC-SA 4.0
+- **Attribution:** Vertex Industries, with help from the community
 
 ### WonderSwan Color
 

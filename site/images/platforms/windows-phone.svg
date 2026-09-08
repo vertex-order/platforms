@@ -1,0 +1,18 @@
+<?xml version="1.0"?><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48.4 76">
+  <defs>
+    <mask id="winphone-logo-sm-cutout">
+      <rect x="0" y="0" width="48.4" height="76" fill="#fff"></rect>
+      <rect x="7" y="7" width="34.4" height="57" rx="2" fill="#000"></rect>
+      <circle cx="24.2" cy="69" r="3.6" fill="#000"></circle>
+      <g fill="#fff">
+        <rect x="11.7" y="21" width="11.5" height="11.5"></rect>
+        <rect x="25.2" y="21" width="11.5" height="11.5"></rect>
+        <rect x="11.7" y="34.5" width="11.5" height="11.5"></rect>
+        <rect x="25.2" y="34.5" width="11.5" height="11.5"></rect>
+      </g>
+    </mask>
+  </defs>
+  <g fill="#000000" mask="url(#winphone-logo-sm-cutout)">
+    <rect x="2" y="2" width="44.4" height="72" rx="3.5"></rect>
+  </g>
+</svg>

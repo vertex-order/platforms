@@ -51,7 +51,7 @@ window.PLATFORM_LEGEND = [
     { iconImg: 'images/platforms/apple-arcade.svg', iconSize: 32, imgStyle: 'width: auto; height: 32px; filter: brightness(0) saturate(100%) invert(80%) sepia(15%) saturate(200%) hue-rotate(195deg);', name: 'Apple Arcade' },
     { icon: 'bi bi-amazon', name: 'Amazon App Store' },
     { icon: 'bi bi-facebook', name: 'Facebook (Messenger)' },
-    { iconImg: 'images/platforms/windows-phone.png', iconSize: 34.5, imgStyle: 'width: auto; height: 34.5px; filter: brightness(0) saturate(100%) invert(80%) sepia(15%) saturate(200%) hue-rotate(195deg);', name: 'Windows Phone' },
+    { iconImg: 'images/platforms/windows-phone.svg', iconSize: 34.5, imgStyle: 'width: auto; height: 34.5px; filter: brightness(0) saturate(100%) invert(80%) sepia(15%) saturate(200%) hue-rotate(195deg);', name: 'Windows Phone' },
     { iconImg: 'images/platforms/mobile-phone.svg', iconSize: 33.5, imgStyle: 'width: auto; height: 33.5px; filter: brightness(0) saturate(100%) invert(80%) sepia(15%) saturate(200%) hue-rotate(195deg);', name: 'Mobile Phones' },
     { iconImg: 'images/platforms/blu-ray.svg', iconSize: 20.28, imgStyle: 'width: auto; height: 20.28px; filter: brightness(0) saturate(100%) invert(80%) sepia(15%) saturate(200%) hue-rotate(195deg);', name: 'UltraHD Blu-ray', prefix: 'U' },
     { iconImg: 'images/platforms/blu-ray.svg', iconSize: 20.28, imgStyle: 'width: auto; height: 20.28px; filter: brightness(0) saturate(100%) invert(80%) sepia(15%) saturate(200%) hue-rotate(195deg);', name: 'Blu-ray' },
