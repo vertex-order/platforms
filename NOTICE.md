@@ -518,11 +518,11 @@ this project: **Vertex Industries, with help from the community**, licensed
 ### SNES Classic Edition
 
 - **Shown as:** Super Nintendo Entertainment System Classic Edition
-- **Asset:** `images/platforms/nintendo-snes.svg` (with `c` suffix)
-- **Exact URL:** https://commons.wikimedia.org/wiki/File:Nintendo_Super_Famicom_logo.svg
-- **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:Nintendo_Super_Famicom_logo.svg); [Trademark](https://commons.wikimedia.org/wiki/File:Nintendo_Super_Famicom_logo.svg)
+- **Asset:** `images/platforms/nintendo-snes-classic-edition.svg`
+- **Exact URL:** https://commons.wikimedia.org/wiki/File:NES_Classic_Edition_logo_NA.svg
+- **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:NES_Classic_Edition_logo_NA.svg); [Trademark](https://commons.wikimedia.org/wiki/File:NES_Classic_Edition_logo_NA.svg)
 - **Attribution:** [Nintendo](https://wikipedia.org/wiki/Nintendo)
-- **Modification:** Cropped from the source icon. Hybrid mark — the `c` suffix text was added after the icon to distinguish this platform.
+- **Modification:** Cropped "NES" and the "C" from Classic to form "NES C". Cropped the "S" from "NES" and put in front to make "SNES C".
 
 ### Steam
 
