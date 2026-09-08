@@ -359,9 +359,11 @@ this project: **Vertex Industries, with help from the community**, licensed
 ### Nintendo Wii U
 
 - **Shown as:** Nintendo Wii U
-- **Asset:** text label `Wii U` — no external asset
-- **License:** Fair use
+- **Asset:** `images/platforms/nintendo-wii-u.svg`
+- **Exact URL:** https://commons.wikimedia.org/wiki/File:WiiU.svg
+- **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:WiiU.svg); [Trademark](https://commons.wikimedia.org/wiki/File:WiiU.svg)
 - **Attribution:** [Nintendo](https://wikipedia.org/wiki/Nintendo)
+- **Modification:** Cropped from the source logo.
 
 ### Ouya
 
