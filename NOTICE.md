@@ -430,9 +430,11 @@ this project: **Vertex Industries, with help from the community**, licensed
 ### PlayStation Classic
 
 - **Shown as:** PlayStation Classic
-- **Asset:** text label `PSc` — no external asset
-- **License:** Fair use
+- **Asset:** `images/platforms/playstation-classic.svg`
+- **Exact URL:** https://commons.wikimedia.org/wiki/File:PlayStation_Classic_logo.svg
+- **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:PlayStation_Classic_logo.svg); [Trademark](https://commons.wikimedia.org/wiki/File:PlayStation_Classic_logo.svg)
 - **Attribution:** [Sony](https://wikipedia.org/wiki/Sony)
+- **Modification:** Cropped each word down to its first letter to make the "PSC" acronym; acronym version listed on the wikipedia page.
 
 ### PlayStation Plus
 
