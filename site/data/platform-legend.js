@@ -10,7 +10,7 @@ window.PLATFORM_LEGEND = [
     { icon: 'bi bi-steam', name: 'Steam (PC; Handheld)' },
     { iconImg: 'images/platforms/epic-games.svg', iconSize: 32, imgStyle: 'width: auto; height: 32px;', name: 'Epic Games Store (PC)' },
     { icon: 'bi bi-xbox', suffix: 'X/S', name: 'Xbox Series X/S (Physical; Digital; Optimized; FPS Boost; 360 Compatibility; One Compatibility)' },
-    { icon: 'bi bi-xbox', suffix: 'One', name: 'Xbox One (Physical; Digital; Enhanced; Xbox One X Enhanced; 360 Compatibility)' },
+    { iconImg: 'images/platforms/xbox-one.svg', iconSize: 32, imgStyle: 'width: auto; height: 32px; filter: brightness(0) saturate(100%) invert(80%) sepia(15%) saturate(200%) hue-rotate(195deg);', name: 'Xbox One (Physical; Digital; Enhanced; Xbox One X Enhanced; 360 Compatibility)' },
     { iconImg: 'images/platforms/xbox-360.svg', iconSize: 32, imgStyle: 'width: auto; height: 32px; filter: brightness(0) saturate(100%) invert(80%) sepia(15%) saturate(200%) hue-rotate(195deg);', name: 'Xbox 360 (Physical; Xbox Live Arcade)' },
     { icon: 'bi bi-xbox', suffix: 'Cloud', name: 'Xbox Cloud' },
     { iconImg: 'images/platforms/playstation5.svg', iconSize: 16.09, imgStyle: 'width: auto; height: 16.09px; filter: brightness(0) saturate(100%) invert(80%) sepia(15%) saturate(200%) hue-rotate(195deg);', name: 'PlayStation 5 (Physical; Digital; PS4 Compatibility; Pro Enhanced)' },
