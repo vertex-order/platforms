@@ -13,7 +13,7 @@
 </helmet>
 <sc-if value="{{ visible }}" hint-placeholder-val="{{ false }}">
   <div style="position: fixed; bottom: var(--space-4); left: 0; right: 0; z-index: 10; max-width: {{ contentWidthPx }}; margin: 0 auto; padding: 0 var(--space-4); display: flex; justify-content: flex-end; pointer-events: none;">
-    <button onClick="{{ scrollToTop }}" title="Back to top" style="pointer-events: auto; width: 40px; height: 40px; flex-shrink: 0; border-radius: var(--radius-md); border: 1px solid var(--color-divider); background: var(--color-surface); color: var(--color-divider); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: color .15s; margin-right: {{ rightOffsetPx }};" style-hover="color: var(--color-neutral-500);">
+    <button onClick="{{ scrollToTop }}" title="Back to top" style="pointer-events: auto; width: 40px; height: 40px; flex-shrink: 0; border-radius: var(--radius-md); border: 1px solid var(--color-divider); background: var(--color-surface); color: var(--color-neutral-400); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: color .15s; margin-right: {{ rightOffsetPx }};" style-hover="color: var(--color-text);">
       <!-- images/ui/arrow-up.svg (Bootstrap Icons, MIT) — inlined so fill:currentColor tracks the button color/hover -->
       <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
         <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5"/>
