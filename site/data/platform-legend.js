@@ -47,7 +47,7 @@ window.PLATFORM_LEGEND = [
     { iconImg: 'images/platforms/msx.svg', iconSize: 12.73, imgStyle: 'width: auto; height: 12.73px; filter: brightness(0) saturate(100%) invert(80%) sepia(15%) saturate(200%) hue-rotate(195deg);', name: 'MSX (Physical; Japan Only)', jpTag: true },
     { iconImg: 'images/platforms/sharp-x1.svg', iconSize: 10.25, imgStyle: 'width: auto; height: 10.25px; filter: brightness(0) saturate(100%) invert(80%) sepia(15%) saturate(200%) hue-rotate(195deg);', name: 'Sharp X1 (Physical; Japan Only)', jpTag: true },
     { iconImg: 'images/platforms/pc8801.svg', iconSize: 7.5, imgStyle: 'width: auto; height: 7.5px; filter: brightness(0) saturate(100%) invert(80%) sepia(15%) saturate(200%) hue-rotate(195deg);', suffix: 'mkII SR', suffixFontSize: '13px', suffixOffsetY: 1, name: 'NEC PC-8801mkII SR (Physical; Japan Only)', jpTag: true },
-    { icon: 'bi bi-browser-chrome', name: 'Browser' },
+    { icon: 'bi bi-globe', name: 'Browser' },
     { icon: 'bi bi-android2', name: 'Android' },
     { icon: 'bi bi-apple', name: 'iOS' },
     { iconImg: 'images/platforms/apple-arcade.svg', iconSize: 16, imgStyle: 'width: auto; height: 16px; filter: brightness(0) saturate(100%) invert(80%) sepia(15%) saturate(200%) hue-rotate(195deg);', name: 'Apple Arcade' },

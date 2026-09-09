@@ -91,11 +91,10 @@ this project: **Vertex Industries, with help from the community**, licensed
 ### Browser
 
 - **Shown as:** Browser
-- **Asset:** `bi bi-browser-chrome` (Bootstrap Icons glyph)
-- **Exact URL:** https://icons.getbootstrap.com/icons/browser-chrome/
+- **Asset:** `bi bi-globe` (Bootstrap Icons glyph)
+- **Exact URL:** https://icons.getbootstrap.com/icons/globe/
 - **License:** Fair use; [MIT](https://github.com/twbs/bootstrap/blob/main/LICENSE)
 - **Attribution:** [Google](https://wikipedia.org/wiki/Google); [Bootstrap Icons](https://icons.getbootstrap.com/)
-- **Alternative:** https://simpleicons.org/?q=google%20chrome
 
 ### Compact Disc
 
