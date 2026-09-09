@@ -586,49 +586,46 @@ this project: **Vertex Industries, with help from the community**, licensed
 
 - **Shown as:** Xbox 360
 - **Asset:** `images/platforms/xbox-360.svg`
-- **Exact URL:** https://icons.getbootstrap.com/icons/xbox/
-- **License:** Fair use; [MIT](https://github.com/twbs/bootstrap/blob/main/LICENSE); Trademark
-- **Attribution:** [Microsoft](https://wikipedia.org/wiki/Microsoft); [Bootstrap Icons](https://icons.getbootstrap.com/)
 - **Exact URL:** https://wikipedia.org/wiki/File:Xbox_360_full_logo.svg
 - **License:** Fair use; [Trademark](https://wikipedia.org/wiki/File:Xbox_360_full_logo.svg)
 - **Attribution:** [Microsoft](https://wikipedia.org/wiki/Microsoft)
-- **Modification:** Merged the bootstrap xbox glyph with a crop of the wikipedia icon to isolate "360".
+- **Exact URL:** https://commons.wikimedia.org/wiki/File:Xbox_Series_X_logo.svg
+- **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:Xbox_Series_X_logo.svg), [Trademark](https://commons.wikimedia.org/wiki/File:Xbox_Series_X_logo.svg)
+- **Attribution:** [Microsoft](https://wikipedia.org/wiki/Microsoft)
+- **Modification:** Merged the Xbox Series X Xbox sphere crop with the with a crop of "360".
 
 ### Xbox Cloud Gaming
 
 - **Shown as:** Xbox Cloud Gaming
 - **Asset:** `images/platforms/xbox-cloud.svg`
-- **Exact URL:** https://icons.getbootstrap.com/icons/xbox/
-- **License:** Fair use; [MIT](https://github.com/twbs/bootstrap/blob/main/LICENSE); Trademark
-- **Attribution:** [Microsoft](https://wikipedia.org/wiki/Microsoft); [Bootstrap Icons](https://icons.getbootstrap.com/)
 - **Exact URL:** https://commons.wikimedia.org/wiki/File:Xbox_Cloud_Gaming_logo.png
 - **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:Xbox_Cloud_Gaming_logo.png), Trademark
 - **Attribution:** [Microsoft](https://wikipedia.org/wiki/Microsoft)
-- **Modification:** Merged the bootstrap xbox glyph with a crop of the wikipedia icon to isolate "CLOUD".
+- **Exact URL:** https://commons.wikimedia.org/wiki/File:Xbox_Series_X_logo.svg
+- **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:Xbox_Series_X_logo.svg), [Trademark](https://commons.wikimedia.org/wiki/File:Xbox_Series_X_logo.svg)
+- **Attribution:** [Microsoft](https://wikipedia.org/wiki/Microsoft)
+- **Modification:** Merged the Xbox Series X Xbox sphere crop with the with a crop of "CLOUD".
 
 ### Xbox One
 
 - **Shown as:** Xbox One
 - **Asset:** `images/platforms/xbox-one.svg`
-- **Exact URL:** https://icons.getbootstrap.com/icons/xbox/
-- **License:** Fair use; [MIT](https://github.com/twbs/bootstrap/blob/main/LICENSE); Trademark
-- **Attribution:** [Microsoft](https://wikipedia.org/wiki/Microsoft); [Bootstrap Icons](https://icons.getbootstrap.com/)
 - **Exact URL:** https://commons.wikimedia.org/wiki/File:X_Box_One_logo.svg
 - **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:X_Box_One_logo.svg), [Trademark](https://commons.wikimedia.org/wiki/File:X_Box_One_logo.svg)
 - **Attribution:** [Microsoft](https://wikipedia.org/wiki/Microsoft)
-- **Modification:** Merged the bootstrap xbox glyph with a crop of the wikipedia icon to isolate "ONE".
+- **Modification:** Crop of the Xbox sphere and "ONE" from source icon.
 
 ### Xbox Series X/S
 
 - **Shown as:** Xbox Series X/S
 - **Asset:** `images/platforms/xbox-xs.svg`
-- **Exact URL:** https://icons.getbootstrap.com/icons/xbox/
-- **License:** Fair use; [MIT](https://github.com/twbs/bootstrap/blob/main/LICENSE); Trademark
-- **Attribution:** [Microsoft](https://wikipedia.org/wiki/Microsoft); [Bootstrap Icons](https://icons.getbootstrap.com/)
 - **Exact URL:** https://commons.wikimedia.org/wiki/File:Xbox_Series_X_S_color.svg
 - **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:Xbox_Series_X_S_color.svg), [Trademark](https://commons.wikimedia.org/wiki/File:Xbox_Series_X_S_color.svg)
 - **Attribution:** [Microsoft](https://wikipedia.org/wiki/Microsoft)
-- **Modification:** Merged the bootstrap xbox glyph with a crop of the wikipedia icon to isolate "X|S".
+- **Exact URL:** https://commons.wikimedia.org/wiki/File:Xbox_Series_X_logo.svg
+- **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:Xbox_Series_X_logo.svg), [Trademark](https://commons.wikimedia.org/wiki/File:Xbox_Series_X_logo.svg)
+- **Attribution:** [Microsoft](https://wikipedia.org/wiki/Microsoft)
+- **Modification:** Merged the Xbox Series X Xbox sphere crop with the with a crop of "X|S".
 
 ### Youtube
 
