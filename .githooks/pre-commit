@@ -5,10 +5,13 @@ set -e
 
 root=$(git rev-parse --show-toplevel)
 
-# 1. Strip C2PA provenance metadata from staged PNG/SVG assets.
+# 1. Strip C2PA provenance metadata from staged PNG/SVG assets, and normalize
+#    SVG empty elements to self-closing form (the icons and Claude Design's
+#    exporter are inconsistent) for stable check-ins.
 staged_img=$(git diff --cached --name-only --diff-filter=ACM -- '*.png' '*.svg')
 if [ -n "$staged_img" ]; then
 	python3 "$root/scripts/strip-c2pa.py" $staged_img
+	python3 "$root/scripts/normalize-svg.py" $staged_img
 	git add $staged_img
 fi
 

@@ -1,5 +1,5 @@
 # Build the deployable site into build/ (gitignored, matches CI).
-build: strip-metadata bundle-components
+build: strip-metadata normalize-svg bundle-components
     rm -rf build
     mkdir build
     cp -r site/. build/
@@ -25,3 +25,8 @@ install-hooks:
 # Strip embedded C2PA provenance metadata from all site images (run after a fresh export).
 strip-metadata:
     python3 scripts/strip-c2pa.py site/images
+
+# Normalize SVG empty elements to self-closing form (the icons and Claude
+# Design's exporter are inconsistent), for a stable check-in.
+normalize-svg:
+    python3 scripts/normalize-svg.py site/images

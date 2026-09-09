@@ -1,8 +1,8 @@
-# Fail a PR whose generated site/components.js is out of step with the
-# sibling site/*.dc.html sources. The pre-commit hook normally keeps them in
-# sync; this catches commits made without the hook (web UI, --no-verify,
-# design-tool sync). Fix: run `just build` (or python3 scripts/bundle-components.py)
-# and commit site/components.js.
+# Fail a PR whose committed artifacts are out of step with their sources:
+#   - site/components.js vs the sibling site/*.dc.html
+#   - SVG serialization vs the canonical self-closing form
+# The pre-commit hook normally keeps both in sync; this catches commits made
+# without the hook (web UI, --no-verify, design-tool sync).
 name: Check generated files
 
 on:
@@ -22,6 +22,22 @@ jobs:
       - name: Fail if it changed
         run: |
           if ! git diff --exit-code -- site/components.js; then
-            echo "::error::site/components.js is stale. Run 'just build' and commit the result."
+            echo "::error::site/components.js is stale. Run 'just bundle-components' (or 'just build') and commit site/components.js."
+            exit 1
+          fi
+
+  svg-serialization:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Normalize SVG serialization
+        run: python3 scripts/normalize-svg.py site/images
+
+      - name: Fail if any SVG changed
+        run: |
+          if ! git diff --exit-code -- 'site/images/**/*.svg'; then
+            echo "::error::SVG serialization is not canonical. Run 'just normalize-svg' (or 'just build') and commit the changed SVGs."
             exit 1
           fi

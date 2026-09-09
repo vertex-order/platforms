@@ -1,17 +1,17 @@
 <?xml version="1.0"?><svg xmlns="http://www.w3.org/2000/svg" viewBox="818 336 1402 1097" width="1402" height="1097">
 <defs>
 <mask id="leftMask" maskUnits="userSpaceOnUse" x="818" y="336" width="1402" height="1097">
-<path d="M833 351 L1600 351 L1455 658 L1393 949 L1611 970 L1645 1418 L833 1418 Z" fill="#fff"></path>
-<path d="M1208 528 l0 161" stroke="#000" stroke-width="55" fill="none" stroke-linecap="round"></path>
-<path d="M1058 1094 c171,88 349,108 537,96" stroke="#000" stroke-width="55" fill="none" stroke-linecap="round"></path>
+<path d="M833 351 L1600 351 L1455 658 L1393 949 L1611 970 L1645 1418 L833 1418 Z" fill="#fff"/>
+<path d="M1208 528 l0 161" stroke="#000" stroke-width="55" fill="none" stroke-linecap="round"/>
+<path d="M1058 1094 c171,88 349,108 537,96" stroke="#000" stroke-width="55" fill="none" stroke-linecap="round"/>
 </mask>
 <clipPath id="screenClip">
-<path d="M833 351 L2205 351 L2205 1418 L833 1418 Z"></path>
+<path d="M833 351 L2205 351 L2205 1418 L833 1418 Z"/>
 </clipPath>
 </defs>
-<path d="M1726 188 c-170,201 -317,464 -333,771 l250 0 c-63,209 -29,443 67,632" stroke="#fff" stroke-width="45" fill="none" stroke-linecap="round" clip-path="url(#screenClip)"></path>
-<path d="M833 351 L1600 351 L1455 658 L1393 949 L1611 970 L1645 1418 L833 1418 Z" fill="#fff" mask="url(#leftMask)"></path>
-<path d="M1792 528 l0 161" stroke="#fff" stroke-width="55" fill="none" stroke-linecap="round"></path>
-<path d="M1628 1188 c151,-3 263,-38 352,-91" stroke="#fff" stroke-width="55" fill="none" stroke-linecap="round"></path>
-<path d="M833 351 L2205 351 L2205 1418 L833 1418 Z" fill="none" stroke="#fff" stroke-width="30" stroke-linejoin="round"></path>
+<path d="M1726 188 c-170,201 -317,464 -333,771 l250 0 c-63,209 -29,443 67,632" stroke="#fff" stroke-width="45" fill="none" stroke-linecap="round" clip-path="url(#screenClip)"/>
+<path d="M833 351 L1600 351 L1455 658 L1393 949 L1611 970 L1645 1418 L833 1418 Z" fill="#fff" mask="url(#leftMask)"/>
+<path d="M1792 528 l0 161" stroke="#fff" stroke-width="55" fill="none" stroke-linecap="round"/>
+<path d="M1628 1188 c151,-3 263,-38 352,-91" stroke="#fff" stroke-width="55" fill="none" stroke-linecap="round"/>
+<path d="M833 351 L2205 351 L2205 1418 L833 1418 Z" fill="none" stroke="#fff" stroke-width="30" stroke-linejoin="round"/>
 </svg>
