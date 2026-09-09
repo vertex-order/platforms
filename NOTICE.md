@@ -611,11 +611,14 @@ this project: **Vertex Industries, with help from the community**, licensed
 ### Xbox Series X/S
 
 - **Shown as:** Xbox Series X/S
-- **Asset:** `bi bi-xbox` (Bootstrap Icons glyph, with `X/S` suffix)
+- **Asset:** `images/platforms/xbox-xs.svg`
 - **Exact URL:** https://icons.getbootstrap.com/icons/xbox/
-- **License:** Fair use; [MIT](https://github.com/twbs/bootstrap/blob/main/LICENSE)
+- **License:** Fair use; [MIT](https://github.com/twbs/bootstrap/blob/main/LICENSE); Trademark
 - **Attribution:** [Microsoft](https://wikipedia.org/wiki/Microsoft); [Bootstrap Icons](https://icons.getbootstrap.com/)
-- **Modification:** Hybrid mark — the `X/S` suffix text was added after the glyph to distinguish this platform.
+- **Exact URL:** https://commons.wikimedia.org/wiki/File:Xbox_Series_X_S_color.svg
+- **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:Xbox_Series_X_S_color.svg), [Trademark](https://commons.wikimedia.org/wiki/File:Xbox_Series_X_S_color.svg)
+- **Attribution:** [Microsoft](https://wikipedia.org/wiki/Microsoft)
+- **Modification:** Merged the bootstrap xbox glyph with a crop of the wikipedia icon to isolate "X|S".
 
 ### Youtube
 
