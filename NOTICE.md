@@ -8,7 +8,7 @@ Not affiliated with any of the below brands or companies. Icons considered fair 
 
 The authoritative record of third-party parts used in this project.
 
-## Icons
+## Platform Icons
 
 One section per entry in
 [`site/data/platform-legend.js`](site/data/platform-legend.js) (`window.PLATFORM_LEGEND`),
@@ -20,7 +20,7 @@ so nothing has to move.
 Each section carries:
 
 - **Shown as** — the legend entry's full `name`.
-- **Asset** — the Bootstrap Icons glyph, the image file under
+- **Asset** — the image file under
   `site/images/platforms/`, or a plain text label.
 - **Exact URL** — the specific page the asset came from.
 - **License** — the terms it is used under.
@@ -39,7 +39,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 ### Amazon App Store
 
 - **Shown as:** Amazon App Store
-- **Asset:** `bi bi-amazon` (Bootstrap Icons glyph)
+- **Asset:** `images/platforms/amazon.svg`
 - **Exact URL:** https://icons.getbootstrap.com/icons/amazon/
 - **License:** Fair use; [MIT](https://github.com/twbs/bootstrap/blob/main/LICENSE)
 - **Attribution:** [Amazon](https://wikipedia.org/wiki/Amazon_(company)); [Bootstrap Icons](https://icons.getbootstrap.com/)
@@ -47,7 +47,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 ### Android
 
 - **Shown as:** Android
-- **Asset:** `bi bi-android2` (Bootstrap Icons glyph)
+- **Asset:** `images/platforms/android2.svg`
 - **Exact URL:** https://icons.getbootstrap.com/icons/android2/
 - **License:** Fair use; [MIT](https://github.com/twbs/bootstrap/blob/main/LICENSE)
 - **Attribution:** [Google](https://wikipedia.org/wiki/Google); [Bootstrap Icons](https://icons.getbootstrap.com/)
@@ -83,7 +83,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 ### Book
 
 - **Shown as:** Book
-- **Asset:** `bi bi-book` (Bootstrap Icons glyph)
+- **Asset:** `images/platforms/book.svg`
 - **Exact URL:** https://icons.getbootstrap.com/icons/book/
 - **License:** [MIT](https://github.com/twbs/bootstrap/blob/main/LICENSE)
 - **Attribution:** [Bootstrap Icons](https://icons.getbootstrap.com/)
@@ -91,7 +91,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 ### Browser
 
 - **Shown as:** Browser
-- **Asset:** `bi bi-globe` (Bootstrap Icons glyph)
+- **Asset:** `images/platforms/globe.svg`
 - **Exact URL:** https://icons.getbootstrap.com/icons/globe/
 - **License:** Fair use; [MIT](https://github.com/twbs/bootstrap/blob/main/LICENSE)
 - **Attribution:** [Google](https://wikipedia.org/wiki/Google); [Bootstrap Icons](https://icons.getbootstrap.com/)
@@ -108,7 +108,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 ### Digital Streaming
 
 - **Shown as:** Digital Streaming
-- **Asset:** `bi bi-cast` (Bootstrap Icons glyph)
+- **Asset:** `images/platforms/cast.svg`
 - **Exact URL:** https://icons.getbootstrap.com/icons/cast/
 - **License:** [MIT](https://github.com/twbs/bootstrap/blob/main/LICENSE)
 - **Attribution:** [Bootstrap Icons](https://icons.getbootstrap.com/)
@@ -132,7 +132,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 ### Facebook (Messenger)
 
 - **Shown as:** Facebook
-- **Asset:** `bi bi-facebook` (Bootstrap Icons glyph)
+- **Asset:** `images/platforms/facebook.svg`
 - **Exact URL:** https://icons.getbootstrap.com/icons/facebook/
 - **License:** Fair use; [MIT](https://github.com/twbs/bootstrap/blob/main/LICENSE)
 - **Attribution:** [Meta](https://wikipedia.org/wiki/Meta_Platforms); [Bootstrap Icons](https://icons.getbootstrap.com/)
@@ -198,7 +198,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 ### iOS
 
 - **Shown as:** iOS
-- **Asset:** `bi bi-apple` (Bootstrap Icons glyph)
+- **Asset:** `images/platforms/apple.svg`
 - **Exact URL:** https://icons.getbootstrap.com/icons/apple/
 - **License:** Fair use; [MIT](https://github.com/twbs/bootstrap/blob/main/LICENSE)
 - **Attribution:** [Apple](https://wikipedia.org/wiki/Apple_Inc.); [Bootstrap Icons](https://icons.getbootstrap.com/)
@@ -534,7 +534,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 ### Steam
 
 - **Shown as:** Steam
-- **Asset:** `bi bi-steam` (Bootstrap Icons glyph)
+- **Asset:** `images/platforms/steam.svg`
 - **Exact URL:** https://icons.getbootstrap.com/icons/steam/
 - **License:** Fair use; [MIT](https://github.com/twbs/bootstrap/blob/main/LICENSE)
 - **Attribution:** [Valve](https://wikipedia.org/wiki/Valve_Corporation); [Bootstrap Icons](https://icons.getbootstrap.com/)
@@ -560,7 +560,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 ### Windows
 
 - **Shown as:** Windows
-- **Asset:** `bi bi-windows` (Bootstrap Icons glyph)
+- **Asset:** `images/platforms/windows.svg`
 - **Exact URL:** https://icons.getbootstrap.com/icons/windows/
 - **License:** Fair use; [MIT](https://github.com/twbs/bootstrap/blob/main/LICENSE)
 - **Attribution:** [Microsoft](https://wikipedia.org/wiki/Microsoft); [Bootstrap Icons](https://icons.getbootstrap.com/)
@@ -630,8 +630,39 @@ this project: **Vertex Industries, with help from the community**, licensed
 ### Youtube
 
 - **Shown as:** Youtube
-- **Asset:** `bi bi-youtube` (Bootstrap Icons glyph)
+- **Asset:** `images/platforms/youtube.svg`
 - **Exact URL:** https://icons.getbootstrap.com/icons/youtube/
 - **License:** Fair use; [MIT](https://github.com/twbs/bootstrap/blob/main/LICENSE)
 - **Attribution:** [Google](https://wikipedia.org/wiki/Google); [Bootstrap Icons](https://icons.getbootstrap.com/)
 - **Alternative:** https://simpleicons.org/?q=youtube
+
+---
+
+## Interface icons
+
+UI chrome glyphs — not platform legend entries. One section per icon,
+**alphabetical by icon name**. Same fields as above.
+
+### arrow-up
+
+- **Shown as:** Back-to-top button
+- **Asset:** `images/ui/arrow-up.svg`
+- **Exact URL:** https://icons.getbootstrap.com/icons/arrow-up/
+- **License:** [MIT](https://github.com/twbs/bootstrap/blob/main/LICENSE)
+- **Attribution:** [Bootstrap Icons](https://icons.getbootstrap.com/)
+
+### moon-stars
+
+- **Shown as:** Theme toggle (dark mode)
+- **Asset:** `images/ui/moon-stars.svg`
+- **Exact URL:** https://icons.getbootstrap.com/icons/moon-stars/
+- **License:** [MIT](https://github.com/twbs/bootstrap/blob/main/LICENSE)
+- **Attribution:** [Bootstrap Icons](https://icons.getbootstrap.com/)
+
+### sun
+
+- **Shown as:** Theme toggle (light mode)
+- **Asset:** `images/ui/sun.svg`
+- **Exact URL:** https://icons.getbootstrap.com/icons/sun/
+- **License:** [MIT](https://github.com/twbs/bootstrap/blob/main/LICENSE)
+- **Attribution:** [Bootstrap Icons](https://icons.getbootstrap.com/)
