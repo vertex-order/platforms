@@ -490,13 +490,11 @@ this project: **Vertex Industries, with help from the community**, licensed
 ### PlayStation VR
 
 - **Shown as:** PlayStation VR
-- **Asset:** `images/platforms/playstation4.svg` (with `VR` suffix)
-- **Exact URL:** https://commons.wikimedia.org/wiki/File:PlayStation_4_logo_and_wordmark.svg
-- **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:PlayStation_4_logo_and_wordmark.svg); [Trademark](https://commons.wikimedia.org/wiki/File:PlayStation_4_logo_and_wordmark.svg)
+- **Asset:** `images/platforms/playstation-vr.svg`
+- **Exact URL:** https://commons.wikimedia.org/wiki/File:PlayStation_VR_logo.svg
+- **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:PlayStation_VR_logo.svg); [Trademark](https://commons.wikimedia.org/wiki/File:PlayStation_VR_logo.svg)
 - **Attribution:** [Sony](https://wikipedia.org/wiki/Sony)
-- **Modification:** Cropped from the source icon. Hybrid mark — the `VR` suffix text was added after the icon to distinguish this platform.
-- **Alternative:** https://simpleicons.org/?q=playstation4
-- **Alternative:** https://breezewiki.com/playstation/wiki/File:PS4_Icon.svg
+- **Modification:** Cropped from the source icon. "P" and "S" from "PlayStation", and "VR", to make "PSVR" acronym.
 
 ### Sharp X1
 
