@@ -351,8 +351,8 @@ this project: **Vertex Industries, with help from the community**, licensed
 
 - **Shown as:** Nintendo Switch
 - **Asset:** `images/platforms/nintendo-switch.svg`
-- **Exact URL:** https://commons.wikimedia.org/wiki/File:Nintendo_Switch_2_logo.svg
-- **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:Nintendo_Switch_2_logo.svg); [Trademark](https://commons.wikimedia.org/wiki/File:Nintendo_Switch_2_logo.svg)
+- **Exact URL:** https://commons.wikimedia.org/wiki/File:Nintendo_Switch_logo.svg
+- **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:Nintendo_Switch_logo.svg); [Trademark](https://commons.wikimedia.org/wiki/File:Nintendo_Switch_logo.svg)
 - **Attribution:** [Nintendo](https://wikipedia.org/wiki/Nintendo)
 - **Modification:** Cropped from the source icon.
 
