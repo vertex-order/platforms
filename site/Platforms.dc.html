@@ -53,15 +53,8 @@ a:hover { color: var(--color-accent); text-decoration: underline; }
 }
 [data-theme="light"] a { color: var(--color-accent-300); }
 [data-theme="light"] a:hover { color: var(--color-accent); }
-[data-theme="light"] img[style*="invert(80%) sepia(15%)"] { filter: brightness(0) saturate(100%) invert(35%) sepia(10%) saturate(400%) hue-rotate(195deg) !important; }
-[data-theme="light"] img[style*="invert(100%)"] { filter: brightness(0) saturate(100%) !important; }
-[data-theme="light"] img[alt="GOG (PC)"] { filter: brightness(0) saturate(100%) invert(35%) sepia(10%) saturate(400%) hue-rotate(195deg) !important; }
-[data-theme="light"] img[alt="Epic Games Store (PC)"],
-[data-theme="light"] img[alt="Fan Translation"],
-[data-theme="light"] img[alt="Fan game movie video"],
-[data-theme="light"] img[alt="Fan Audiobook"],
-[data-theme="light"] img[alt="Fan story recap video"],
-[data-theme="light"] img[alt="Fan playthrough video"] { filter: brightness(0) saturate(100%) invert(35%) sepia(10%) saturate(400%) hue-rotate(195deg) !important; }
+/* Icon tint overrides for light mode now live in PlatformIcon.dc.html itself,
+   so they travel with it when it's copied to other projects. */
 </style>
 </helmet>
 <div data-theme="{{ effectiveTheme }}" style="background: var(--color-bg); color: var(--color-text); font-family: var(--font-body); min-height: 100vh;">
@@ -80,7 +73,7 @@ a:hover { color: var(--color-accent); text-decoration: underline; }
 
   <div style="max-width: 760px; margin: 0 auto; padding: calc(var(--space-8) + var(--space-6)) var(--space-4) var(--space-8);">
     <h1 style="font-family: var(--font-heading); font-weight: 500; font-size: 32px; margin: var(--space-6) 0 var(--space-3);">Platforms legend</h1>
-    <p style="color: var(--color-neutral-300); font-size: 16px; line-height: 1.6; max-width: 620px; margin: 0 0 var(--space-6);">A working reference for tuning how platform icons render in the Vertex Order listings. The <strong style="color: var(--color-text); font-weight: 500;">Zoomed</strong> grid is roughly twice page size for easier visual tweaking; the <strong style="color: var(--color-text); font-weight: 500;">Page size</strong> grid renders each icon through <code style="font-size: 13px;">PlatformIcon.dc.html</code> at the size used in listing rows. Halve a size you land on in Zoomed to get its page-size value.</p>
+    <p style="color: var(--color-neutral-300); font-size: 16px; line-height: 1.6; max-width: 620px; margin: 0 0 var(--space-6);">A working reference for tuning how platform icons render in the Vertex Order listings. The <strong style="color: var(--color-text); font-weight: 500;">Zoomed</strong> grid is roughly twice page size for easier visual tweaking; the <strong style="color: var(--color-text); font-weight: 500;">Page size</strong> grid renders each icon through <code style="font-size: 13px;">PlatformIcon.dc.html</code> at the size used in listing rows — the same data, at 1x.</p>
 
     <h3 style="font-family: var(--font-heading); font-weight: 500; font-size: 14px; letter-spacing: 0.06em; color: var(--color-neutral-400); margin: 0 0 var(--space-2);">ZOOMED ICONS</h3>
     <div style="position: relative; margin: 0 0 var(--space-8);">
@@ -88,7 +81,7 @@ a:hover { color: var(--color-accent); text-decoration: underline; }
       <div style="position: relative; display: flex; flex-wrap: wrap; align-content: flex-start; row-gap: 16px; column-gap: 16px;">
         <sc-for list="{{ platformLegend }}" as="pl" hint-placeholder-count="30">
           <span data-legend-item="{{ pl.name }}" style="display: flex; align-items: center; justify-content: center; height: 68px; flex: 0 0 auto;">
-            <dc-import name="ZoomedPlatformIcon" item-name="{{ pl.name }}" prefix="{{ pl.prefix }}" icon-img="{{ pl.iconImg }}" icon="{{ pl.icon }}" icon-size="{{ pl.iconSize }}" suffix-font-size="{{ pl.suffixFontSize }}" suffix-small-caps="{{ pl.suffixSmallCaps }}" suffix-offset-y="{{ pl.suffixOffsetY }}" img-style="{{ pl.imgStyle }}" text="{{ pl.text }}" font-size="{{ pl.fontSize }}" suffix="{{ pl.suffix }}" jp-tag="{{ pl.jpTag }}" non-jp-tag="{{ pl.nonJpTag }}" hint-size="auto,40px" style="display: flex;"></dc-import>
+            <dc-import name="ZoomedPlatformIcon" item-name="{{ pl.name }}" prefix="{{ pl.prefix }}" icon-img="{{ pl.iconImg }}" icon="{{ pl.icon }}" icon-size="{{ pl.iconSize }}" suffix-font-size="{{ pl.suffixFontSize }}" suffix-small-caps="{{ pl.suffixSmallCaps }}" suffix-offset-y="{{ pl.suffixOffsetY }}" img-style="{{ pl.imgStyle }}" text="{{ pl.text }}" suffix="{{ pl.suffix }}" jp-tag="{{ pl.jpTag }}" non-jp-tag="{{ pl.nonJpTag }}" hint-size="auto,40px" style="display: flex;"></dc-import>
           </span>
         </sc-for>
       </div>
@@ -97,7 +90,7 @@ a:hover { color: var(--color-accent); text-decoration: underline; }
     <h3 style="font-family: var(--font-heading); font-weight: 500; font-size: 14px; letter-spacing: 0.06em; color: var(--color-neutral-400); margin: 0 0 var(--space-2);">PAGE SIZE ICONS</h3>
     <div style="margin: 0 0 var(--space-8);">
       <span style="display: flex; flex-wrap: wrap; align-items: center; gap: 6px;">
-        <sc-for list="{{ platformLegendActual }}" as="pl" hint-placeholder-count="30">
+        <sc-for list="{{ platformLegend }}" as="pl" hint-placeholder-count="30">
 <dc-import name="PlatformIcon" item-name="{{ pl.name }}" prefix="{{ pl.prefix }}" icon-img="{{ pl.iconImg }}" icon="{{ pl.icon }}" icon-size="{{ pl.iconSize }}" suffix-font-size="{{ pl.suffixFontSize }}" suffix-small-caps="{{ pl.suffixSmallCaps }}" suffix-offset-y="{{ pl.suffixOffsetY }}" img-style="{{ pl.imgStyle }}" text="{{ pl.text }}" suffix="{{ pl.suffix }}" jp-tag="{{ pl.jpTag }}" non-jp-tag="{{ pl.nonJpTag }}" hint-size="auto,20px" style="display: flex;"></dc-import>
 </sc-for>
       </span>
@@ -123,21 +116,6 @@ const LAST_UPDATED = '2026-08-01'; // ISO date, single source of truth for "last
 function copyrightYears() {
   const y = Number(LAST_UPDATED.split('-')[0]);
   return y > 2026 ? '2026–' + y : '2026';
-}
-// PLATFORM_LEGEND holds zoomed (≈2x) sizes. Page-size icons are half: halve
-// iconSize and every "<dimension>: Npx" inside imgStyle. Non-px units untouched.
-function toPageSize(pl) {
-  return {
-    ...pl,
-    iconSize: typeof pl.iconSize === 'number' ? pl.iconSize / 2 : pl.iconSize,
-    imgStyle: typeof pl.imgStyle === 'string'
-      ? pl.imgStyle.replace(/(width|height):\s*([\d.]+)px/g, (_, prop, n) => prop + ': ' + (Math.round(parseFloat(n) / 2 * 100) / 100) + 'px')
-      : pl.imgStyle,
-    suffixFontSize: typeof pl.suffixFontSize === 'string'
-      ? pl.suffixFontSize.replace(/([\d.]+)px/, (_, n) => (Math.round(parseFloat(n) / 2 * 100) / 100) + 'px')
-      : pl.suffixFontSize,
-    suffixSmallCaps: pl.suffixSmallCaps,
-  };
 }
 class Component extends DCLogic {
   state = {
@@ -171,7 +149,6 @@ class Component extends DCLogic {
     const platformLegend = (typeof window !== 'undefined' && window.PLATFORM_LEGEND) || [];
     return {
       platformLegend,
-      platformLegendActual: platformLegend.map(toPageSize),
       effectiveTheme,
       themeIcon: effectiveTheme === 'light' ? 'bi bi-sun' : 'bi bi-moon-stars',
       toggleTheme: () => this.toggleTheme(),

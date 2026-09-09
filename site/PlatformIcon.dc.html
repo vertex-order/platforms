@@ -8,6 +8,25 @@
 <body>
 <x-dc>
 
+<helmet>
+<style>
+/* Theme-dependent icon tints. These rely on an ancestor with a data-theme
+   attribute (set by the consuming page's light/dark toggle) — with no such
+   ancestor, icons render in their default (dark-mode-friendly) colors.
+   Icons sharing the flat brand-agnostic tint filter get a darker variant
+   for light backgrounds; icons with no filter by default (their own
+   light-grey brand color) get the same darker tint added only in light mode. */
+[data-theme="light"] img[style*="invert(80%) sepia(15%)"] { filter: brightness(0) saturate(100%) invert(35%) sepia(10%) saturate(400%) hue-rotate(195deg) !important; }
+[data-theme="light"] img[style*="invert(100%)"] { filter: brightness(0) saturate(100%) !important; }
+[data-theme="light"] img[alt="GOG (PC)"],
+[data-theme="light"] img[alt="Epic Games Store (PC)"],
+[data-theme="light"] img[alt="Fan Translation"],
+[data-theme="light"] img[alt="Fan game movie video"],
+[data-theme="light"] img[alt="Fan Audiobook"],
+[data-theme="light"] img[alt="Fan story recap video"],
+[data-theme="light"] img[alt="Fan playthrough video"] { filter: brightness(0) saturate(100%) invert(35%) sepia(10%) saturate(400%) hue-rotate(195deg) !important; }
+</style>
+</helmet>
 <sc-if value="{{ linked }}" hint-placeholder-val="{{ false }}">
   <a href="{{ href }}" target="_blank" rel="noopener" title="{{ itemName }}" style="display: flex; align-items: center; flex-shrink: 0; color: var(--color-neutral-300); opacity: 0.85; position: relative;" style-hover="opacity: 1; color: var(--color-accent-300);">
     <span style="display: flex; align-items: center; flex-shrink: 0; opacity: {{ contentOpacity }};">

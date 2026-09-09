@@ -7,37 +7,14 @@
 </head>
 <body>
 <x-dc>
-
-<!-- 2x version of PlatformIcon.dc.html — same prop shape, roughly double the
-     dimensions. This is the view for tweaking optical size / weight; halve the
-     values you land on to get the page-size numbers PlatformIcon renders. -->
-<span title="{{ itemName }}" style="display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--color-neutral-300); opacity: 0.85; position: relative;">
-  <span style="display: flex; align-items: center; flex-shrink: 0; opacity: {{ contentOpacity }};">
-    <sc-if value="{{ prefix }}" hint-placeholder-val="{{ false }}"><span style="font-size: 21.5px; margin-right: 4px;">{{ prefix }}</span></sc-if>
-    <sc-if value="{{ iconImg }}" hint-placeholder-val="{{ false }}"><img src="{{ iconImg }}" alt="{{ itemName }}" height="{{ iconSize }}" style="width: auto; max-width: none; flex-shrink: 0; {{ imgStyle }}"></sc-if>
-    <sc-if value="{{ icon }}" hint-placeholder-val="{{ false }}"><i class="{{ icon }}" style="font-size: 32px;"></i></sc-if>
-    <sc-if value="{{ text }}" hint-placeholder-val="{{ false }}"><span style="padding: 2px 8px; line-height: 1.4; white-space: nowrap; font-size: {{ textFontSize }};">{{ text }}</span></sc-if>
-    <sc-if value="{{ suffix }}" hint-placeholder-val="{{ false }}"><span style="font-size: {{ suffixFontSize }}; margin-left: 6px; white-space: nowrap; line-height: 1; display: flex; align-items: center; margin-top: {{ suffixOffsetY }}px; font-variant: {{ suffixFontVariant }};">{{ suffix }}</span></sc-if>
-    <sc-if value="{{ jpTag }}" hint-placeholder-val="{{ false }}"><span style="font-size: 21.5px; font-style: italic; font-variant: small-caps; padding-left: 2px;">(jp)</span></sc-if>
-    <sc-if value="{{ nonJpTag }}" hint-placeholder-val="{{ false }}"><span style="font-size: 21.5px; font-style: italic; font-variant: small-caps; padding-left: 2px;">(non-jp)</span></sc-if>
-  </span>
-  <sc-if value="{{ terminated }}" hint-placeholder-val="{{ false }}"><span style="position: absolute; left: -2px; right: -2px; top: 50%; height: 2px; background: {{ strikeColor }}; transform: rotate(-10deg);"></span></sc-if>
+<!-- 2x display of PlatformIcon.dc.html: same props, passed straight through,
+     rendered inside a zoom:2 wrapper. Only difference from calling
+     PlatformIcon directly is size (and, here, the guideline overlay drawn by
+     the page around this grid) — no separate sizing math. -->
+<span style="display: flex; align-items: center; justify-content: center; flex-shrink: 0; zoom: 2;">
+  <dc-import name="PlatformIcon" item-name="{{ itemName }}" prefix="{{ prefix }}" icon-img="{{ iconImg }}" icon="{{ icon }}" icon-size="{{ iconSize }}" img-style="{{ imgStyle }}" text="{{ text }}" suffix="{{ suffix }}" suffix-font-size="{{ suffixFontSize }}" suffix-offset-y="{{ suffixOffsetY }}" suffix-small-caps="{{ suffixSmallCaps }}" jp-tag="{{ jpTag }}" non-jp-tag="{{ nonJpTag }}" content-opacity="{{ contentOpacity }}" terminated="{{ terminated }}" strike-color="{{ strikeColor }}" hint-size="40px,32px"></dc-import>
 </span>
-
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 80, &quot;height&quot;: 40}, &quot;itemName&quot;: {&quot;editor&quot;: null, &quot;default&quot;: &quot;&quot;, &quot;tsType&quot;: &quot;string&quot;}, &quot;prefix&quot;: {&quot;editor&quot;: null, &quot;default&quot;: null, &quot;tsType&quot;: &quot;string | null&quot;}, &quot;iconImg&quot;: {&quot;editor&quot;: null, &quot;default&quot;: null, &quot;tsType&quot;: &quot;string | null&quot;}, &quot;icon&quot;: {&quot;editor&quot;: null, &quot;default&quot;: &quot;bi bi-steam&quot;, &quot;tsType&quot;: &quot;string | null&quot;}, &quot;iconSize&quot;: {&quot;editor&quot;: null, &quot;default&quot;: 32, &quot;tsType&quot;: &quot;number&quot;}, &quot;imgStyle&quot;: {&quot;editor&quot;: null, &quot;default&quot;: &quot;&quot;, &quot;tsType&quot;: &quot;string&quot;}, &quot;text&quot;: {&quot;editor&quot;: null, &quot;default&quot;: null, &quot;tsType&quot;: &quot;string | null&quot;}, &quot;fontSize&quot;: {&quot;editor&quot;: null, &quot;default&quot;: null, &quot;tsType&quot;: &quot;string | null&quot;}, &quot;suffix&quot;: {&quot;editor&quot;: null, &quot;default&quot;: null, &quot;tsType&quot;: &quot;string | null&quot;}, &quot;suffixFontSize&quot;: {&quot;editor&quot;: null, &quot;default&quot;: null, &quot;tsType&quot;: &quot;string | null&quot;}, &quot;suffixOffsetY&quot;: {&quot;editor&quot;: null, &quot;default&quot;: 0, &quot;tsType&quot;: &quot;number&quot;}, &quot;suffixSmallCaps&quot;: {&quot;editor&quot;: null, &quot;default&quot;: false, &quot;tsType&quot;: &quot;boolean&quot;}, &quot;jpTag&quot;: {&quot;editor&quot;: null, &quot;default&quot;: false, &quot;tsType&quot;: &quot;boolean&quot;}, &quot;nonJpTag&quot;: {&quot;editor&quot;: null, &quot;default&quot;: false, &quot;tsType&quot;: &quot;boolean&quot;}, &quot;contentOpacity&quot;: {&quot;editor&quot;: null, &quot;default&quot;: 1, &quot;tsType&quot;: &quot;number&quot;}, &quot;terminated&quot;: {&quot;editor&quot;: null, &quot;default&quot;: false, &quot;tsType&quot;: &quot;boolean&quot;}, &quot;strikeColor&quot;: {&quot;editor&quot;: null, &quot;default&quot;: null, &quot;tsType&quot;: &quot;string | null&quot;}}">
-class Component extends DCLogic {
-  renderVals() {
-    return {
-      contentOpacity: this.props.contentOpacity ?? 1,
-      textFontSize: this.props.fontSize || '21.5px',
-      suffixFontSize: this.props.suffixFontSize || '21.5px',
-      suffixFontVariant: this.props.suffixSmallCaps ? 'small-caps' : 'normal',
-      suffixOffsetY: (this.props.suffixOffsetY || 0) * 2,
-      strikeColor: this.props.strikeColor || 'var(--color-neutral-500)',
-    };
-  }
-}
-</script>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 80, &quot;height&quot;: 40}, &quot;itemName&quot;: {&quot;editor&quot;: null, &quot;default&quot;: &quot;&quot;, &quot;tsType&quot;: &quot;string&quot;}, &quot;prefix&quot;: {&quot;editor&quot;: null, &quot;default&quot;: null, &quot;tsType&quot;: &quot;string | null&quot;}, &quot;iconImg&quot;: {&quot;editor&quot;: null, &quot;default&quot;: null, &quot;tsType&quot;: &quot;string | null&quot;}, &quot;icon&quot;: {&quot;editor&quot;: null, &quot;default&quot;: &quot;bi bi-steam&quot;, &quot;tsType&quot;: &quot;string | null&quot;}, &quot;iconSize&quot;: {&quot;editor&quot;: null, &quot;default&quot;: 16, &quot;tsType&quot;: &quot;number&quot;}, &quot;imgStyle&quot;: {&quot;editor&quot;: null, &quot;default&quot;: &quot;&quot;, &quot;tsType&quot;: &quot;string&quot;}, &quot;text&quot;: {&quot;editor&quot;: null, &quot;default&quot;: null, &quot;tsType&quot;: &quot;string | null&quot;}, &quot;suffix&quot;: {&quot;editor&quot;: null, &quot;default&quot;: null, &quot;tsType&quot;: &quot;string | null&quot;}, &quot;suffixFontSize&quot;: {&quot;editor&quot;: null, &quot;default&quot;: null, &quot;tsType&quot;: &quot;string | null&quot;}, &quot;suffixOffsetY&quot;: {&quot;editor&quot;: null, &quot;default&quot;: 0, &quot;tsType&quot;: &quot;number&quot;}, &quot;suffixSmallCaps&quot;: {&quot;editor&quot;: null, &quot;default&quot;: false, &quot;tsType&quot;: &quot;boolean&quot;}, &quot;jpTag&quot;: {&quot;editor&quot;: null, &quot;default&quot;: false, &quot;tsType&quot;: &quot;boolean&quot;}, &quot;nonJpTag&quot;: {&quot;editor&quot;: null, &quot;default&quot;: false, &quot;tsType&quot;: &quot;boolean&quot;}, &quot;contentOpacity&quot;: {&quot;editor&quot;: null, &quot;default&quot;: 1, &quot;tsType&quot;: &quot;number&quot;}, &quot;terminated&quot;: {&quot;editor&quot;: null, &quot;default&quot;: false, &quot;tsType&quot;: &quot;boolean&quot;}, &quot;strikeColor&quot;: {&quot;editor&quot;: null, &quot;default&quot;: null, &quot;tsType&quot;: &quot;string | null&quot;}}"></script>
 </body>
 </html>

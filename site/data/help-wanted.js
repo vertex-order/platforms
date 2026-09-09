@@ -2,7 +2,6 @@
 // module) so it loads over file:// like the other data/*.js files.
 window.HELP_WANTED_ITEMS = [
   "Replace icons without an explicit license: MSX2, PC-8801",
-  "Light-mode filter tuning for icons that sit wrong on the light palette",
-  "Optical-size passes where an icon reads larger or smaller than its neighbours at page size",
   "Replace icons with one that's more legible at small sizes: Arcade, PS Plus",
+  "Optical-size passes where an icon reads larger or smaller than its neighbours at page size",
 ];
