@@ -83,7 +83,7 @@ a:hover { color: var(--color-accent); text-decoration: underline; }
 
   <div style="max-width: 760px; margin: 0 auto; padding: calc(var(--space-8) + var(--space-6)) var(--space-4) var(--space-8);">
     <h1 style="font-family: var(--font-heading); font-weight: 500; font-size: 32px; margin: var(--space-6) 0 var(--space-3);">Platforms legend</h1>
-    <p style="color: var(--color-neutral-300); font-size: 16px; line-height: 1.6; max-width: 620px; margin: 0 0 var(--space-6);">A working reference for tuning how platform icons render in the Vertex Order listings. The <strong style="color: var(--color-text); font-weight: 500;">Zoomed</strong> grid is roughly twice page size for easier visual tweaking; the <strong style="color: var(--color-text); font-weight: 500;">Page size</strong> grid renders each icon through <code style="font-size: 13px;">PlatformIcon.dc.html</code> at the size used in listing rows — the same data, at 1x.</p>
+    <p style="color: var(--color-neutral-300); font-size: 16px; line-height: 1.6; max-width: 620px; margin: 0 0 var(--space-6);">A working reference for tuning how platform icons render in the Vertex Order listings. The <strong style="color: var(--color-text); font-weight: 500;">Zoomed</strong> grid is roughly twice page size for easier visual tweaking; the <a href="#page-size-icons">Page size</a> grid renders each icon through <code style="font-size: 13px;">PlatformIcon.dc.html</code> at the size used in listing rows — the same data, at 1x. See our <a href="#help-wanted">Help Wanted</a> at the bottom.</p>
 
     <h3 style="font-family: var(--font-heading); font-weight: 500; font-size: 14px; letter-spacing: 0.06em; color: var(--color-neutral-400); margin: 0 0 var(--space-2);">ZOOMED ICONS</h3>
     <div style="position: relative; margin: 0 0 var(--space-8);">
@@ -97,7 +97,7 @@ a:hover { color: var(--color-accent); text-decoration: underline; }
       </div>
     </div>
 
-    <h3 style="font-family: var(--font-heading); font-weight: 500; font-size: 14px; letter-spacing: 0.06em; color: var(--color-neutral-400); margin: 0 0 var(--space-2);">PAGE SIZE ICONS</h3>
+    <h3 id="page-size-icons" style="font-family: var(--font-heading); font-weight: 500; font-size: 14px; letter-spacing: 0.06em; color: var(--color-neutral-400); margin: 0 0 var(--space-2);">PAGE SIZE ICONS</h3>
     <div style="margin: 0 0 var(--space-8);">
       <span style="display: flex; flex-wrap: wrap; align-items: center; gap: 6px;">
         <sc-for list="{{ platformLegend }}" as="pl" hint-placeholder-count="30">
@@ -108,7 +108,9 @@ a:hover { color: var(--color-accent); text-decoration: underline; }
 
     <div style="height: 1px; background: linear-gradient(to right, transparent, var(--color-neutral-700), transparent); margin: 0 0 var(--space-6);"></div>
 
-    <dc-import name="HelpWanted" items="{{ helpWantedItems }}" hint-size="auto,220px" style="display: block;"></dc-import>
+    <div id="help-wanted">
+      <dc-import name="HelpWanted" items="{{ helpWantedItems }}" hint-size="auto,220px" style="display: block;"></dc-import>
+    </div>
 
     <h3 style="font-family: var(--font-heading); font-weight: 500; font-size: 14px; letter-spacing: 0.06em; color: var(--color-neutral-400); margin: 0 0 var(--space-2);">CREDITS</h3>
     <p style="color: var(--color-neutral-500); font-size: 12px; line-height: 1.7; margin: 0;">
