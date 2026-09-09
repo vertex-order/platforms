@@ -512,6 +512,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **Exact URL:** https://commons.wikimedia.org/wiki/File:Sharp_X1_logo.svg
 - **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:Sharp_X1_logo.svg) [Trademark](https://commons.wikimedia.org/wiki/File:Sharp_X1_logo.svg)
 - **Attribution:** [Sharp](https://wikipedia.org/wiki/Sharp_Corporation)
+- **Modification:** Filled in for visibility at small sizes.
 
 ### SNES
 
