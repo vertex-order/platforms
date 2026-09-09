@@ -587,14 +587,17 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **Attribution:** [Microsoft](https://wikipedia.org/wiki/Microsoft)
 - **Modification:** Merged the bootstrap xbox glyph with a crop of the wikipedia icon to isolate "360".
 
-### Xbox Cloud
+### Xbox Cloud Gaming
 
-- **Shown as:** Xbox Cloud
-- **Asset:** `bi bi-xbox` (Bootstrap Icons glyph, with `Cloud` suffix)
+- **Shown as:** Xbox Cloud Gaming
+- **Asset:** `images/platforms/xbox-cloud.svg`
 - **Exact URL:** https://icons.getbootstrap.com/icons/xbox/
-- **License:** Fair use; [MIT](https://github.com/twbs/bootstrap/blob/main/LICENSE)
+- **License:** Fair use; [MIT](https://github.com/twbs/bootstrap/blob/main/LICENSE); Trademark
 - **Attribution:** [Microsoft](https://wikipedia.org/wiki/Microsoft); [Bootstrap Icons](https://icons.getbootstrap.com/)
-- **Modification:** Hybrid mark — the `Cloud` suffix text was added after the glyph to distinguish this platform.
+- **Exact URL:** https://commons.wikimedia.org/wiki/File:Xbox_Cloud_Gaming_logo.png
+- **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:Xbox_Cloud_Gaming_logo.png), Trademark
+- **Attribution:** [Microsoft](https://wikipedia.org/wiki/Microsoft)
+- **Modification:** Merged the bootstrap xbox glyph with a crop of the wikipedia icon to isolate "CLOUD".
 
 ### Xbox One
 
