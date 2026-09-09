@@ -496,6 +496,15 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **Attribution:** [Sony](https://wikipedia.org/wiki/Sony)
 - **Modification:** Cropped from the source icon. "P" and "S" from "PlayStation", and "VR", to make "PSVR" acronym.
 
+### PlayStation VR2
+
+- **Shown as:** PlayStation VR2
+- **Asset:** `images/platforms/playstation-vr2.svg`
+- **Exact URL:** https://commons.wikimedia.org/wiki/File:PlayStation_VR2_logo.svg
+- **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:PlayStation_VR2_logo.svg); [Trademark](https://commons.wikimedia.org/wiki/File:PlayStation_VR2_logo.svg)
+- **Attribution:** [Sony](https://wikipedia.org/wiki/Sony)
+- **Modification:** Cropped from the source icon. "P" and "S" from "PlayStation", and "VR2", to make "PSVR2" acronym.
+
 ### Sharp X1
 
 - **Shown as:** Sharp X1
