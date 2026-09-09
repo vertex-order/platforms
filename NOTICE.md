@@ -578,11 +578,14 @@ this project: **Vertex Industries, with help from the community**, licensed
 ### Xbox 360
 
 - **Shown as:** Xbox 360
-- **Asset:** `bi bi-xbox` (Bootstrap Icons glyph, with `360` suffix)
+- **Asset:** `images/platforms/xbox-360.svg`
 - **Exact URL:** https://icons.getbootstrap.com/icons/xbox/
-- **License:** Fair use; [MIT](https://github.com/twbs/bootstrap/blob/main/LICENSE)
+- **License:** Fair use; [MIT](https://github.com/twbs/bootstrap/blob/main/LICENSE); Trademark
 - **Attribution:** [Microsoft](https://wikipedia.org/wiki/Microsoft); [Bootstrap Icons](https://icons.getbootstrap.com/)
-- **Modification:** Hybrid mark — the `360` suffix text was added after the glyph to distinguish this platform.
+- **Exact URL:** https://wikipedia.org/wiki/File:Xbox_360_full_logo.svg
+- **License:** Fair use; [Trademark](https://wikipedia.org/wiki/File:Xbox_360_full_logo.svg)
+- **Attribution:** [Microsoft](https://wikipedia.org/wiki/Microsoft)
+- **Modification:** Merged the bootstrap xbox glyph with a crop of the wikipedia icon to isolate "360".
 
 ### Xbox Cloud
 
