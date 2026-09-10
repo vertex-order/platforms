@@ -64,8 +64,9 @@ cd platforms
 
 Optional: install [`just`](https://github.com/casey/just) for the
 `just serve` / `just build` shortcuts, and run `just install-hooks` once to
-wire up the pre-commit hook (strips image metadata, regenerates
-`site/components.js`). Neither is required to contribute.
+wire up the pre-commit hook (strips image metadata, normalizes SVG
+serialization, regenerates `site/components.js`). Neither is required to
+contribute.
 
 ## Adjust a platform icon
 
@@ -89,7 +90,15 @@ Reload the page. Data-only edits need no rebuild.
 1. Drop the image in
    [`site/images/platforms/`](site/images/platforms/), named after what it
    represents (`ps5.svg`, `snes.png`), not where it came from. (Bootstrap
-   Icon or text-only entries skip this.)
+   Icon or text-only entries skip this.) For an SVG, the pre-commit hook
+   canonicalizes serialization (self-closing tags) and CI enforces it — no
+   setup needed. To also minify — strip editor cruft, cut coordinate
+   precision, drop offscreen artwork a crop left behind — run the one-time
+   `just trim-svg` pass and eyeball the result in both icon grids. That
+   pass is the only thing in the repo that needs Node — install it first:
+   `winget install OpenJS.NodeJS.LTS` (Windows) / `brew install node`
+   (macOS) / your distro's package; `just trim-svg` then calls `npx`,
+   which fetches and caches svgo on first run (no `npm install`).
 2. Add an entry to `PLATFORM_LEGEND` in `platform-legend.js` — copy a
    neighbouring entry of the same kind as a template.
 3. Add the source to the **Credits** list in
@@ -104,6 +113,10 @@ Title, intro, section headings, credits, copyright:
 `{{ expression }}` template bindings, evaluated at runtime by `support.js`.
 The `.dc.html` naming is just the format Claude Design imports/exports — you
 don't need the tool to edit it.
+
+The **Help Wanted** list is data, not copy — edit
+[`site/data/help-wanted.js`](site/data/help-wanted.js) (one string per
+item); [`site/HelpWanted.dc.html`](site/HelpWanted.dc.html) just renders it.
 
 ## Restyle
 
@@ -123,7 +136,8 @@ something there needs to change.
 ## Edit a `.dc.html` component
 
 The sibling components — `PlatformIcon.dc.html`, `ZoomedPlatformIcon.dc.html`,
-`BackToTop.dc.html` — are the render layer. If you change one, regenerate
+`BackToTop.dc.html`, `HelpWanted.dc.html` — are the render layer. If you
+change one, regenerate
 [`site/components.js`](site/components.js) — a build artifact that inlines
 every component so `Platforms.dc.html` also works opened straight off disk
 (`file://`):
@@ -189,11 +203,15 @@ site/
 ├── PlatformIcon.dc.html     page-size icon component (kept in sync with the other repos)
 ├── ZoomedPlatformIcon.dc.html   2x version, for tuning
 ├── BackToTop.dc.html        floating back-to-top control
+├── HelpWanted.dc.html       renders the Help Wanted list
 ├── components.js            AUTO-GENERATED from the *.dc.html above — don't hand-edit
 ├── support.js               vendored DC runtime — don't hand-edit
 ├── data/
-│   └── platform-legend.js   window.PLATFORM_LEGEND — the legend (edit this)
-├── images/platforms/        platform icons referenced by the legend
+│   ├── platform-legend.js   window.PLATFORM_LEGEND — the legend (edit this)
+│   └── help-wanted.js       window.HELP_WANTED_ITEMS — the Help Wanted list (edit this)
+├── images/
+│   ├── platforms/           platform icons referenced by the legend
+│   └── ui/                   page-chrome glyphs (reference copies; inlined into the components)
 └── _ds/nocturne-.../
     ├── styles.css           design tokens + component classes (safe to edit)
     ├── readme.md            design-system guide — read before restyling
@@ -201,11 +219,14 @@ site/
 
 scripts/bundle-components.py   regenerates site/components.js
 scripts/strip-c2pa.py          strips provenance metadata from images
-justfile                       build / bundle-components / serve / clean / install-hooks
-.githooks/pre-commit           strips image metadata, regenerates components.js
+scripts/normalize-svg.py       canonicalizes SVG serialization (self-closing tags)
+scripts/trim-svg.py            one-time: drops path subpaths that fall outside the viewBox
+svgo.config.mjs                config for the one-time `just trim-svg` svgo pass
+justfile                       build / bundle-components / serve / clean / install-hooks / normalize-svg / trim-svg
+.githooks/pre-commit           strips image metadata, normalizes SVGs, regenerates components.js
 .github/workflows/
 ├── static.yml                 build + deploy site/ to Pages on push to main
-└── check-generated.yml        PR check: fails if components.js is out of date
+└── check-generated.yml        PR check: fails if components.js or SVG serialization is stale
 ```
 
 ## Appendix: deploy internals
@@ -214,8 +235,9 @@ Every push to `main` runs
 [`.github/workflows/static.yml`](.github/workflows/static.yml):
 
 1. Checks out the repo.
-2. Installs `just`, runs `just build` — strips image metadata, regenerates
-   `components.js`, copies `site/` into a gitignored `build/`, renames
+2. Installs `just`, runs `just build` — strips image metadata, normalizes
+   SVG serialization, regenerates `components.js`, copies `site/` into a
+   gitignored `build/`, renames
    `build/Platforms.dc.html` to `build/index.html` (GitHub Pages needs a
    root `index.html`; every other path in the file is already relative).
    Same recipe you can run locally.

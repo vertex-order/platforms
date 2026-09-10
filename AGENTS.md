@@ -67,8 +67,26 @@ diff-clean and CI green.
 
 ## Build / preview / deploy
 
-- No bundler, no Node. Open `site/Platforms.dc.html` off disk, or
-  `just serve` to preview the way CI deploys.
+- No bundler, no Node for the site. Open `site/Platforms.dc.html` off disk,
+  or `just serve` to preview the way CI deploys.
 - Push to `main` = deploy (GitHub Actions runs `just build`, publishes
   `build/` to Pages; `build/Platforms.dc.html` is renamed to `index.html`).
 - Recipes: see [`justfile`](justfile).
+
+## Platform icon SVGs
+
+- `scripts/normalize-svg.py` canonicalizes serialization to self-closing
+  tags — run by the pre-commit hook and `just build`, and
+  `check-generated.yml` fails a PR whose SVGs aren't canonical (a second
+  gotcha alongside `components.js`). It's a pure string pass, no visual
+  change.
+- `just trim-svg` is a **separate one-time minify pass**, not part of
+  `build`: svgo (`svgo.config.mjs` — editor cruft, unused defs, precision)
+  then `scripts/trim-svg.py` (drops path subpaths that lie entirely
+  outside the `viewBox` — e.g. wordmarks left behind by a crop). It's the
+  only task that needs Node — `winget install OpenJS.NodeJS.LTS` /
+  `brew install node` / distro package, then it calls `npx` (fetches svgo
+  on first run, no `npm install`). Every icon it changes needs a visual
+  re-check in both grids; `trim-svg.py` is pixel-safe by construction but
+  bails, per file, on transforms / `<use>` / masks / strokes / rotated
+  arcs.

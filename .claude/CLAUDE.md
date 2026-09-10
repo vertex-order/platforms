@@ -24,6 +24,26 @@ entry per platform, each an `icon` (Bootstrap Icon class), an `iconImg`
 Edit `platform-legend.js` and the `*.dc.html` files. Don't hand-edit
 `support.js`, `components.js`, or anything under `_ds/` except `styles.css`.
 
+The **Help Wanted** list is `data/help-wanted.js` (`window.HELP_WANTED_ITEMS`,
+one string per item); `HelpWanted.dc.html` only renders it.
+
+## Platform icon SVGs
+
+`images/platforms/*.svg` are checked in minified: self-closing tags, no XML
+prolog or editor metadata, trimmed coordinate precision, and no path
+geometry outside the `viewBox`. In a full checkout a pre-commit hook plus a
+one-time `just trim-svg` pass maintain that; here (design tool, no shell)
+neither runs, so:
+
+- Keep hand edits to an SVG minimal. Don't paste a pretty-printed or
+  editor-bloated file back over a minified one.
+- If the exporter re-serializes an icon (self-closing vs `</path>`,
+  re-indenting) that's cosmetic — the repo's hook and CI normalize it on
+  commit. Don't fix it by hand.
+- A new icon that's a crop of larger artwork often still carries the
+  cropped-away paths outside its `viewBox` — invisible, but shipped. Note
+  it so the `just trim-svg` pass catches it in a full checkout.
+
 ## Regenerating components.js
 
 `components.js` (next to `Platforms.dc.html` and the sibling `*.dc.html`

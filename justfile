@@ -40,7 +40,8 @@ normalize-svg:
 # Then normalize-svg.py restores the canonical self-closing form.
 # Every changed icon still needs a visual re-check in Platforms.dc.html
 # (zoomed + page-size rows) before committing.
-# Needs Node: `winget install OpenJS.NodeJS.LTS` (or `scoop install nodejs-lts`).
+# Needs Node — the only task that does: `winget install OpenJS.NodeJS.LTS`
+# / `scoop install nodejs-lts` (Windows), `brew install node` (macOS).
 # svgo is npm-only — no winget/scoop package — so npx fetches and caches it.
 trim-svg:
     npx --yes svgo@3 --config svgo.config.mjs --recursive --folder site/images/platforms
