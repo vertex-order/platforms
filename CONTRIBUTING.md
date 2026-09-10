@@ -191,13 +191,16 @@ real deploy output.
 
 ## Open a PR
 
-1. Fork, branch off `main`.
-2. Make your edit under `site/`.
-3. Preview locally. If you touched a `*.dc.html`, run `just bundle-components`
+1. Raise it in [Discussions](https://github.com/vertex-order/platforms/discussions)
+   first and agree the change there. PRs without a linked Discussion (or
+   issue) may be closed unreviewed.
+2. Fork, branch off `main`.
+3. Make your edit under `site/`.
+4. Preview locally. If you touched a `*.dc.html`, run `just bundle-components`
    and commit `site/components.js`.
-4. Sign off each commit — `git commit -s` (see [Licensing](#licensing)).
-5. PR against `main`. **Merging deploys automatically** — no manual export
-   step, ever.
+5. Sign off each commit — `git commit -s` (see [Licensing](#licensing)).
+6. PR against `main`, linking the Discussion. **Merging deploys
+   automatically** — no manual export step, ever.
 
 ## Licensing
 
