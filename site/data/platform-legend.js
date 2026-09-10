@@ -53,7 +53,7 @@ window.PLATFORM_LEGEND = [
     { iconImg: 'images/platforms/msx2.svg', iconSize: 12.93, imgStyle: 'width: auto; height: 12.93px;', name: 'MSX2 (Physical; Japan Only)', jpTag: true },
     { iconImg: 'images/platforms/msx.svg', iconSize: 12.73, imgStyle: 'width: auto; height: 12.73px;', name: 'MSX (Physical; Japan Only)', jpTag: true },
     { iconImg: 'images/platforms/sharp-x1.svg', iconSize: 10.25, imgStyle: 'width: auto; height: 10.25px;', name: 'Sharp X1 (Physical; Japan Only)', jpTag: true },
-    { iconImg: 'images/platforms/pc8801.svg', iconSize: 7.5, imgStyle: 'width: auto; height: 7.5px;', suffix: 'mkII SR', suffixFontSize: '13px', suffixOffsetY: 1, name: 'NEC PC-8801mkII SR (Physical; Japan Only)', jpTag: true },
+    { iconImg: 'images/platforms/pc8801.svg', iconSize: 8.875, imgStyle: 'width: auto; height: 8.875px;', suffix: 'mkII SR', suffixFontSize: '9.75px', suffixOffsetY: 1, name: 'NEC PC-8801mkII SR (Physical; Japan Only)', jpTag: true },
     { iconImg: 'images/platforms/globe.svg', iconSize: 16, imgStyle: 'width: auto; height: 16px;', name: 'Browser' },
     { iconImg: 'images/platforms/android2.svg', iconSize: 16, imgStyle: 'width: auto; height: 16px;', name: 'Android' },
     { iconImg: 'images/platforms/apple.svg', iconSize: 16, imgStyle: 'width: auto; height: 16px;', name: 'iOS' },
