@@ -1,0 +1,38 @@
+name: Tracked change
+description: Collaborator-only technical tracking for a change already agreed in Discussions.
+labels: ["tracked"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Issues here are **only** for technical coordination between
+        collaborators on a change that has already been raised and agreed in
+        [Discussions](https://github.com/vertex-order/platforms/discussions).
+
+        If you're proposing, requesting, or debating a change — icon requests,
+        sizing ideas, questions — start a Discussion instead. That's where the
+        conversation happens; the issue is just the work item.
+  - type: input
+    id: discussion
+    attributes:
+      label: Discussion link
+      description: The Discussions thread where this change was raised and agreed.
+      placeholder: https://github.com/vertex-order/platforms/discussions/000
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: What needs doing
+      description: >-
+        The concrete technical work — files, components, icons, sizes. Keep
+        design debate in the Discussion and link back to it for context.
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes
+      description: Blockers, related PRs or issues, follow-ups.
+    validations:
+      required: false

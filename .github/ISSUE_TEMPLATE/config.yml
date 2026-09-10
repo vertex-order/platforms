@@ -1,5 +1,5 @@
-blank_issues_enabled: true
+blank_issues_enabled: false
 contact_links:
   - name: Questions & ideas
     url: https://github.com/vertex-order/platforms/discussions
-    about: Issues are for collaborators. For everything else, open a discussion.
+    about: Propose or discuss a change here. Issues are collaborator-only tracking for changes already agreed.
