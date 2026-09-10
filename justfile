@@ -30,3 +30,13 @@ strip-metadata:
 # Design's exporter are inconsistent), for a stable check-in.
 normalize-svg:
     python3 scripts/normalize-svg.py site/images
+
+# One-time SVG trimming — NOT part of `build`, run by hand. svgo strips
+# editor cruft, unused defs, inline styles, and excess precision (see
+# svgo.config.mjs). Every changed icon needs a visual re-check in
+# Platforms.dc.html (zoomed + page-size rows) before committing.
+# Needs Node: `winget install OpenJS.NodeJS.LTS` (or `scoop install nodejs-lts`).
+# svgo is npm-only — no winget/scoop package — so npx fetches and caches it.
+trim-svg:
+    npx --yes svgo@3 --config svgo.config.mjs --recursive --folder site/images/platforms
+    python3 scripts/normalize-svg.py site/images/platforms

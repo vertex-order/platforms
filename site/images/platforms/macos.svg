@@ -1,17 +1,1 @@
-<?xml version="1.0"?><svg xmlns="http://www.w3.org/2000/svg" viewBox="818 336 1402 1097" width="1402" height="1097">
-<defs>
-<mask id="leftMask" maskUnits="userSpaceOnUse" x="818" y="336" width="1402" height="1097">
-<path d="M833 351 L1600 351 L1455 658 L1393 949 L1611 970 L1645 1418 L833 1418 Z" fill="#fff"/>
-<path d="M1208 528 l0 161" stroke="#000" stroke-width="55" fill="none" stroke-linecap="round"/>
-<path d="M1058 1094 c171,88 349,108 537,96" stroke="#000" stroke-width="55" fill="none" stroke-linecap="round"/>
-</mask>
-<clipPath id="screenClip">
-<path d="M833 351 L2205 351 L2205 1418 L833 1418 Z"/>
-</clipPath>
-</defs>
-<path d="M1726 188 c-170,201 -317,464 -333,771 l250 0 c-63,209 -29,443 67,632" stroke="#fff" stroke-width="45" fill="none" stroke-linecap="round" clip-path="url(#screenClip)"/>
-<path d="M833 351 L1600 351 L1455 658 L1393 949 L1611 970 L1645 1418 L833 1418 Z" fill="#fff" mask="url(#leftMask)"/>
-<path d="M1792 528 l0 161" stroke="#fff" stroke-width="55" fill="none" stroke-linecap="round"/>
-<path d="M1628 1188 c151,-3 263,-38 352,-91" stroke="#fff" stroke-width="55" fill="none" stroke-linecap="round"/>
-<path d="M833 351 L2205 351 L2205 1418 L833 1418 Z" fill="none" stroke="#fff" stroke-width="30" stroke-linejoin="round"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="818 336 1402 1097"><defs><clipPath id="a"><path d="M833 351h1372v1067H833Z"/></clipPath><mask id="b" width="1402" height="1097" x="818" y="336" maskUnits="userSpaceOnUse"><path fill="#fff" d="M833 351h767l-145 307-62 291 218 21 34 448H833Z"/><path fill="none" stroke="#000" stroke-linecap="round" stroke-width="55" d="M1208 528v161m-150 405c171 88 349 108 537 96"/></mask></defs><path fill="none" stroke="#fff" stroke-linecap="round" stroke-width="45" d="M1726 188c-170 201-317 464-333 771h250c-63 209-29 443 67 632" clip-path="url(#a)"/><path fill="#fff" d="M833 351h767l-145 307-62 291 218 21 34 448H833Z" mask="url(#b)"/><path fill="none" stroke="#fff" stroke-linecap="round" stroke-width="55" d="M1792 528v161m-164 499c151-3 263-38 352-91"/><path fill="none" stroke="#fff" stroke-linejoin="round" stroke-width="30" d="M833 351h1372v1067H833Z"/></svg>
