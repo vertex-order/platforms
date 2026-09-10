@@ -1,0 +1,16 @@
+version: 2
+updates:
+  # Keep the SHA-pinned actions in .github/workflows/ current. No npm entry:
+  # the only Node tool (svgo) runs via `npx` from the justfile, not a manifest.
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: weekly
+    cooldown:
+      default-days: 7
+    groups:
+      actions:
+        patterns:
+          - "*"
+    commit-message:
+      prefix: "chore"

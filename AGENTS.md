@@ -16,17 +16,18 @@ Guidance for AI coding tools working in a **full checkout** of this repo
 
 A staging ground for tuning how platform icons render in the
 [Vertex Order](https://vertex-order.github.io) game listings — nothing here
-ships to the listings directly. [`site/data/platform-legend.js`](site/data/platform-legend.js)
-holds the legend (`window.PLATFORM_LEGEND`): one entry per platform, each an
+ships to the listings directly. [`site/data/platform-icons.js`](site/data/platform-icons.js)
+holds the record (`window.PLATFORM_ICONS`): one entry per platform, each an
 `icon` (Bootstrap Icon class), an `iconImg` (path under `images/platforms/`),
 or a `text` label, with optional `iconSize` / `imgStyle` / `fontSize` /
-`prefix` / `suffix` / `jpTag`. **Those values are the zoomed (~2×) sizes.**
-[`site/Platforms.dc.html`](site/Platforms.dc.html) renders the list twice —
-a **Zoomed** grid straight from the legend (via
-`ZoomedPlatformIcon.dc.html`, on ruled guide lines) and a **Page size** grid
-through the real `PlatformIcon.dc.html`, fed the legend with `iconSize` and
-every `Npx` in `imgStyle` halved (`toPageSize()` in that file). Bootstrap
-glyphs are fixed by the components: 32px zoomed, 16px page size.
+`prefix` / `suffix` / `jpTag`. **Those values are page (1×) size — exactly
+what `PlatformIcon.dc.html` renders in a listing row.**
+[`site/Platforms.dc.html`](site/Platforms.dc.html) renders the list twice
+from the same data — a **Zoomed** grid via `ZoomedPlatformIcon.dc.html`
+(which passes `scale` 2 to `PlatformIcon`, so it renders itself at 2× via
+CSS `zoom`, on ruled guide lines) and a **Page size** grid straight through
+the real `PlatformIcon.dc.html` at `scale` 1. Bootstrap glyphs are a fixed
+16px in `PlatformIcon` (32px after the 2× zoom).
 
 The entry page is **`Platforms.dc.html`**, not `page.dc.html` — this repo
 diverges from the other Vertex Order repos there (see the note in
@@ -59,9 +60,9 @@ diff-clean and CI green.
 
 | Editable | Vendored / generated — don't hand-edit |
 | --- | --- |
-| `site/data/platform-legend.js` (the legend) | `site/components.js` (generated) |
+| `site/data/platform-icons.js` (the platform record) | `site/components.js` (generated) |
 | `site/*.dc.html` (page + render components) | `site/support.js` |
-| `NOTICE.md` (third-party icon attribution — keep in step with the legend) | |
+| `NOTICE.md` (third-party icon attribution — keep in step with `platform-icons.js`) | |
 | `site/_ds/*/styles.css` (design tokens) | `site/_ds/*/_ds_bundle.js`, `_ds_manifest.json` |
 | `site/images/platforms/` | `site/_ds/*/_adherence.oxlintrc.json` |
 

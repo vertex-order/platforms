@@ -1,7 +1,7 @@
-// Platform legend entries — icon rendering for each platform, shared by the
-// row platform icons and the standalone Platforms legend page. Sizes/styles
-// here are PAGE size (1x, as PlatformIcon.dc.html renders them); the Zoomed
-// legend grid displays the same entries at 2x via CSS zoom.
+// Platform icon entries — how each platform renders in a Vertex Order
+// listing row, consumed by the row icons and the standalone Platforms page.
+// Sizes/styles here are PAGE size (1x, as PlatformIcon.dc.html renders them);
+// the Zoomed grid shows the same entries at 2x via CSS zoom.
 //
 // imgStyle carries sizing only (width/height). The light/dark tint filter is
 // owned by PlatformIcon.dc.html (the .dc-plat-img rule) and applied to every
@@ -9,8 +9,8 @@
 // a `filter:` in imgStyle only to opt an icon out of the standard tint (e.g.
 // nintendo-snes uses grayscale to keep its multi-colour logo legible).
 //
-// Classic script (not a module) so it loads over site/data/platform-legend.js
-window.PLATFORM_LEGEND = [
+// Classic script (not a module) so it loads via a plain <script src>.
+window.PLATFORM_ICONS = [
     { iconImg: 'images/platforms/windows.svg', iconSize: 16, imgStyle: 'width: auto; height: 16px;', name: 'Windows (PC; Handheld; Digital)' },
     { iconImg: 'images/platforms/macos.svg', iconSize: 16.5, imgStyle: 'width: auto; height: 16.5px;', name: 'macOS' },
     { iconImg: 'images/platforms/linux.svg', iconSize: 20, imgStyle: 'width: auto; height: 20px;', name: 'Linux' },

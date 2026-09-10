@@ -2,7 +2,7 @@
 
 # NOTICE — third-party assets
 
-© 2026 Vertex Industries, with help from the community. Content licensed [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/).
+© 2026 Vertex Industries, with help from the community. This repo is [MIT](LICENSE); the third-party marks below are used under fair use and keep their own terms.
 
 Not affiliated with any of the below brands or companies. Icons considered fair use and only used for communicating historical platform availability at a glance.
 
@@ -11,7 +11,7 @@ The authoritative record of third-party parts used in this project.
 ## Platform Icons
 
 One section per entry in
-[`site/data/platform-legend.js`](site/data/platform-legend.js) (`window.PLATFORM_LEGEND`),
+[`site/data/platform-icons.js`](site/data/platform-icons.js) (`window.PLATFORM_ICONS`),
 **alphabetical by platform name**. Order is by name, not by source, on
 purpose: the exact URL / author / licence stays attached to the platform
 even if the icon is later swapped for a better one from a different source,
@@ -19,7 +19,7 @@ so nothing has to move.
 
 Each section carries:
 
-- **Shown as** — the legend entry's full `name`.
+- **Shown as** — the entry's full `name`.
 - **Asset** — the image file under
   `site/images/platforms/`, or a plain text label.
 - **Exact URL** — the specific page the asset came from.
@@ -29,8 +29,8 @@ Each section carries:
 
 Text-label entries render as type, not an asset — no
 attribution needed. Any icon not credited on the project page is original to
-this project: **Vertex Industries, with help from the community**, licensed
-**CC BY-NC-SA 4.0**.
+this project — **Vertex Industries, with help from the community** — and
+released under **[MIT](LICENSE)** with the rest of the repo.
 
 `_TBD_` marks a field not yet verified.
 
@@ -67,7 +67,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **Shown as:** Arcade
 - **Asset:** `images/platforms/arcade.svg`
 - **Exact URL:** original to this project
-- **License:** CC BY-NC-SA 4.0
+- **License:** MIT (this repo)
 - **Attribution:** Vertex Industries, with help from the community
 
 
@@ -143,7 +143,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **Shown as:** Fan Audiobook
 - **Asset:** `images/platforms/fan-audiobook.svg`
 - **Exact URL:** original to this project
-- **License:** CC BY-NC-SA 4.0
+- **License:** MIT (this repo)
 - **Attribution:** Vertex Industries, with help from the community
 
 ### Fan game movie video
@@ -151,7 +151,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **Shown as:** Fan game movie video
 - **Asset:** `images/platforms/fan-movie.svg`
 - **Exact URL:** original to this project
-- **License:** CC BY-NC-SA 4.0
+- **License:** MIT (this repo)
 - **Attribution:** Vertex Industries, with help from the community
 
 ### Fan playthrough video
@@ -159,7 +159,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **Shown as:** Fan playthrough video
 - **Asset:** `images/platforms/fan-playthrough.svg`
 - **Exact URL:** original to this project
-- **License:** CC BY-NC-SA 4.0
+- **License:** MIT (this repo)
 - **Attribution:** Vertex Industries, with help from the community
 
 ### Fan story recap video
@@ -167,7 +167,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **Shown as:** Fan story recap video
 - **Asset:** `images/platforms/fan-recap.svg`
 - **Exact URL:** original to this project
-- **License:** CC BY-NC-SA 4.0
+- **License:** MIT (this repo)
 - **Attribution:** Vertex Industries, with help from the community
 
 ### Fan Translation
@@ -175,7 +175,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **Shown as:** Fan Translation
 - **Asset:** `images/platforms/fan-translation.svg`
 - **Exact URL:** original to this project
-- **License:** CC BY-NC-SA 4.0
+- **License:** MIT (this repo)
 - **Attribution:** Vertex Industries, with help from the community
 
 ### Game Boy Advance
@@ -243,7 +243,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **Shown as:** Mobile Phones
 - **Asset:** `images/platforms/mobile-phone.svg`
 - **Exact URL:** original to this project
-- **License:** CC BY-NC-SA 4.0
+- **License:** MIT (this repo)
 - **Attribution:** Vertex Industries, with help from the community
 
 ### MSX
@@ -570,7 +570,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 - **Shown as:** Windows Phone
 - **Asset:** `images/platforms/windows-phone.svg`
 - **Exact URL:** original to this project
-- **License:** CC BY-NC-SA 4.0
+- **License:** MIT (this repo)
 - **Attribution:** Vertex Industries, with help from the community
 
 ### WonderSwan Color
@@ -640,7 +640,7 @@ this project: **Vertex Industries, with help from the community**, licensed
 
 ## Interface icons
 
-UI chrome glyphs — not platform legend entries. One section per icon,
+UI chrome glyphs — not `platform-icons.js` entries. One section per icon,
 **alphabetical by icon name**. Same fields as above.
 
 ### arrow-up

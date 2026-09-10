@@ -15,6 +15,7 @@ edit, preview in a browser, open a PR.
 - [Edit a `.dc.html` component](#edit-a-dchtml-component)
 - [Preview locally](#preview-locally)
 - [Open a PR](#open-a-pr)
+- [Licensing](#licensing)
 - [Appendix: repo layout](#appendix-repo-layout)
 - [Appendix: deploy internals](#appendix-deploy-internals)
 
@@ -25,8 +26,8 @@ A staging ground for working out how platform icons should render in the
 sizes, weights, and the light/dark colour treatment — without touching the
 real site.
 
-[`site/data/platform-legend.js`](site/data/platform-legend.js) is the single
-source of truth. It assigns `window.PLATFORM_LEGEND`, an array with **one
+[`site/data/platform-icons.js`](site/data/platform-icons.js) is the single
+source of truth. It assigns `window.PLATFORM_ICONS`, an array with **one
 entry per platform**. Each entry is one of:
 
 | Kind | Fields |
@@ -36,23 +37,24 @@ entry per platform**. Each entry is one of:
 | Text label | `text: 'Wii U'`, `fontSize` |
 
 plus optional `prefix`, `suffix`, `jpTag`, `name` (the hover title).
-**The sizes in this file are the zoomed (~2×) sizes.**
+**The sizes in this file are page (1×) size** — exactly what
+`PlatformIcon.dc.html` renders in a listing row, copied straight across.
 
-[`site/Platforms.dc.html`](site/Platforms.dc.html) renders the list twice:
+[`site/Platforms.dc.html`](site/Platforms.dc.html) renders the list twice
+from the same data — the only difference is CSS `zoom`:
 
-- **Zoomed icons** — straight from the legend, roughly 2× page size, on
-  ruled guide lines. Easier to judge optical size and weight. Rendered by
-  [`site/ZoomedPlatformIcon.dc.html`](site/ZoomedPlatformIcon.dc.html).
-- **Page size icons** — each entry through
-  [`site/PlatformIcon.dc.html`](site/PlatformIcon.dc.html), the component
-  the real site uses, at listing-row size. The page halves `iconSize` and
-  every `Npx` in `imgStyle` first (`toPageSize()` in `Platforms.dc.html`).
-  Bootstrap glyphs are a fixed size in each component — 32px zoomed, 16px
-  page — so only images and text carry a tunable number.
+- **Zoomed icons** — the same entries at 2×, on ruled guide lines, easier to
+  judge optical size and weight. Rendered by
+  [`site/ZoomedPlatformIcon.dc.html`](site/ZoomedPlatformIcon.dc.html), which
+  passes `scale` 2 to `PlatformIcon`.
+- **Page size icons** — each entry straight through
+  [`site/PlatformIcon.dc.html`](site/PlatformIcon.dc.html), the component the
+  real site uses, at listing-row size (`scale` 1). Bootstrap glyphs are a
+  fixed 16px there (32px after the 2× zoom), so only images and text carry a
+  tunable number.
 
 Workflow: tune an entry in the Zoomed grid, check it in the Page size grid,
-then halve the number you landed on when you copy it into the real site's
-data.
+copy the number you landed on into the real site's data as-is.
 
 ## Quick start
 
@@ -71,7 +73,7 @@ contribute.
 ## Adjust a platform icon
 
 Edit the entry in
-[`site/data/platform-legend.js`](site/data/platform-legend.js):
+[`site/data/platform-icons.js`](site/data/platform-icons.js):
 
 - **Image size** — `iconSize` is the rendered height in px; keep the
   `height: Npx` inside `imgStyle` in step with it. The `imgStyle` filter
@@ -80,8 +82,8 @@ Edit the entry in
   mode — match an existing icon's filter so both themes work).
 - **Text label size** — `fontSize` (e.g. `'21.5px'`).
 - **Bootstrap glyph size** — not per-entry; change the `font-size` in
-  `ZoomedPlatformIcon.dc.html` (zoomed) and/or `PlatformIcon.dc.html`
-  (page), which affects every glyph.
+  `PlatformIcon.dc.html` (fixed 16px, scaled by `zoom` in the Zoomed grid),
+  which affects every glyph.
 
 Reload the page. Data-only edits need no rebuild.
 
@@ -99,7 +101,7 @@ Reload the page. Data-only edits need no rebuild.
    `winget install OpenJS.NodeJS.LTS` (Windows) / `brew install node`
    (macOS) / your distro's package; `just trim-svg` then calls `npx`,
    which fetches and caches svgo on first run (no `npm install`).
-2. Add an entry to `PLATFORM_LEGEND` in `platform-legend.js` — copy a
+2. Add an entry to `PLATFORM_ICONS` in `platform-icons.js` — copy a
    neighbouring entry of the same kind as a template.
 3. Add the source to the **Credits** list in
    [`site/Platforms.dc.html`](site/Platforms.dc.html), and add a section for
@@ -130,7 +132,8 @@ The light-mode palette and the light-mode image-filter overrides live in the
 `<style>` block of `Platforms.dc.html` itself.
 
 The rest of `_ds/` (`_ds_bundle.js`, `_ds_manifest.json`,
-`_adherence.oxlintrc.json`) is vendored — don't hand-edit; open an issue if
+`_adherence.oxlintrc.json`) is vendored — don't hand-edit; start a
+[discussion](https://github.com/vertex-order/platforms/discussions) if
 something there needs to change.
 
 ## Edit a `.dc.html` component
@@ -169,8 +172,8 @@ there too.
 ## Preview locally
 
 Simplest — open [`site/Platforms.dc.html`](site/Platforms.dc.html) directly
-in a browser (`file://`). `components.js` plus the classic-script legend
-make that work with no server. Off disk the page depends on `components.js`
+in a browser (`file://`). `components.js` plus the classic-script
+`platform-icons.js` make that work with no server. Off disk the page depends on `components.js`
 being current, so run `just bundle-components` after editing any `*.dc.html`.
 
 To preview the way it deploys — and so component edits load live without a
@@ -192,8 +195,29 @@ real deploy output.
 2. Make your edit under `site/`.
 3. Preview locally. If you touched a `*.dc.html`, run `just bundle-components`
    and commit `site/components.js`.
-4. PR against `main`. **Merging deploys automatically** — no manual export
+4. Sign off each commit — `git commit -s` (see [Licensing](#licensing)).
+5. PR against `main`. **Merging deploys automatically** — no manual export
    step, ever.
+
+## Licensing
+
+Everything in this repo is [MIT](LICENSE) — what you contribute, and what
+ships out. It's Claude Design's framework tailored to rendering order lists;
+we're glad to have people take it and build their own.
+
+The one exception is the platform icons under `site/images/platforms/` —
+third-party marks used under fair use, each recorded in [`NOTICE.md`](NOTICE.md)
+with its own source and terms. Don't submit an icon without adding its
+`NOTICE.md` section.
+
+Sign off every commit with `git commit -s`. It adds a `Signed-off-by` line
+certifying you wrote the change, or otherwise have the right to submit it
+under MIT — the
+[Developer Certificate of Origin](https://developercertificate.org/).
+
+Questions and proposals go in
+[Discussions](https://github.com/vertex-order/platforms/discussions);
+issues are for collaborators.
 
 ## Appendix: repo layout
 
@@ -207,10 +231,10 @@ site/
 ├── components.js            AUTO-GENERATED from the *.dc.html above — don't hand-edit
 ├── support.js               vendored DC runtime — don't hand-edit
 ├── data/
-│   ├── platform-legend.js   window.PLATFORM_LEGEND — the legend (edit this)
+│   ├── platform-icons.js    window.PLATFORM_ICONS — the platform record (edit this)
 │   └── help-wanted.js       window.HELP_WANTED_ITEMS — the Help Wanted list (edit this)
 ├── images/
-│   ├── platforms/           platform icons referenced by the legend
+│   ├── platforms/           platform icons referenced by platform-icons.js
 │   └── ui/                   page-chrome glyphs (reference copies; inlined into the components)
 └── _ds/nocturne-.../
     ├── styles.css           design tokens + component classes (safe to edit)
@@ -224,9 +248,12 @@ scripts/trim-svg.py            one-time: drops path subpaths that fall outside t
 svgo.config.mjs                config for the one-time `just trim-svg` svgo pass
 justfile                       build / bundle-components / serve / clean / install-hooks / normalize-svg / trim-svg
 .githooks/pre-commit           strips image metadata, normalizes SVGs, regenerates components.js
-.github/workflows/
-├── static.yml                 build + deploy site/ to Pages on push to main
-└── check-generated.yml        PR check: fails if components.js or SVG serialization is stale
+.github/
+├── workflows/static.yml       build + deploy site/ to Pages on push to main
+├── workflows/check-generated.yml   PR check: fails if components.js or SVG serialization is stale
+├── ISSUE_TEMPLATE/config.yml  points non-collaborators to Discussions
+├── PULL_REQUEST_TEMPLATE.md   contributor checklist
+└── dependabot.yml             weekly github-actions version bumps
 ```
 
 ## Appendix: deploy internals

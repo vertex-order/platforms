@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="./support.js"></script>
-<script src="./data/platform-legend.js"></script>
+<script src="./data/platform-icons.js"></script>
 <script src="./data/help-wanted.js"></script>
 <script>
   /* components.js is a generated bundle that inlines every sibling *.dc.html so
@@ -89,7 +89,7 @@ a:hover { color: var(--color-accent); text-decoration: underline; }
     <div style="position: relative; margin: 0 0 var(--space-8);">
       <div style="position: absolute; inset: 0; pointer-events: none; background-color: var(--color-accent); -webkit-mask-image: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='84'%3E%3Crect x='0' y='14' width='28' height='2' fill='white'/%3E%3Crect x='0' y='50' width='28' height='2' fill='white'/%3E%3C/svg%3E&quot;); mask-image: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='84'%3E%3Crect x='0' y='14' width='28' height='2' fill='white'/%3E%3Crect x='0' y='50' width='28' height='2' fill='white'/%3E%3C/svg%3E&quot;); -webkit-mask-size: 28px 84px; mask-size: 28px 84px; -webkit-mask-repeat: repeat; mask-repeat: repeat;"></div>
       <div style="position: relative; display: flex; flex-wrap: wrap; align-content: flex-start; row-gap: 16px; column-gap: 16px;">
-        <sc-for list="{{ platformLegend }}" as="pl" hint-placeholder-count="30">
+        <sc-for list="{{ platformIcons }}" as="pl" hint-placeholder-count="30">
           <span data-legend-item="{{ pl.name }}" style="display: flex; align-items: center; justify-content: center; height: 68px; flex: 0 0 auto;">
             <dc-import name="ZoomedPlatformIcon" item-name="{{ pl.name }}" prefix="{{ pl.prefix }}" icon-img="{{ pl.iconImg }}" icon="{{ pl.icon }}" icon-size="{{ pl.iconSize }}" suffix-font-size="{{ pl.suffixFontSize }}" suffix-small-caps="{{ pl.suffixSmallCaps }}" suffix-offset-y="{{ pl.suffixOffsetY }}" img-style="{{ pl.imgStyle }}" text="{{ pl.text }}" suffix="{{ pl.suffix }}" jp-tag="{{ pl.jpTag }}" non-jp-tag="{{ pl.nonJpTag }}" hint-size="auto,40px" style="display: flex;"></dc-import>
           </span>
@@ -100,7 +100,7 @@ a:hover { color: var(--color-accent); text-decoration: underline; }
     <h3 id="page-size-icons" style="font-family: var(--font-heading); font-weight: 500; font-size: 14px; letter-spacing: 0.06em; color: var(--color-neutral-400); margin: 0 0 var(--space-2);">PAGE SIZE ICONS</h3>
     <div style="margin: 0 0 var(--space-8);">
       <span style="display: flex; flex-wrap: wrap; align-items: center; gap: 6px;">
-        <sc-for list="{{ platformLegend }}" as="pl" hint-placeholder-count="30">
+        <sc-for list="{{ platformIcons }}" as="pl" hint-placeholder-count="30">
 <dc-import name="PlatformIcon" item-name="{{ pl.name }}" prefix="{{ pl.prefix }}" icon-img="{{ pl.iconImg }}" icon="{{ pl.icon }}" icon-size="{{ pl.iconSize }}" suffix-font-size="{{ pl.suffixFontSize }}" suffix-small-caps="{{ pl.suffixSmallCaps }}" suffix-offset-y="{{ pl.suffixOffsetY }}" img-style="{{ pl.imgStyle }}" text="{{ pl.text }}" suffix="{{ pl.suffix }}" jp-tag="{{ pl.jpTag }}" non-jp-tag="{{ pl.nonJpTag }}" hint-size="auto,20px" style="display: flex;"></dc-import>
 </sc-for>
       </span>
@@ -116,7 +116,7 @@ a:hover { color: var(--color-accent); text-decoration: underline; }
     <p style="color: var(--color-neutral-500); font-size: 12px; line-height: 1.7; margin: 0;">
       See <a href="https://github.com/vertex-order/platforms/blob/main/NOTICE.md" target="_blank" rel="noopener">NOTICE</a> for icon credits.
     </p>
-    <p style="color: var(--color-neutral-600); font-size: 11px; margin: var(--space-3) 0 0;">&copy; {{ copyrightYearsStr }} Vertex Industries, with help from the community. Content licensed <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener" style="color: var(--color-neutral-500);">CC BY-NC-SA 4.0</a>.</p>
+    <p style="color: var(--color-neutral-600); font-size: 11px; margin: var(--space-3) 0 0;">&copy; {{ copyrightYearsStr }} Vertex Industries, with help from the community. <a href="https://github.com/vertex-order/platforms/blob/main/LICENSE" target="_blank" rel="noopener" style="color: var(--color-neutral-500);">MIT licensed</a> — platform icons remain the property of their owners.</p>
     <p style="color: var(--color-neutral-600); font-size: 11px; margin: var(--space-2) 0 0;">Platform icons may lead to optional affiliate links at no cost to you to help support the maintenance of Vertex Order lists.</p>
     <p style="color: var(--color-neutral-600); font-size: 11px; margin: var(--space-2) 0 0;">Icons considered fair use and only used for communicating historical platform availability at a glance.</p>
     <p style="color: var(--color-neutral-600); font-size: 11px; margin: var(--space-2) 0 0;">Not affiliated with any of the above brands or companies.</p>
@@ -158,9 +158,9 @@ class Component extends DCLogic {
   }
   renderVals() {
     const effectiveTheme = this.state.theme || (this.state.systemLight ? 'light' : 'dark');
-    const platformLegend = (typeof window !== 'undefined' && window.PLATFORM_LEGEND) || [];
+    const platformIcons = (typeof window !== 'undefined' && window.PLATFORM_ICONS) || [];
     return {
-      platformLegend,
+      platformIcons,
       effectiveTheme,
       themeIsLight: effectiveTheme === 'light',
       themeIsDark: effectiveTheme !== 'light',

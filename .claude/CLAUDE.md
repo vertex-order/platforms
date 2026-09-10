@@ -6,22 +6,25 @@ A staging ground for tuning how platform icons render in the Vertex Order
 game listings — sizes, weights, light/dark treatment. Nothing here ships to
 the listings directly.
 
-`data/platform-legend.js` holds the legend (`window.PLATFORM_LEGEND`): one
+`data/platform-icons.js` holds the record (`window.PLATFORM_ICONS`): one
 entry per platform, each an `icon` (Bootstrap Icon class), an `iconImg`
 (path under `images/platforms/`), or a `text` label, plus optional
 `iconSize` / `imgStyle` / `fontSize` / `prefix` / `suffix` / `jpTag`.
-**Those values are the zoomed (~2×) sizes.**
+**Those values are page (1×) size — exactly what `PlatformIcon.dc.html`
+renders in a listing row.**
 
-`Platforms.dc.html` (the entry page) renders the legend twice:
+`Platforms.dc.html` (the entry page) renders that record twice, from the
+same data — the only difference is CSS `zoom`:
 
-- **Zoomed icons** — straight from the legend, via `ZoomedPlatformIcon.dc.html`,
-  on ruled guide lines. This is the view you tune.
-- **Page size icons** — through `PlatformIcon.dc.html` (the component the
-  real site uses), fed the legend with `iconSize` and every `Npx` in
-  `imgStyle` halved (`toPageSize()` in `Platforms.dc.html`). Bootstrap
-  glyphs are fixed by the components: 32px zoomed, 16px page size.
+- **Zoomed icons** — via `ZoomedPlatformIcon.dc.html`, which passes
+  `scale` (default 2) to `PlatformIcon` so it renders itself at 2× via
+  `zoom`, on ruled guide lines. This is the view you tune.
+- **Page size icons** — straight through `PlatformIcon.dc.html` (the
+  component the real site uses) at `scale` 1.
 
-Edit `platform-legend.js` and the `*.dc.html` files. Don't hand-edit
+Bootstrap glyphs are a fixed 16px in `PlatformIcon` (32px after the 2× zoom).
+
+Edit `platform-icons.js` and the `*.dc.html` files. Don't hand-edit
 `support.js`, `components.js`, or anything under `_ds/` except `styles.css`.
 
 The **Help Wanted** list is `data/help-wanted.js` (`window.HELP_WANTED_ITEMS`,
