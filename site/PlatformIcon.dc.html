@@ -10,27 +10,26 @@
 
 <helmet>
 <style>
-/* Theme-dependent icon tints. These rely on an ancestor with a data-theme
-   attribute (set by the consuming page's light/dark toggle) — with no such
-   ancestor, icons render in their default (dark-mode-friendly) colors.
-   Icons sharing the flat brand-agnostic tint filter get a darker variant
-   for light backgrounds; icons with no filter by default (their own
-   light-grey brand color) get the same darker tint added only in light mode. */
-[data-theme="light"] img[style*="invert(80%) sepia(15%)"] { filter: brightness(0) saturate(100%) invert(35%) sepia(10%) saturate(400%) hue-rotate(195deg) !important; }
-[data-theme="light"] img[style*="invert(100%)"] { filter: brightness(0) saturate(100%) !important; }
-[data-theme="light"] img[alt="GOG (PC)"],
-[data-theme="light"] img[alt="Epic Games Store (PC)"],
-[data-theme="light"] img[alt="Fan Translation"],
-[data-theme="light"] img[alt="Fan game movie video"],
-[data-theme="light"] img[alt="Fan Audiobook"],
-[data-theme="light"] img[alt="Fan story recap video"],
-[data-theme="light"] img[alt="Fan playthrough video"] { filter: brightness(0) saturate(100%) invert(35%) sepia(10%) saturate(400%) hue-rotate(195deg) !important; }
+/* Canonical icon tint. Every platform <img> gets it by default, so the
+   legend never repeats the filter string and the source SVG's own fill
+   (black, white, light-grey brand color — whatever) stops mattering:
+   brightness(0) flattens it before the tint is applied.
+
+   The light-mode variant relies on an ancestor with a data-theme="light"
+   attribute (set by the consuming page's toggle); with no such ancestor
+   icons keep the dark-mode tint.
+
+   Escape hatch: a `filter:` in the legend entry's imgStyle is inline, so it
+   overrides both rules below — used by nintendo-snes (grayscale, to keep
+   its multi-colour logo readable as luminance rather than a flat blob). */
+.dc-plat-img { filter: brightness(0) saturate(100%) invert(80%) sepia(15%) saturate(200%) hue-rotate(195deg); }
+[data-theme="light"] .dc-plat-img { filter: brightness(0) saturate(100%) invert(35%) sepia(10%) saturate(400%) hue-rotate(195deg); }
 </style>
 </helmet>
 <sc-if value="{{ linked }}" hint-placeholder-val="{{ false }}">
-  <a href="{{ href }}" target="_blank" rel="noopener" title="{{ itemName }}" style="display: flex; align-items: center; flex-shrink: 0; color: var(--color-neutral-300); opacity: 0.85; position: relative;" style-hover="opacity: 1; color: var(--color-accent-300);">
+  <a href="{{ href }}" target="_blank" rel="noopener" title="{{ itemName }}" style="display: flex; align-items: center; flex-shrink: 0; color: var(--color-neutral-300); opacity: 0.85; position: relative; zoom: {{ scale }};" style-hover="opacity: 1; color: var(--color-accent-300);">
     <span style="display: flex; align-items: center; flex-shrink: 0; opacity: {{ contentOpacity }};">
-      <sc-if value="{{ iconImg }}" hint-placeholder-val="{{ false }}"><img src="{{ iconImg }}" alt="{{ itemName }}" width="{{ iconSize }}" height="{{ iconSize }}" style="flex-shrink: 0; max-width: none; {{ imgStyle }}"></sc-if>
+      <sc-if value="{{ iconImg }}" hint-placeholder-val="{{ false }}"><img src="{{ iconImg }}" alt="{{ itemName }}" class="dc-plat-img" width="{{ iconSize }}" height="{{ iconSize }}" style="flex-shrink: 0; max-width: none; {{ imgStyle }}"></sc-if>
       <sc-if value="{{ icon }}" hint-placeholder-val="{{ false }}"><i class="{{ icon }}" style="font-size: 16px;"></i></sc-if>
       <sc-if value="{{ text }}" hint-placeholder-val="{{ false }}"><span style="font-size: 10.8px; padding: 1px 4px; line-height: 1.4;">{{ text }}</span></sc-if>
       <sc-if value="{{ suffix }}" hint-placeholder-val="{{ false }}"><span style="font-size: {{ suffixFontSize }}; margin-left: 3px; line-height: 1; display: flex; align-items: center; margin-top: {{ suffixOffsetY }}px; font-variant: {{ suffixFontVariant }};">{{ suffix }}</span></sc-if>
@@ -41,10 +40,10 @@
   </a>
 </sc-if>
 <sc-if value="{{ unlinkedDefault }}" hint-placeholder-val="{{ true }}">
-  <span title="{{ itemName }}" style="display: flex; align-items: center; flex-shrink: 0; color: var(--color-neutral-300); opacity: 0.85; position: relative;">
+  <span title="{{ itemName }}" style="display: flex; align-items: center; flex-shrink: 0; color: var(--color-neutral-300); opacity: 0.85; position: relative; zoom: {{ scale }};">
     <span style="display: flex; align-items: center; flex-shrink: 0; opacity: {{ contentOpacity }};">
       <sc-if value="{{ prefix }}" hint-placeholder-val="{{ false }}"><span style="font-size: 11px; margin-right: 2px;">{{ prefix }}</span></sc-if>
-      <sc-if value="{{ iconImg }}" hint-placeholder-val="{{ false }}"><img src="{{ iconImg }}" alt="{{ itemName }}" width="{{ iconSize }}" height="{{ iconSize }}" style="flex-shrink: 0; max-width: none; {{ imgStyle }}"></sc-if>
+      <sc-if value="{{ iconImg }}" hint-placeholder-val="{{ false }}"><img src="{{ iconImg }}" alt="{{ itemName }}" class="dc-plat-img" width="{{ iconSize }}" height="{{ iconSize }}" style="flex-shrink: 0; max-width: none; {{ imgStyle }}"></sc-if>
       <sc-if value="{{ icon }}" hint-placeholder-val="{{ false }}"><i class="{{ icon }}" style="font-size: 16px;"></i></sc-if>
       <sc-if value="{{ text }}" hint-placeholder-val="{{ false }}"><span style="font-size: 10.8px; padding: 1px 4px; line-height: 1.4;">{{ text }}</span></sc-if>
       <sc-if value="{{ suffix }}" hint-placeholder-val="{{ false }}"><span style="font-size: {{ suffixFontSize }}; margin-left: 3px; line-height: 1; display: flex; align-items: center; margin-top: {{ suffixOffsetY }}px; font-variant: {{ suffixFontVariant }};">{{ suffix }}</span></sc-if>
@@ -55,9 +54,9 @@
   </span>
 </sc-if>
 <sc-if value="{{ unlinkedMuted }}" hint-placeholder-val="{{ false }}">
-  <span title="{{ itemName }}" style="display: flex; align-items: center; flex-shrink: 0; color: var(--color-neutral-300); position: relative;">
+  <span title="{{ itemName }}" style="display: flex; align-items: center; flex-shrink: 0; color: var(--color-neutral-300); position: relative; zoom: {{ scale }};">
     <span style="display: flex; align-items: center; flex-shrink: 0; opacity: {{ contentOpacity }};">
-      <sc-if value="{{ iconImg }}" hint-placeholder-val="{{ false }}"><img src="{{ iconImg }}" alt="{{ itemName }}" width="{{ iconSize }}" height="{{ iconSize }}" style="flex-shrink: 0; max-width: none; {{ imgStyle }}"></sc-if>
+      <sc-if value="{{ iconImg }}" hint-placeholder-val="{{ false }}"><img src="{{ iconImg }}" alt="{{ itemName }}" class="dc-plat-img" width="{{ iconSize }}" height="{{ iconSize }}" style="flex-shrink: 0; max-width: none; {{ imgStyle }}"></sc-if>
       <sc-if value="{{ icon }}" hint-placeholder-val="{{ false }}"><i class="{{ icon }}" style="font-size: 16px;"></i></sc-if>
       <sc-if value="{{ text }}" hint-placeholder-val="{{ false }}"><span style="font-size: 10.8px; padding: 1px 4px; line-height: 1.4;">{{ text }}</span></sc-if>
       <sc-if value="{{ suffix }}" hint-placeholder-val="{{ false }}"><span style="font-size: {{ suffixFontSize }}; margin-left: 3px; line-height: 1; display: flex; align-items: center; margin-top: {{ suffixOffsetY }}px; font-variant: {{ suffixFontVariant }};">{{ suffix }}</span></sc-if>
@@ -69,7 +68,7 @@
 </sc-if>
 
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 24, &quot;height&quot;: 20}, &quot;href&quot;: {&quot;editor&quot;: null, &quot;default&quot;: null, &quot;tsType&quot;: &quot;string | null&quot;}, &quot;itemName&quot;: {&quot;editor&quot;: null, &quot;default&quot;: &quot;&quot;, &quot;tsType&quot;: &quot;string&quot;}, &quot;prefix&quot;: {&quot;editor&quot;: null, &quot;default&quot;: null, &quot;tsType&quot;: &quot;string | null&quot;}, &quot;iconImg&quot;: {&quot;editor&quot;: null, &quot;default&quot;: &quot;images/platforms/globe.svg&quot;, &quot;tsType&quot;: &quot;string | null&quot;}, &quot;icon&quot;: {&quot;editor&quot;: null, &quot;default&quot;: null, &quot;tsType&quot;: &quot;string | null&quot;}, &quot;iconSize&quot;: {&quot;editor&quot;: null, &quot;default&quot;: 16, &quot;tsType&quot;: &quot;number&quot;}, &quot;imgStyle&quot;: {&quot;editor&quot;: null, &quot;default&quot;: &quot;width: auto; height: 16px; filter: brightness(0) saturate(100%) invert(80%) sepia(15%) saturate(200%) hue-rotate(195deg);&quot;, &quot;tsType&quot;: &quot;string&quot;}, &quot;text&quot;: {&quot;editor&quot;: null, &quot;default&quot;: null, &quot;tsType&quot;: &quot;string | null&quot;}, &quot;suffix&quot;: {&quot;editor&quot;: null, &quot;default&quot;: null, &quot;tsType&quot;: &quot;string | null&quot;}, &quot;suffixFontSize&quot;: {&quot;editor&quot;: null, &quot;default&quot;: null, &quot;tsType&quot;: &quot;string | null&quot;}, &quot;suffixOffsetY&quot;: {&quot;editor&quot;: null, &quot;default&quot;: 0, &quot;tsType&quot;: &quot;number&quot;}, &quot;suffixSmallCaps&quot;: {&quot;editor&quot;: null, &quot;default&quot;: false, &quot;tsType&quot;: &quot;boolean&quot;}, &quot;jpTag&quot;: {&quot;editor&quot;: null, &quot;default&quot;: false, &quot;tsType&quot;: &quot;boolean&quot;}, &quot;nonJpTag&quot;: {&quot;editor&quot;: null, &quot;default&quot;: false, &quot;tsType&quot;: &quot;boolean&quot;}, &quot;contentOpacity&quot;: {&quot;editor&quot;: null, &quot;default&quot;: 1, &quot;tsType&quot;: &quot;number&quot;}, &quot;terminated&quot;: {&quot;editor&quot;: null, &quot;default&quot;: false, &quot;tsType&quot;: &quot;boolean&quot;}, &quot;strikeColor&quot;: {&quot;editor&quot;: null, &quot;default&quot;: null, &quot;tsType&quot;: &quot;string | null&quot;}, &quot;muted&quot;: {&quot;editor&quot;: null, &quot;default&quot;: false, &quot;tsType&quot;: &quot;boolean&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 24, &quot;height&quot;: 20}, &quot;href&quot;: {&quot;editor&quot;: null, &quot;default&quot;: null, &quot;tsType&quot;: &quot;string | null&quot;}, &quot;itemName&quot;: {&quot;editor&quot;: null, &quot;default&quot;: &quot;&quot;, &quot;tsType&quot;: &quot;string&quot;}, &quot;prefix&quot;: {&quot;editor&quot;: null, &quot;default&quot;: null, &quot;tsType&quot;: &quot;string | null&quot;}, &quot;iconImg&quot;: {&quot;editor&quot;: null, &quot;default&quot;: &quot;images/platforms/globe.svg&quot;, &quot;tsType&quot;: &quot;string | null&quot;}, &quot;icon&quot;: {&quot;editor&quot;: null, &quot;default&quot;: null, &quot;tsType&quot;: &quot;string | null&quot;}, &quot;iconSize&quot;: {&quot;editor&quot;: null, &quot;default&quot;: 16, &quot;tsType&quot;: &quot;number&quot;}, &quot;imgStyle&quot;: {&quot;editor&quot;: null, &quot;default&quot;: &quot;width: auto; height: 16px;&quot;, &quot;tsType&quot;: &quot;string&quot;}, &quot;scale&quot;: {&quot;editor&quot;: null, &quot;default&quot;: 1, &quot;tsType&quot;: &quot;number&quot;}, &quot;text&quot;: {&quot;editor&quot;: null, &quot;default&quot;: null, &quot;tsType&quot;: &quot;string | null&quot;}, &quot;suffix&quot;: {&quot;editor&quot;: null, &quot;default&quot;: null, &quot;tsType&quot;: &quot;string | null&quot;}, &quot;suffixFontSize&quot;: {&quot;editor&quot;: null, &quot;default&quot;: null, &quot;tsType&quot;: &quot;string | null&quot;}, &quot;suffixOffsetY&quot;: {&quot;editor&quot;: null, &quot;default&quot;: 0, &quot;tsType&quot;: &quot;number&quot;}, &quot;suffixSmallCaps&quot;: {&quot;editor&quot;: null, &quot;default&quot;: false, &quot;tsType&quot;: &quot;boolean&quot;}, &quot;jpTag&quot;: {&quot;editor&quot;: null, &quot;default&quot;: false, &quot;tsType&quot;: &quot;boolean&quot;}, &quot;nonJpTag&quot;: {&quot;editor&quot;: null, &quot;default&quot;: false, &quot;tsType&quot;: &quot;boolean&quot;}, &quot;contentOpacity&quot;: {&quot;editor&quot;: null, &quot;default&quot;: 1, &quot;tsType&quot;: &quot;number&quot;}, &quot;terminated&quot;: {&quot;editor&quot;: null, &quot;default&quot;: false, &quot;tsType&quot;: &quot;boolean&quot;}, &quot;strikeColor&quot;: {&quot;editor&quot;: null, &quot;default&quot;: null, &quot;tsType&quot;: &quot;string | null&quot;}, &quot;muted&quot;: {&quot;editor&quot;: null, &quot;default&quot;: false, &quot;tsType&quot;: &quot;boolean&quot;}}">
 class Component extends DCLogic {
   renderVals() {
     const linked = !!this.props.href;
@@ -82,6 +81,7 @@ class Component extends DCLogic {
       suffixFontVariant: this.props.suffixSmallCaps ? 'small-caps' : 'normal',
       suffixOffsetY: this.props.suffixOffsetY || 0,
       strikeColor: this.props.strikeColor || 'var(--color-neutral-500)',
+      scale: this.props.scale || 1,
     };
   }
 }
