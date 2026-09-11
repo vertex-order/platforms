@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+# Owned by vertex-order/platforms — edit here. Vendored elsewhere via
+# sync.toml; don't edit the copy there.
 """Strip embedded C2PA content-credential metadata from image assets.
 
 Claude Design exports (and similar tools) embed a C2PA provenance

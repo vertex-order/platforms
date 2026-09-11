@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+# Owned by vertex-order/platforms — edit here. Vendored elsewhere via
+# sync.toml; don't edit the copy there.
 """Second SVG trim pass: drop path subpaths that lie entirely outside the
 viewBox.
 
@@ -377,7 +379,7 @@ def iter_svgs(paths):
 
 
 def main(argv):
-    targets = argv or ["site/images/platforms"]
+    targets = argv or ["site/images"]
     changed = 0
     for svg in iter_svgs(targets):
         res = trim_svg(str(svg))

@@ -5,7 +5,12 @@ set -e
 
 root=$(git rev-parse --show-toplevel)
 
-# 1. Strip C2PA provenance metadata from staged PNG/SVG assets, and normalize
+# 1. Guard: refuse a commit that hand-edits a vendored file (sync.toml
+#    [subscribe.*]) so it no longer matches its source. A real sync commit
+#    (just sync, then commit) always matches, so it always passes.
+python3 "$root/scripts/sync.py" --check-staged
+
+# 2. Strip C2PA provenance metadata from staged PNG/SVG assets, and normalize
 #    SVG empty elements to self-closing form (the icons and Claude Design's
 #    exporter are inconsistent) for stable check-ins.
 staged_img=$(git diff --cached --name-only --diff-filter=ACM -- '*.png' '*.svg')
@@ -15,7 +20,7 @@ if [ -n "$staged_img" ]; then
 	git add $staged_img
 fi
 
-# 2. Regenerate site/components.js when a sibling component changes.
+# 3. Regenerate site/components.js when a sibling component changes.
 staged_dc=$(git diff --cached --name-only --diff-filter=ACMD -- 'site/*.dc.html' | grep -v '^site/Platforms\.dc\.html$' || true)
 if [ -n "$staged_dc" ]; then
 	python3 "$root/scripts/bundle-components.py"

@@ -1,0 +1,21 @@
+# Fail a PR (or a push to main that bypassed the pre-commit guard) whose
+# vendored files (sync.toml [subscribe.*]) have drifted from their source
+# repo at the pinned ref — hand-edited, or the ref moved without a resync.
+# Fix: `just sync` and commit the result.
+name: Check vendored files
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  vendored:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Check vendored files against their sources
+        run: python3 scripts/sync.py --check

@@ -640,29 +640,8 @@ released under **[MIT](LICENSE)** with the rest of the repo.
 
 ## Interface icons
 
-UI chrome glyphs — not `platform-icons.js` entries. One section per icon,
-**alphabetical by icon name**. Same fields as above.
-
-### arrow-up
-
-- **Shown as:** Back-to-top button
-- **Asset:** `images/ui/arrow-up.svg`
-- **Exact URL:** https://icons.getbootstrap.com/icons/arrow-up/
-- **License:** [MIT](https://github.com/twbs/bootstrap/blob/main/LICENSE)
-- **Attribution:** [Bootstrap Icons](https://icons.getbootstrap.com/)
-
-### moon-stars
-
-- **Shown as:** Theme toggle (dark mode)
-- **Asset:** `images/ui/moon-stars.svg`
-- **Exact URL:** https://icons.getbootstrap.com/icons/moon-stars/
-- **License:** [MIT](https://github.com/twbs/bootstrap/blob/main/LICENSE)
-- **Attribution:** [Bootstrap Icons](https://icons.getbootstrap.com/)
-
-### sun
-
-- **Shown as:** Theme toggle (light mode)
-- **Asset:** `images/ui/sun.svg`
-- **Exact URL:** https://icons.getbootstrap.com/icons/sun/
-- **License:** [MIT](https://github.com/twbs/bootstrap/blob/main/LICENSE)
-- **Attribution:** [Bootstrap Icons](https://icons.getbootstrap.com/)
+The UI chrome glyphs (`site/images/ui/` — back-to-top, theme toggle) and the
+components that use them are owned by
+[vertex-order/kit](https://github.com/vertex-order/kit) and pulled in from
+there. Their sources and terms are recorded in that repo's
+[NOTICE.md](https://github.com/vertex-order/kit/blob/main/NOTICE.md).

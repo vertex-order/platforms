@@ -10,6 +10,18 @@ build: strip-metadata normalize-svg bundle-components
 bundle-components:
     python3 scripts/bundle-components.py
 
+# Pull vendored files from the repos in sync.toml [subscribe.*].
+sync:
+    python3 scripts/sync.py
+
+# CI check: fail if any vendored file drifted from its source.
+sync-check:
+    python3 scripts/sync.py --check
+
+# Repin a subscription's ref to its current HEAD sha, then pull it.
+sync-update name:
+    python3 scripts/sync.py --update {{name}}
+
 # Build then serve build/ locally, like the real deploy.
 serve: build
     cd build && python -m http.server 8000

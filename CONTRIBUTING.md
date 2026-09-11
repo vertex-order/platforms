@@ -13,6 +13,7 @@ edit, preview in a browser, open a PR.
 - [Edit page copy](#edit-page-copy)
 - [Restyle](#restyle)
 - [Edit a `.dc.html` component](#edit-a-dchtml-component)
+- [Cross-repo sync](#cross-repo-sync)
 - [Preview locally](#preview-locally)
 - [Open a PR](#open-a-pr)
 - [Licensing](#licensing)
@@ -138,9 +139,12 @@ something there needs to change.
 
 ## Edit a `.dc.html` component
 
-The sibling components — `PlatformIcon.dc.html`, `ZoomedPlatformIcon.dc.html`,
-`BackToTop.dc.html`, `HelpWanted.dc.html` — are the render layer. If you
-change one, regenerate
+**Owned here:** `PlatformIcon.dc.html`, `ZoomedPlatformIcon.dc.html`,
+`Platforms.dc.html`. **Vendored from [`vertex-order/kit`](https://github.com/vertex-order/kit)**
+(don't edit here — see [Cross-repo sync](#cross-repo-sync)):
+`BackToTop.dc.html`, `HelpWanted.dc.html`, plus `support.js` and `_ds/`.
+
+If you change an owned component, regenerate
 [`site/components.js`](site/components.js) — a build artifact that inlines
 every component so `Platforms.dc.html` also works opened straight off disk
 (`file://`):
@@ -164,10 +168,34 @@ a refresh shows the *bundled* copy — regenerate before you reload.
 design tool)? See the header comment at the top of `components.js` for the
 by-hand procedure, and [`.claude/CLAUDE.md`](.claude/CLAUDE.md).
 
-`PlatformIcon.dc.html` is meant to stay in sync with the same-named
-component in the other Vertex Order repos — it is the whole point of the
-Page size grid. Change it here only to prototype a change you will make
-there too.
+`PlatformIcon.dc.html` is owned here and pulled by `kit` (and, via kit, by
+every list repo) — it is the whole point of the Page size grid. A change to
+it ships everywhere, so test it against real data before you PR.
+
+## Cross-repo sync
+
+This repo owns the **platform-icon micro-kit** (`PlatformIcon.dc.html`,
+`platform-icons.js`, `images/platforms/`, the SVG scripts, `svgo.config.mjs`)
+and vendors the **build substrate** (`support.js`, `_ds/`, `images/ui/`,
+`BackToTop.dc.html`, `HelpWanted.dc.html`, `bundle-components.py`, `sync.py`)
+from [`vertex-order/kit`](https://github.com/vertex-order/kit).
+[`sync.toml`](sync.toml) is the manifest.
+
+- `just sync` — pull the vendored files at the pinned `ref`.
+- `just sync-check` — what CI runs
+  ([`check-vendored.yml`](.github/workflows/check-vendored.yml)); fails on drift.
+- `just sync-update kit` — repin to kit's current HEAD, then pull.
+
+Never hand-edit a vendored file. To change one, change it in `kit`, then
+`just sync-update kit` here. A change that spans both repos: land the kit
+side first, `sync-update kit`, then land the platforms side.
+
+Three things stop a hand edit from landing: a `Owned by vertex-order/kit —
+edit here` header comment on the file itself (where the format allows one),
+a pre-commit guard (`sync.py --check-staged`) that refuses to commit a
+vendored file that no longer matches its source, and the same check in CI.
+None of them stop you from *making* the edit locally — only from committing
+or merging it — so still read the header comment before you type.
 
 ## Preview locally
 
@@ -224,39 +252,40 @@ issues are for collaborators.
 
 ## Appendix: repo layout
 
+Owned here (edit these):
+
 ```
 site/
 ├── Platforms.dc.html        entry page: copy, both icon grids, render/logic
-├── PlatformIcon.dc.html     page-size icon component (kept in sync with the other repos)
-├── ZoomedPlatformIcon.dc.html   2x version, for tuning
-├── BackToTop.dc.html        floating back-to-top control
-├── HelpWanted.dc.html       renders the Help Wanted list
-├── components.js            AUTO-GENERATED from the *.dc.html above — don't hand-edit
-├── support.js               vendored DC runtime — don't hand-edit
+├── PlatformIcon.dc.html     page-size icon component — pulled by kit + every list
+├── ZoomedPlatformIcon.dc.html   2x wrapper, tuning only (kit doesn't need it)
 ├── data/
-│   ├── platform-icons.js    window.PLATFORM_ICONS — the platform record (edit this)
-│   └── help-wanted.js       window.HELP_WANTED_ITEMS — the Help Wanted list (edit this)
-├── images/
-│   ├── platforms/           platform icons referenced by platform-icons.js
-│   └── ui/                   page-chrome glyphs (reference copies; inlined into the components)
-└── _ds/nocturne-.../
-    ├── styles.css           design tokens + component classes (safe to edit)
-    ├── readme.md            design-system guide — read before restyling
-    └── _ds_*                vendored runtime/manifest — don't hand-edit
+│   ├── platform-icons.js    window.PLATFORM_ICONS — the platform record
+│   └── help-wanted.js       window.HELP_WANTED_ITEMS — the Help Wanted list
+└── images/platforms/        platform icons referenced by platform-icons.js
+scripts/{strip-c2pa,normalize-svg,trim-svg}.py   image metadata / SVG canonicalize / one-time trim
+svgo.config.mjs              config for `just trim-svg`
+sync.toml                    cross-repo file-sync manifest
+justfile, .githooks/pre-commit, .github/  build glue + CI
+```
 
-scripts/bundle-components.py   regenerates site/components.js
-scripts/strip-c2pa.py          strips provenance metadata from images
-scripts/normalize-svg.py       canonicalizes SVG serialization (self-closing tags)
-scripts/trim-svg.py            one-time: drops path subpaths that fall outside the viewBox
-svgo.config.mjs                config for the one-time `just trim-svg` svgo pass
-justfile                       build / bundle-components / serve / clean / install-hooks / normalize-svg / trim-svg
-.githooks/pre-commit           strips image metadata, normalizes SVGs, regenerates components.js
-.github/
-├── workflows/static.yml       build + deploy site/ to Pages on push to main
-├── workflows/check-generated.yml   PR check: fails if components.js or SVG serialization is stale
-├── ISSUE_TEMPLATE/config.yml  points non-collaborators to Discussions
-├── PULL_REQUEST_TEMPLATE.md   contributor checklist
-└── dependabot.yml             weekly github-actions version bumps
+Vendored from [`vertex-order/kit`](https://github.com/vertex-order/kit) via
+`just sync` — **don't hand-edit** (see [Cross-repo sync](#cross-repo-sync)):
+
+```
+site/support.js, site/_ds/, site/images/ui/,
+site/BackToTop.dc.html, site/HelpWanted.dc.html,
+scripts/bundle-components.py, scripts/sync.py
+```
+
+Generated (`just bundle-components`): `site/components.js`.
+
+```
+.github/workflows/
+├── static.yml            build + deploy site/ to Pages on push to main
+├── check-generated.yml   PR check: components.js / SVG serialization stale
+└── check-vendored.yml    PR check: a vendored file drifted from kit
+```
 ```
 
 ## Appendix: deploy internals

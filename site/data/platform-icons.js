@@ -1,3 +1,6 @@
+// Owned by vertex-order/platforms — edit here. Vendored elsewhere via
+// sync.toml; don't edit the copy there.
+//
 // Platform icon entries — how each platform renders in a Vertex Order
 // listing row, consumed by the row icons and the standalone Platforms page.
 // Sizes/styles here are PAGE size (1x, as PlatformIcon.dc.html renders them);

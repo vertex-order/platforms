@@ -1,0 +1,44 @@
+# sync.toml — cross-repo file sync. Read by scripts/sync.py (`just sync`).
+# See AGENTS.md → "Cross-repo sync" and CONTRIBUTING.md.
+#
+# [publish]      — what THIS repo owns and other repos pull. Documentation;
+#                  sync.py only uses it to refuse clobbering an owned path.
+# [subscribe.*]  — what THIS repo vendors FROM elsewhere. sync.py fetches these
+#                  at `ref` and writes them into the tree. Vendored copies —
+#                  never hand-edit; edit them in the owning repo.
+#                  check-vendored.yml fails the PR if any has drifted.
+
+[publish]
+owner = "vertex-order/platforms"
+# The platform-icon micro-kit: the component, its data, its artwork, and the
+# SVG tooling that maintains the artwork. kit pulls all of this; lists get it
+# transitively via kit.
+paths = [
+  "site/PlatformIcon.dc.html",
+  "site/data/platform-icons.js",
+  "site/images/platforms/",
+  "scripts/normalize-svg.py",
+  "scripts/strip-c2pa.py",
+  "scripts/trim-svg.py",
+  "svgo.config.mjs",
+]
+# platforms-only, not published: site/Platforms.dc.html (the tuning bench),
+# site/ZoomedPlatformIcon.dc.html (2x wrapper — kit doesn't need it).
+
+[publish.consumers]  # for humans; sync.py ignores this
+"vertex-order/kit" = "pulls every path above; re-bundles PlatformIcon into its own components.js"
+"vertex-order/<list>" = "gets them transitively via kit"
+
+[subscribe.kit]
+repo = "vertex-order/kit"
+ref  = "main"   # pin to a commit SHA / tag for reproducibility: `just sync-update kit`
+paths = [
+  "site/_ds/",
+  "site/images/ui/",
+  "site/support.js",
+  "site/BackToTop.dc.html",
+  "site/HelpWanted.dc.html",
+  "scripts/bundle-components.py",
+  "scripts/sync.py",
+]
+# TODO: add the theme-swap component here once kit factors it out of its page.

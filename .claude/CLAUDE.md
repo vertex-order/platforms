@@ -24,11 +24,18 @@ same data — the only difference is CSS `zoom`:
 
 Bootstrap glyphs are a fixed 16px in `PlatformIcon` (32px after the 2× zoom).
 
-Edit `platform-icons.js` and the `*.dc.html` files. Don't hand-edit
-`support.js`, `components.js`, or anything under `_ds/` except `styles.css`.
+This repo **owns** `platform-icons.js`, `PlatformIcon.dc.html`,
+`ZoomedPlatformIcon.dc.html`, `Platforms.dc.html`, `images/platforms/`, and
+the SVG scripts. Edit those. It **vendors** `support.js`, `_ds/`,
+`images/ui/`, `BackToTop.dc.html`, `HelpWanted.dc.html`,
+`bundle-components.py`, and `sync.py` from `vertex-order/kit` — never
+hand-edit those; `sync.toml` is the manifest and `check-vendored.yml`
+enforces it. Full-checkout tooling: `just sync` / `sync-update`; in a design
+tool the vendored files are just the last-synced committed copies.
+`components.js` stays generated — don't hand-edit it either.
 
 The **Help Wanted** list is `data/help-wanted.js` (`window.HELP_WANTED_ITEMS`,
-one string per item); `HelpWanted.dc.html` only renders it.
+one string per item); `HelpWanted.dc.html` (vendored from kit) renders it.
 
 ## Platform icon SVGs
 

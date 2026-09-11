@@ -1,3 +1,6 @@
+// Owned by vertex-order/platforms — edit here. Vendored elsewhere via
+// sync.toml; don't edit the copy there.
+//
 // One-time SVG trimming config — used by `just trim-svg`, NOT part of `build`.
 //
 // svgo strips what our two build-time passes (strip-c2pa.py, normalize-svg.py)
@@ -6,8 +9,8 @@
 // inline style="" props, and excess coordinate precision.
 //
 // Everything here CAN change rendering. After running, eyeball every changed
-// icon in Platforms.dc.html — BOTH the zoomed row and the page-size row — and
-// diff the SVGs before committing. Retest priority:
+// icon wherever it renders — at every size it renders at — and diff the SVGs
+// before committing. Retest priority:
 //   1. removeDimensions — icons lose width/height, now scale to their box.
 //   2. convertStyleToAttrs — style="fill:#fff" becomes fill="#fff"; watch for
 //      dropped shorthand.
@@ -17,8 +20,8 @@
 // normalize-svg.py afterward so the check-in form is guaranteed.
 //
 // What svgo does NOT do: prune path subpaths that sit fully outside the
-// viewBox (e.g. the "NINTENDO SWITCH" wordmark hiding in nintendo-switch.svg).
-// That needs a geometry-aware pass — a future scripts/trim-svg.py.
+// viewBox (e.g. a wordmark left behind by a crop). That needs the
+// geometry-aware pass in scripts/trim-svg.py.
 
 export default {
   multipass: true,

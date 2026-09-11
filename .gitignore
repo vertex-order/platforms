@@ -9,6 +9,10 @@ build/
 # auto-generated thumbnail cache
 .thumbnail
 
+# Python bytecode cache
+__pycache__/
+*.pyc
+
 site/github.md
 site/CLAUDE.md
 site/.claude/

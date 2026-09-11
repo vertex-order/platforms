@@ -1,5 +1,8 @@
 # Nocturne design system
 
+> Owned by vertex-order/kit — edit here. Vendored elsewhere via sync.toml;
+> don't edit the copy there.
+
 Nocturne is a quiet, compact dark interface: a near-neutral blue-grey ground, Inter at medium weight, soft 8px radii and an accent used as a line and a glow rather than a flood. Rules fade to transparent at their ends — over 48px a side — rather than stopping cleanly; short accent marks stay solid. Contrast comes from the tonal ramps, not from saturation, and photographs blend into the page with their dark values falling away.
 
 ## How to use this

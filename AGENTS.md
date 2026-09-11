@@ -29,9 +29,9 @@ CSS `zoom`, on ruled guide lines) and a **Page size** grid straight through
 the real `PlatformIcon.dc.html` at `scale` 1. Bootstrap glyphs are a fixed
 16px in `PlatformIcon` (32px after the 2× zoom).
 
-The entry page is **`Platforms.dc.html`**, not `page.dc.html` — this repo
-diverges from the other Vertex Order repos there (see the note in
-[`scripts/bundle-components.py`](scripts/bundle-components.py)).
+The entry page here is **`Platforms.dc.html`** (elsewhere it's `page.dc.html`).
+`bundle-components.py` detects the entry page — any `*.dc.html` that
+references `components.js` — so the shared script needs no per-repo config.
 
 ## The one rule that bites
 
@@ -58,13 +58,51 @@ diff-clean and CI green.
 
 ## What's editable vs vendored
 
-| Editable | Vendored / generated — don't hand-edit |
+| Editable (owned here) | Vendored — don't hand-edit |
 | --- | --- |
-| `site/data/platform-icons.js` (the platform record) | `site/components.js` (generated) |
-| `site/*.dc.html` (page + render components) | `site/support.js` |
-| `NOTICE.md` (third-party icon attribution — keep in step with `platform-icons.js`) | |
-| `site/_ds/*/styles.css` (design tokens) | `site/_ds/*/_ds_bundle.js`, `_ds_manifest.json` |
-| `site/images/platforms/` | `site/_ds/*/_adherence.oxlintrc.json` |
+| `site/data/platform-icons.js` (the platform record) | `site/components.js` (generated — `just bundle-components`) |
+| `site/PlatformIcon.dc.html`, `ZoomedPlatformIcon.dc.html`, `Platforms.dc.html` | `site/support.js`, `site/_ds/`, `site/images/ui/` (from kit) |
+| `site/images/platforms/` | `site/BackToTop.dc.html`, `site/HelpWanted.dc.html` (from kit) |
+| `NOTICE.md`, `scripts/{normalize-svg,strip-c2pa,trim-svg}.py`, `svgo.config.mjs` | `scripts/bundle-components.py`, `scripts/sync.py` (from kit) |
+
+## Cross-repo sync
+
+This repo and [`vertex-order/kit`](https://github.com/vertex-order/kit) each
+**own** some files and **vendor** others from the other — a deliberate
+two-way pull. [`sync.toml`](sync.toml) is the manifest:
+
+- `[publish]` — the platform-icon micro-kit (`PlatformIcon.dc.html`,
+  `platform-icons.js`, `images/platforms/`, the SVG scripts, `svgo.config.mjs`).
+  kit pulls all of it; the list repos get it transitively via kit.
+- `[subscribe.kit]` — what we vendor from kit: the DC runtime, Nocturne
+  (`_ds/`), the generic components, `bundle-components.py`, `sync.py`.
+
+`just sync` pulls the subscribed files at the pinned `ref`. `just sync-check`
+(and `.github/workflows/check-vendored.yml` on every PR) fails if a vendored
+file has drifted. `just sync-update kit` repins to kit's current HEAD.
+
+**Never edit a vendored file here** — change it in kit, then `just sync-update kit`.
+Three guards back that up:
+
+1. **A header comment**, where the file format allows one — `Owned by
+   vertex-order/kit — edit here. Vendored elsewhere via sync.toml; don't edit
+   the copy there.` (Not on `*.svg` or JSON — no room without breaking the
+   icon-minification policy or the format.)
+2. **Pre-commit guard** — `sync.py --check-staged` (wired into
+   `.githooks/pre-commit`) refuses to commit a staged vendored file that no
+   longer matches its source. A real sync commit always matches, so it always
+   passes; a hand edit doesn't.
+3. **CI** — `check-vendored.yml` runs the same check on every PR and on push
+   to `main`, catching anything committed without the hook (`--no-verify`,
+   web UI, a design-tool sync).
+
+**A change spanning both repos** (e.g. a new `PlatformIcon` prop that needs a
+Nocturne token): land the kit-side piece first → `just sync-update kit` here →
+land the `PlatformIcon` change here → in kit, `just sync-update platforms`.
+
+Design tool (no shell): `sync.py` can't run; the vendored files are just the
+last-synced committed copies — same story as `components.js`. The header
+comment is the one guard still visible there.
 
 ## Build / preview / deploy
 
