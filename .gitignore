@@ -2,6 +2,7 @@
 
 # scratch space for fresh Claude Design exports before extracting into site/
 _reference/
+_references/
 
 # workflow build output (generated in CI, never committed)
 build/
