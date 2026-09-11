@@ -41,7 +41,7 @@ plus optional `prefix`, `suffix`, `jpTag`, `name` (the hover title).
 **The sizes in this file are page (1×) size** — exactly what
 `PlatformIcon.dc.html` renders in a listing row, copied straight across.
 
-[`site/Platforms.dc.html`](site/Platforms.dc.html) renders the list twice
+[`site/page.dc.html`](site/page.dc.html) renders the list twice
 from the same data — the only difference is CSS `zoom`:
 
 - **Zoomed icons** — the same entries at 2×, on ruled guide lines, easier to
@@ -62,7 +62,7 @@ copy the number you landed on into the real site's data as-is.
 ```sh
 git clone https://github.com/vertex-order/platforms
 cd platforms
-# open site/Platforms.dc.html in a browser — done, no build step
+# open site/page.dc.html in a browser — done, no build step
 ```
 
 Optional: install [`just`](https://github.com/casey/just) for the
@@ -79,7 +79,7 @@ Edit the entry in
 - **Image size** — `iconSize` is the rendered height in px; keep the
   `height: Npx` inside `imgStyle` in step with it. The `imgStyle` filter
   chain is what tints an icon to match the text colour (and the
-  `[data-theme="light"]` rules in `Platforms.dc.html` re-tint it for light
+  `[data-theme="light"]` rules in `page.dc.html` re-tint it for light
   mode — match an existing icon's filter so both themes work).
 - **Text label size** — `fontSize` (e.g. `'21.5px'`).
 - **Bootstrap glyph size** — not per-entry; change the `font-size` in
@@ -105,14 +105,14 @@ Reload the page. Data-only edits need no rebuild.
 2. Add an entry to `PLATFORM_ICONS` in `platform-icons.js` — copy a
    neighbouring entry of the same kind as a template.
 3. Add the source to the **Credits** list in
-   [`site/Platforms.dc.html`](site/Platforms.dc.html), and add a section for
+   [`site/page.dc.html`](site/page.dc.html), and add a section for
    it in [`NOTICE.md`](NOTICE.md) (the authoritative attribution record —
    alphabetical by platform name).
 
 ## Edit page copy
 
 Title, intro, section headings, credits, copyright:
-[`site/Platforms.dc.html`](site/Platforms.dc.html). It is readable HTML with
+[`site/page.dc.html`](site/page.dc.html). It is readable HTML with
 `{{ expression }}` template bindings, evaluated at runtime by `support.js`.
 The `.dc.html` naming is just the format Claude Design imports/exports — you
 don't need the tool to edit it.
@@ -130,7 +130,7 @@ folder's [`readme.md`](site/_ds/nocturne-dd511f00-0314-498c-83ef-49f001a371b0/re
 first — it documents the system's conventions and a do/don't list.
 
 The light-mode palette and the light-mode image-filter overrides live in the
-`<style>` block of `Platforms.dc.html` itself.
+`<style>` block of `page.dc.html` itself.
 
 The rest of `_ds/` (`_ds_bundle.js`, `_ds_manifest.json`,
 `_adherence.oxlintrc.json`) is vendored — don't hand-edit; start a
@@ -140,13 +140,13 @@ something there needs to change.
 ## Edit a `.dc.html` component
 
 **Owned here:** `PlatformIcon.dc.html`, `ZoomedPlatformIcon.dc.html`,
-`Platforms.dc.html`. **Vendored from [`vertex-order/kit`](https://github.com/vertex-order/kit)**
+`page.dc.html`. **Vendored from [`vertex-order/kit`](https://github.com/vertex-order/kit)**
 (don't edit here — see [Cross-repo sync](#cross-repo-sync)):
 `BackToTop.dc.html`, `HelpWanted.dc.html`, plus `support.js` and `_ds/`.
 
 If you change an owned component, regenerate
 [`site/components.js`](site/components.js) — a build artifact that inlines
-every component so `Platforms.dc.html` also works opened straight off disk
+every component so `page.dc.html` also works opened straight off disk
 (`file://`):
 
 ```sh
@@ -158,7 +158,7 @@ and CI ([`check-generated.yml`](.github/workflows/check-generated.yml))
 fails your PR if it's stale — so if you forget, run `just bundle-components`
 and commit the result.
 
-`Platforms.dc.html` loads `components.js` **only over `file://`**. When you
+`page.dc.html` loads `components.js` **only over `file://`**. When you
 preview over http (`just serve`, `python -m http.server`, any static
 server) the runtime fetches each `*.dc.html` live, so your component edits
 show up on reload whether or not you regenerated the bundle. Opened off disk,
@@ -174,12 +174,22 @@ it ships everywhere, so test it against real data before you PR.
 
 ## Cross-repo sync
 
-This repo owns the **platform-icon micro-kit** (`PlatformIcon.dc.html`,
-`platform-icons.js`, `images/platforms/`, the SVG scripts, `svgo.config.mjs`)
-and vendors the **build substrate** (`support.js`, `_ds/`, `images/ui/`,
-`BackToTop.dc.html`, `HelpWanted.dc.html`, `bundle-components.py`, `sync.py`)
-from [`vertex-order/kit`](https://github.com/vertex-order/kit).
+This repo owns just the **platform-icon micro-kit** (`PlatformIcon.dc.html`,
+`platform-icons.js`, `images/platforms/`) and vendors essentially everything
+else — the DC runtime, Nocturne (`_ds/`, `images/ui/`), the generic
+components (`BackToTop.dc.html`, `HelpWanted.dc.html`), every script
+(`bundle-components.py`, `sync.py`, and the SVG tooling —
+`normalize-svg.py`, `strip-c2pa.py`, `trim-svg.py`, `svgo.config.mjs`),
+the `justfile` itself, and CI/editor config with no reason to differ per repo — from
+[`vertex-order/kit`](https://github.com/vertex-order/kit). kit owns as much
+as it honestly can, so pulling it gets you the whole toolkit in one go.
 [`sync.toml`](sync.toml) is the manifest.
+
+Not vendored, on purpose: `.github/ISSUE_TEMPLATE/*` and
+`.github/PULL_REQUEST_TEMPLATE.md`. Both necessarily carry this repo's own
+Discussions URL (and the PR template has icon-grid-specific checklist
+lines), so they can never be byte-identical to kit's copy — seeded from it
+once, then kept locally.
 
 - `just sync` — pull the vendored files at the pinned `ref`.
 - `just sync-check` — what CI runs
@@ -199,7 +209,7 @@ or merging it — so still read the header comment before you type.
 
 ## Preview locally
 
-Simplest — open [`site/Platforms.dc.html`](site/Platforms.dc.html) directly
+Simplest — open [`site/page.dc.html`](site/page.dc.html) directly
 in a browser (`file://`). `components.js` plus the classic-script
 `platform-icons.js` make that work with no server. Off disk the page depends on `components.js`
 being current, so run `just bundle-components` after editing any `*.dc.html`.
@@ -209,12 +219,12 @@ regen — serve `site/` over http:
 
 ```sh
 cd site && python -m http.server 8000
-# http://localhost:8000/Platforms.dc.html
+# http://localhost:8000/page.dc.html
 ```
 
 Any static server works (`npx serve`, VS Code Live Server, …). With `just`:
 `just serve` runs the exact copy-and-rename step CI uses
-(`site/` → `build/`, `Platforms.dc.html` → `index.html`), so you preview the
+(`site/` → `build/`, `page.dc.html` → `index.html`), so you preview the
 real deploy output.
 
 ## Open a PR
@@ -256,18 +266,18 @@ Owned here (edit these):
 
 ```
 site/
-├── Platforms.dc.html        entry page: copy, both icon grids, render/logic
+├── page.dc.html        entry page: copy, both icon grids, render/logic
 ├── PlatformIcon.dc.html     page-size icon component — pulled by kit + every list
 ├── ZoomedPlatformIcon.dc.html   2x wrapper, tuning only (kit doesn't need it)
 ├── data/
 │   ├── platform-icons.js    window.PLATFORM_ICONS — the platform record
 │   └── help-wanted.js       window.HELP_WANTED_ITEMS — the Help Wanted list
 └── images/platforms/        platform icons referenced by platform-icons.js
-scripts/{strip-c2pa,normalize-svg,trim-svg}.py   image metadata / SVG canonicalize / one-time trim
-svgo.config.mjs              config for `just trim-svg`
 sync.toml                    cross-repo file-sync manifest
-justfile, .githooks/pre-commit, .github/  build glue + CI
 ```
+
+`.github/ISSUE_TEMPLATE/*`, `.github/PULL_REQUEST_TEMPLATE.md` — kept
+locally (repo-specific URL/checklist), seeded from kit's copies.
 
 Vendored from [`vertex-order/kit`](https://github.com/vertex-order/kit) via
 `just sync` — **don't hand-edit** (see [Cross-repo sync](#cross-repo-sync)):
@@ -275,18 +285,17 @@ Vendored from [`vertex-order/kit`](https://github.com/vertex-order/kit) via
 ```
 site/support.js, site/_ds/, site/images/ui/,
 site/BackToTop.dc.html, site/HelpWanted.dc.html,
-scripts/bundle-components.py, scripts/sync.py
+scripts/bundle-components.py, scripts/sync.py,
+scripts/{normalize-svg,strip-c2pa,trim-svg}.py, svgo.config.mjs,
+justfile, .editorconfig, .gitattributes, .claude/settings.json,
+CODE_OF_CONDUCT.md, .githooks/pre-commit,
+.github/workflows/{static,check-generated,check-vendored}.yml,
+.github/dependabot.yml
 ```
 
-Generated (`just bundle-components`): `site/components.js`.
-
-```
-.github/workflows/
-├── static.yml            build + deploy site/ to Pages on push to main
-├── check-generated.yml   PR check: components.js / SVG serialization stale
-└── check-vendored.yml    PR check: a vendored file drifted from kit
-```
-```
+Generated (`just bundle-components`): `site/components.js`. The `justfile`'s
+`build` recipe renames an entry page to `index.html` if one exists
+(`mv ... 2>/dev/null || true`) — a no-op in kit, which has none.
 
 ## Appendix: deploy internals
 
@@ -297,7 +306,7 @@ Every push to `main` runs
 2. Installs `just`, runs `just build` — strips image metadata, normalizes
    SVG serialization, regenerates `components.js`, copies `site/` into a
    gitignored `build/`, renames
-   `build/Platforms.dc.html` to `build/index.html` (GitHub Pages needs a
+   `build/page.dc.html` to `build/index.html` (GitHub Pages needs a
    root `index.html`; every other path in the file is already relative).
    Same recipe you can run locally.
 3. Uploads `build/` as the Pages artifact and deploys it.

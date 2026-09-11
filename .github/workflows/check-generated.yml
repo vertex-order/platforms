@@ -1,4 +1,8 @@
-# Fail a PR whose committed artifacts are out of step with their sources:
+# Owned by vertex-order/kit — edit here. Vendored elsewhere via sync.toml;
+# don't edit the copy there.
+#
+# Fail a PR (or a push to main) whose committed artifacts are out of step
+# with their sources:
 #   - site/components.js vs the sibling site/*.dc.html
 #   - SVG serialization vs the canonical self-closing form
 # The pre-commit hook normally keeps both in sync; this catches commits made
@@ -7,6 +11,8 @@ name: Check generated files
 
 on:
   pull_request:
+  push:
+    branches: [main]
   workflow_dispatch:
 
 jobs:

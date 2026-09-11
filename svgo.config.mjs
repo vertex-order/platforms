@@ -1,5 +1,5 @@
-// Owned by vertex-order/platforms — edit here. Vendored elsewhere via
-// sync.toml; don't edit the copy there.
+// Owned by vertex-order/kit — edit here. Vendored elsewhere via sync.toml;
+// don't edit the copy there.
 //
 // One-time SVG trimming config — used by `just trim-svg`, NOT part of `build`.
 //

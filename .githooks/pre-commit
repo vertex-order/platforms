@@ -1,4 +1,7 @@
 #!/bin/sh
+# Owned by vertex-order/kit — edit here. Vendored elsewhere via sync.toml;
+# don't edit the copy there.
+#
 # Pre-commit: keep derived site artifacts in step with their sources.
 # Pure Python, no external tools required.
 set -e
@@ -20,8 +23,10 @@ if [ -n "$staged_img" ]; then
 	git add $staged_img
 fi
 
-# 3. Regenerate site/components.js when a sibling component changes.
-staged_dc=$(git diff --cached --name-only --diff-filter=ACMD -- 'site/*.dc.html' | grep -v '^site/Platforms\.dc\.html$' || true)
+# 3. Regenerate site/components.js when any *.dc.html changes.
+#    bundle-components.py detects the entry page itself (any *.dc.html that
+#    references components.js), so this doesn't special-case a filename.
+staged_dc=$(git diff --cached --name-only --diff-filter=ACMD -- 'site/*.dc.html')
 if [ -n "$staged_dc" ]; then
 	python3 "$root/scripts/bundle-components.py"
 	git add "$root/site/components.js"

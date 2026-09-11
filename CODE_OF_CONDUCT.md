@@ -1,4 +1,6 @@
 <!-- CODE_OF_CONDUCT.md (markdown) -->
+<!-- Owned by vertex-order/kit — edit here. Vendored elsewhere via sync.toml;
+     don't edit the copy there. -->
 
 # Contributor Covenant 3.0 Code of Conduct
 

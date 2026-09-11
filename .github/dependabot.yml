@@ -1,3 +1,5 @@
+# Owned by vertex-order/kit — edit here. Vendored elsewhere via sync.toml;
+# don't edit the copy there.
 version: 2
 updates:
   # Keep the SHA-pinned actions in .github/workflows/ current. No npm entry:

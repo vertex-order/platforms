@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-# Owned by vertex-order/platforms — edit here. Vendored elsewhere via
-# sync.toml; don't edit the copy there.
+# Owned by vertex-order/kit — edit here. Vendored elsewhere via sync.toml;
+# don't edit the copy there.
 """Second SVG trim pass: drop path subpaths that lie entirely outside the
 viewBox.
 

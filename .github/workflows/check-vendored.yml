@@ -1,3 +1,6 @@
+# Owned by vertex-order/kit — edit here. Vendored elsewhere via sync.toml;
+# don't edit the copy there.
+#
 # Fail a PR (or a push to main that bypassed the pre-commit guard) whose
 # vendored files (sync.toml [subscribe.*]) have drifted from their source
 # repo at the pinned ref — hand-edited, or the ref moved without a resync.

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-# Owned by vertex-order/platforms — edit here. Vendored elsewhere via
-# sync.toml; don't edit the copy there.
+# Owned by vertex-order/kit — edit here. Vendored elsewhere via sync.toml;
+# don't edit the copy there.
 """Normalize SVG element serialization to one canonical form: self-closing
 tags (`<path .../>`, never `<path ...></path>`).
 

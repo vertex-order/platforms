@@ -7,22 +7,23 @@
 #                  at `ref` and writes them into the tree. Vendored copies —
 #                  never hand-edit; edit them in the owning repo.
 #                  check-vendored.yml fails the PR if any has drifted.
+#
+# Not vendored, even though this repo needs one: .github/ISSUE_TEMPLATE/*
+# and .github/PULL_REQUEST_TEMPLATE.md — each necessarily carries this
+# repo's own Discussions URL (and PR-checklist lines specific to the icon
+# grids), so they can never satisfy sync.py's byte-identical-or-flagged
+# guarantee. Seeded from kit's copies once, then maintained locally.
 
 [publish]
 owner = "vertex-order/platforms"
-# The platform-icon micro-kit: the component, its data, its artwork, and the
-# SVG tooling that maintains the artwork. kit pulls all of this; lists get it
-# transitively via kit.
+# The platform-icon micro-kit: the component, its data, and its artwork.
+# kit pulls all of it; the list repos get it transitively via kit.
 paths = [
   "site/PlatformIcon.dc.html",
   "site/data/platform-icons.js",
   "site/images/platforms/",
-  "scripts/normalize-svg.py",
-  "scripts/strip-c2pa.py",
-  "scripts/trim-svg.py",
-  "svgo.config.mjs",
 ]
-# platforms-only, not published: site/Platforms.dc.html (the tuning bench),
+# platforms-only, not published: site/page.dc.html (the tuning bench),
 # site/ZoomedPlatformIcon.dc.html (2x wrapper — kit doesn't need it).
 
 [publish.consumers]  # for humans; sync.py ignores this
@@ -40,5 +41,19 @@ paths = [
   "site/HelpWanted.dc.html",
   "scripts/bundle-components.py",
   "scripts/sync.py",
+  "scripts/normalize-svg.py",
+  "scripts/strip-c2pa.py",
+  "scripts/trim-svg.py",
+  "svgo.config.mjs",
+  "justfile",
+  ".editorconfig",
+  ".gitattributes",
+  ".claude/settings.json",
+  "CODE_OF_CONDUCT.md",
+  ".githooks/pre-commit",
+  ".github/workflows/check-generated.yml",
+  ".github/workflows/check-vendored.yml",
+  ".github/workflows/static.yml",
+  ".github/dependabot.yml",
 ]
 # TODO: add the theme-swap component here once kit factors it out of its page.
