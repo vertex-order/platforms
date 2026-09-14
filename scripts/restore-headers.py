@@ -7,12 +7,19 @@ carry one, when a design-tool round-trip has stripped it.
 Claude Design overwrites site/ wholesale on export and doesn't preserve a
 leading ownership comment on every file type it touches -- so a round-trip
 silently drops the header on `*.dc.html` components, `_ds/` CSS and
-markdown, and support.js. This restores each file's header verbatim from
-sync.toml (the file's real owner: this repo's own [publish].owner for a
-path under [publish].paths, or a [subscribe.<name>].repo for a path under
-that subscription), skipping any file that already has it, so `just build`
-output is safe to diff -- header noise self-clears the same way
-normalize-svg.py already clears SVG serialization noise.
+markdown, and support.js. When a file's header is fully missing, this
+inserts one naming the owner sync.toml implies (this repo's own
+[publish].owner for a path under [publish].paths, or a [subscribe.<name>].repo
+for a path under that subscription) -- but sync.toml only tells you where
+*this* repo fetches a path from, not who first authored it: a repo that
+pulls PlatformIcon.dc.html transitively through kit's own [subscribe.kit]
+would have this script infer owner "kit" for a file actually owned by
+"platforms". So a header that's already present and well-formed, for *any*
+vertex-order/* owner, is left completely alone (only its wrapping is
+normalized) -- sync.toml's inferred owner is strictly a fallback for
+filling in a blank, never a value that overwrites one already there. This
+keeps `just build` output safe to diff -- header noise self-clears the same
+way normalize-svg.py already clears SVG serialization noise.
 
 Runs from `just build` and the pre-commit hook (staged files only there),
 alongside normalize-svg.py and ensure-helmets.py.
@@ -69,44 +76,51 @@ def owner_for(rel, owned):
 
 def ensure_dc_html_header(path, owner):
     text = path.read_text(encoding="utf-8")
-    header = (
-        f"<!-- {path.name} — owned by {owner}. Edit here.\n"
-        "     Vendored elsewhere via sync.toml; don't edit the copy there. -->\n"
-    )
-    if text.startswith(header):
-        return False
-    text = re.sub(
-        r"^<!--\s*" + re.escape(path.name) + r"\s*—\s*owned by .*?-->\n",
-        "",
+    existing = re.match(
+        r"^<!--\s*" + re.escape(path.name) + r"\s*—\s*owned by (vertex-order/[\w.-]+)\."
+        r"\s*Edit here\.\s*\n\s*Vendored elsewhere via sync\.toml;"
+        r" don't edit the copy there\. -->\n",
         text,
-        count=1,
         flags=re.DOTALL,
     )
-    path.write_text(header + text, encoding="utf-8", newline="\n")
+    header = (
+        f"<!-- {path.name} — owned by {existing.group(1) if existing else owner}. Edit here.\n"
+        "     Vendored elsewhere via sync.toml; don't edit the copy there. -->\n"
+    )
+    rest = text[existing.end():] if existing else text
+    if existing and text == header + rest:
+        return False
+    path.write_text(header + rest, encoding="utf-8", newline="\n")
     return True
 
 
 def ensure_css_header(path, owner):
     text = path.read_text(encoding="utf-8")
-    header = (
-        f"/* Owned by {owner} — edit here. Vendored elsewhere via "
-        "sync.toml; don't edit the copy there. */\n"
+    existing = re.match(
+        r"^/\*\s*Owned by (vertex-order/[\w.-]+) — edit here\. Vendored elsewhere via"
+        r" sync\.toml; don't edit the copy there\. \*/\n",
+        text,
     )
-    if text.startswith(header):
+    header = (
+        f"/* Owned by {existing.group(1) if existing else owner} — edit here. "
+        "Vendored elsewhere via sync.toml; don't edit the copy there. */\n"
+    )
+    rest = text[existing.end():] if existing else text
+    if existing and text == header + rest:
         return False
-    text = re.sub(r"^/\*\s*Owned by .*?\*/\n", "", text, count=1, flags=re.DOTALL)
-    path.write_text(header + text, encoding="utf-8", newline="\n")
+    path.write_text(header + rest, encoding="utf-8", newline="\n")
     return True
 
 
 def ensure_md_header(path, owner):
     text = path.read_text(encoding="utf-8")
+    if re.search(r"^> Owned by vertex-order/[\w.-]+ — edit here\. Vendored elsewhere via sync\.toml;\n"
+                 r"> don't edit the copy there\.\n", text, flags=re.MULTILINE):
+        return False
     block = (
         f"> Owned by {owner} — edit here. Vendored elsewhere via sync.toml;\n"
         "> don't edit the copy there.\n"
     )
-    if block in text:
-        return False
     lines = text.splitlines(keepends=True)
     insert_at = 1
     if insert_at < len(lines) and lines[insert_at].strip() == "":
