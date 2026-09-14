@@ -7,7 +7,7 @@
 # page, platforms and every list have `page.dc.html`.
 
 # Assemble the deployable site into build/ (gitignored, matches CI).
-build: strip-metadata normalize-svg bundle-components
+build: strip-metadata normalize-svg restore-headers ensure-helmets bundle-components
     rm -rf build
     mkdir build
     cp -r site/. build/
@@ -37,8 +37,9 @@ sync-update name:
 clean:
     rm -rf build
 
-# One-time per clone: wire up repo git hooks (pre-commit strips C2PA metadata
-# from images and regenerates site/components.js when a component changes).
+# One-time per clone: wire up repo git hooks (pre-commit restores ownership
+# headers and design-system helmets, strips C2PA metadata from images, and
+# regenerates site/components.js when a component changes).
 install-hooks:
     git config core.hooksPath .githooks
 
@@ -50,6 +51,17 @@ strip-metadata:
 # Design's exporter are inconsistent), for a stable check-in.
 normalize-svg:
     python3 scripts/normalize-svg.py site/images
+
+# Restore the "owned by vertex-order/X" header comment on any site/ file a
+# Claude Design export stripped it from (sync.toml says who owns what).
+restore-headers:
+    python3 scripts/restore-headers.py
+
+# Add the Nocturne design-system <helmet> to any component missing one, so
+# every component previews standalone and a design-tool export's own
+# addition of it is never a surprise diff.
+ensure-helmets:
+    python3 scripts/ensure-helmets.py
 
 # One-time SVG trimming — NOT part of `build`, run by hand. Two passes:
 #   1. svgo — editor cruft, unused defs, inline styles, excess precision

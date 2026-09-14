@@ -42,6 +42,8 @@ paths = [
   "scripts/bundle-components.py",
   "scripts/sync.py",
   "scripts/normalize-svg.py",
+  "scripts/restore-headers.py",
+  "scripts/ensure-helmets.py",
   "scripts/strip-c2pa.py",
   "scripts/trim-svg.py",
   "svgo.config.mjs",
