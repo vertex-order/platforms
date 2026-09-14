@@ -38,6 +38,7 @@ paths = [
   "site/images/ui/",
   "site/support.js",
   "site/BackToTop.dc.html",
+  "site/Footer.dc.html",
   "site/HelpWanted.dc.html",
   "scripts/bundle-components.py",
   "scripts/sync.py",

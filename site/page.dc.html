@@ -112,23 +112,12 @@ a:hover { color: var(--color-accent); text-decoration: underline; }
       <dc-import name="HelpWanted" items="{{ helpWantedItems }}" hint-size="auto,220px" style="display: block;"></dc-import>
     </div>
 
-    <h3 style="font-family: var(--font-heading); font-weight: 500; font-size: 14px; letter-spacing: 0.06em; color: var(--color-neutral-400); margin: 0 0 var(--space-2);">CREDITS</h3>
-    <p style="color: var(--color-neutral-500); font-size: 12px; line-height: 1.7; margin: 0;">
-      See <a href="https://github.com/vertex-order/platforms/blob/main/NOTICE.md" target="_blank" rel="noopener">NOTICE</a> for icon credits.
-    </p>
-    <p style="color: var(--color-neutral-600); font-size: 11px; margin: var(--space-3) 0 0;">&copy; {{ copyrightYearsStr }} Vertex Industries, with help from the community. <a href="https://github.com/vertex-order/platforms/blob/main/LICENSE" target="_blank" rel="noopener" style="color: var(--color-neutral-500);">MIT licensed</a> — platform icons remain the property of their owners.</p>
-    <p style="color: var(--color-neutral-600); font-size: 11px; margin: var(--space-2) 0 0;">Platform icons may lead to optional affiliate links at no cost to you to help support the maintenance of Vertex Order lists.</p>
-    <p style="color: var(--color-neutral-600); font-size: 11px; margin: var(--space-2) 0 0;">Icons considered fair use and only used for communicating historical platform availability at a glance.</p>
-    <p style="color: var(--color-neutral-600); font-size: 11px; margin: var(--space-2) 0 0;">Not affiliated with any of the above brands or companies.</p>
+    <dc-import name="Footer" credits="{{ footerCredits }}" last-updated="{{ footerLastUpdated }}" license="{{ footerLicense }}" entities="{{ footerEntities }}" disclosures="{{ footerDisclosures }}" hint-size="auto,260px" style="display: block;"></dc-import>
   </div>
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script>
-const LAST_UPDATED = '2026-08-01'; // ISO date, single source of truth for "last updated" / copyright year
-function copyrightYears() {
-  const y = Number(LAST_UPDATED.split('-')[0]);
-  return y > 2026 ? '2026–' + y : '2026';
-}
+const LAST_UPDATED = '2026-08-01'; // ISO date, passed to Footer as last-updated
 class Component extends DCLogic {
   state = {
     theme: (typeof localStorage !== 'undefined' && localStorage.getItem('platformsTheme')) || null,
@@ -165,8 +154,19 @@ class Component extends DCLogic {
       themeIsLight: effectiveTheme === 'light',
       themeIsDark: effectiveTheme !== 'light',
       toggleTheme: () => this.toggleTheme(),
-      copyrightYearsStr: copyrightYears(),
       helpWantedItems: (typeof window !== 'undefined' && window.HELP_WANTED_ITEMS) || [],
+      footerLastUpdated: LAST_UPDATED,
+      footerCredits: [
+        { parts: [{ text: 'See ' }, { text: 'NOTICE', url: 'https://github.com/vertex-order/platforms/blob/main/NOTICE.md' }, { text: ' for icon credits.' }] },
+      ],
+      footerLicense: [
+        { text: 'MIT licensed', url: 'https://github.com/vertex-order/platforms/blob/main/LICENSE' },
+        { text: ' — platform icons remain the property of their owners.' },
+      ],
+      footerEntities: [],
+      footerDisclosures: [
+        { plain: 'Platform icons may lead to optional affiliate links at no cost to you to help support the maintenance of Vertex Order lists.' },
+      ],
     };
   }
 }
