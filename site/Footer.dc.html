@@ -15,7 +15,10 @@
 </helmet>
 
 <sc-if value="{{ hasCredits }}" hint-placeholder-val="{{ true }}">
-  <h3 style="font-family: var(--font-heading); font-weight: 500; font-size: 14px; letter-spacing: 0.06em; color: var(--color-neutral-400); margin: 0 0 var(--space-2);">CREDITS</h3>
+  <span style="display: flex; align-items: baseline; gap: 6px; margin: 0 0 var(--space-2);" onMouseEnter="{{ creditsPilcrow.onAnchorHoverEnter }}" onMouseLeave="{{ creditsPilcrow.onAnchorHoverLeave }}">
+    <h3 id="credits" style="font-family: var(--font-heading); font-weight: 500; font-size: 14px; letter-spacing: 0.06em; color: var(--color-neutral-400); margin: 0; scroll-margin-top: 60px;">CREDITS</h3>
+    <a href="{{ creditsPilcrow.anchorHref }}" onClick="{{ creditsPilcrow.onAnchorClick }}" title="Link to this section" style="color: var(--color-neutral-500); text-decoration: none; font-size: 14px; opacity: {{ creditsPilcrow.pilcrowOpacity }}; transition: opacity .15s;">&para;</a>
+  </span>
   <sc-for list="{{ credits }}" as="para" hint-placeholder-count="1">
     <p style="color: var(--color-neutral-500); font-size: 12px; line-height: 1.7; margin: 0 0 {{ para.mb }};">
       <sc-if value="{{ para.plain }}" hint-placeholder-val="{{ false }}">{{ para.plain }}</sc-if>
@@ -90,6 +93,20 @@ function mapParagraphs(paragraphs) {
   });
 }
 class Component extends DCLogic {
+  state = { hoverAnchor: null };
+  buildPilcrow(anchorId) {
+    return {
+      anchorHref: '#' + anchorId,
+      pilcrowOpacity: this.state.hoverAnchor === anchorId ? 1 : 0,
+      onAnchorHoverEnter: () => this.setState({ hoverAnchor: anchorId }),
+      onAnchorHoverLeave: () => this.setState(s => s.hoverAnchor === anchorId ? { hoverAnchor: null } : null),
+      onAnchorClick: e => {
+        e.preventDefault();
+        history.pushState(null, '', '#' + anchorId);
+        document.getElementById(anchorId)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      },
+    };
+  }
   renderVals() {
     const credits = mapParagraphs(this.props.credits);
     const foundingYear = this.props.foundingYear ?? 2026;
@@ -108,6 +125,7 @@ class Component extends DCLogic {
     return {
       credits,
       hasCredits: credits.length > 0,
+      creditsPilcrow: this.buildPilcrow('credits'),
       lastUpdatedText,
       copyrightYearsStr,
       license: mapParts(this.props.license),

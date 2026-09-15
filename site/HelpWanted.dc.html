@@ -14,7 +14,10 @@
 <script src="_ds/nocturne-dd511f00-0314-498c-83ef-49f001a371b0/_ds_bundle.js"></script>
 </helmet>
 
-<h3 id="help-wanted" style="font-family: var(--font-heading); font-weight: 500; font-size: 14px; letter-spacing: 0.06em; color: var(--color-neutral-400); margin: 0 0 var(--space-2); scroll-margin-top: 60px;">HELP WANTED</h3>
+<span style="display: flex; align-items: baseline; gap: 6px; margin: 0 0 var(--space-2);" onMouseEnter="{{ pilcrow.onAnchorHoverEnter }}" onMouseLeave="{{ pilcrow.onAnchorHoverLeave }}">
+  <h3 id="help-wanted" style="font-family: var(--font-heading); font-weight: 500; font-size: 14px; letter-spacing: 0.06em; color: var(--color-neutral-400); margin: 0; scroll-margin-top: 60px;">HELP WANTED</h3>
+  <a href="{{ pilcrow.anchorHref }}" onClick="{{ pilcrow.onAnchorClick }}" title="Link to this section" style="color: var(--color-neutral-500); text-decoration: none; font-size: 14px; opacity: {{ pilcrow.pilcrowOpacity }}; transition: opacity .15s;">&para;</a>
+</span>
 <ul style="color: var(--color-neutral-500); font-size: 12px; line-height: 1.7; margin: 0 0 var(--space-6); padding-left: 1.2em;">
   <sc-for list="{{ items }}" as="item" hint-placeholder-count="9">
     <li>{{ item }}</li>
@@ -22,6 +25,26 @@
 </ul>
 
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 620, &quot;height&quot;: 220}, &quot;items&quot;: {&quot;editor&quot;: null, &quot;default&quot;: [], &quot;tsType&quot;: &quot;array&quot;}}"></script>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 620, &quot;height&quot;: 220}, &quot;items&quot;: {&quot;editor&quot;: null, &quot;default&quot;: [], &quot;tsType&quot;: &quot;array&quot;}}">
+class Component extends DCLogic {
+  state = { hoverAnchor: null };
+  buildPilcrow(anchorId) {
+    return {
+      anchorHref: '#' + anchorId,
+      pilcrowOpacity: this.state.hoverAnchor === anchorId ? 1 : 0,
+      onAnchorHoverEnter: () => this.setState({ hoverAnchor: anchorId }),
+      onAnchorHoverLeave: () => this.setState(s => s.hoverAnchor === anchorId ? { hoverAnchor: null } : null),
+      onAnchorClick: e => {
+        e.preventDefault();
+        history.pushState(null, '', '#' + anchorId);
+        document.getElementById(anchorId)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      },
+    };
+  }
+  renderVals() {
+    return { items: this.props.items || [], pilcrow: this.buildPilcrow('help-wanted') };
+  }
+}
+</script>
 </body>
 </html>
