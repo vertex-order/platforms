@@ -32,7 +32,7 @@ paths = [
 
 [subscribe.kit]
 repo = "vertex-order/kit"
-ref = "bdf3f54c20add9b51eb143a3ca36076039b2f2f0"
+ref = "8dbc1b27d1753784d09e862421fbdb1035b8705c"
 paths = [
   "site/_ds/",
   "site/images/ui/",
@@ -40,6 +40,7 @@ paths = [
   "site/BackToTop.dc.html",
   "site/Footer.dc.html",
   "site/HelpWanted.dc.html",
+  "site/Metadata.dc.html",
   "site/ThemeToggle.dc.html",
   "scripts/bundle-components.py",
   "scripts/sync.py",

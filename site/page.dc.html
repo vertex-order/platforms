@@ -3,7 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Static fallback for non-JS agents; Metadata.dc.html overwrites both from
+     SITE_CONFIG once the page mounts, since this <head> isn't templated. -->
+<title>Platforms legend — Vertex Order</title>
+<meta name="description" content="Internal tooling for tuning how platform icons render across the Vertex Order lists.">
 <script src="./support.js"></script>
+<script src="./data/site.js"></script>
 <script src="./data/platform-icons.js"></script>
 <script src="./data/help-wanted.js"></script>
 <script>
@@ -59,13 +64,14 @@ a:hover { color: var(--color-accent); text-decoration: underline; }
 <div style="background: var(--color-bg); color: var(--color-text); font-family: var(--font-body); min-height: 100vh;">
   <span id="top" style="position: absolute; top: 0; left: 0;"></span>
 
+  <dc-import name="Metadata" title="{{ metaTitle }}" description="{{ metaDescription }}" hint-size="0,0"></dc-import>
   <dc-import name="ThemeToggle" hint-size="36px,36px"></dc-import>
   <dc-import name="BackToTop" hint-size="0,0"></dc-import>
 
   <div style="max-width: 760px; margin: 0 auto; padding: calc(var(--space-8) + var(--space-6)) var(--space-4) var(--space-8);">
     <h1 style="font-family: var(--font-heading); font-weight: 500; font-size: 32px; margin: var(--space-6) 0 var(--space-3);">Platforms legend</h1>
     <p style="color: var(--color-neutral-300); font-size: 16px; line-height: 1.6; max-width: 620px; margin: 0 0 var(--space-3);">Looking for the order lists? Head to <a href="https://vertex-order.github.io" target="_blank" rel="noopener">vertex-order.github.io</a>.</p>
-    <p style="color: var(--color-neutral-300); font-size: 16px; line-height: 1.6; max-width: 620px; margin: 0 0 var(--space-6);">This page is internal tooling for tuning how platform icons render in the Vertex Order listings — not something you need to visit as a reader. The <strong style="color: var(--color-text); font-weight: 500;">Zoomed</strong> grid is roughly twice page size for easier visual tweaking; the <a href="#page-size-icons">Page size</a> grid renders each icon through <code style="font-size: 13px;">PlatformIcon.dc.html</code> at the size used in listing rows — the same data, at 1x. Icons are credited in full in <a href="{{ footerNoticeUrl }}" target="_blank" rel="noopener">NOTICE</a>. See our <a href="#help-wanted">Help Wanted</a> at the bottom.</p>
+    <p style="color: var(--color-neutral-300); font-size: 16px; line-height: 1.6; max-width: 620px; margin: 0 0 var(--space-6);">This page is internal tooling for tuning how platform icons render in the Vertex Order listings — not something you need to visit as a reader. The <strong style="color: var(--color-text); font-weight: 500;">Zoomed</strong> grid is roughly twice page size for easier visual tweaking; the <a href="#page-size-icons">Page size</a> grid renders each icon through <code style="font-size: 13px;">PlatformIcon.dc.html</code> at the size used in listing rows — the same data, at 1x. Icons are credited in full in <a href="{{ footerNoticeUrl }}" target="_blank" rel="noopener">NOTICE</a>. See <a href="#help-wanted">Help Wanted</a> below, or use the <a href="{{ siteDiscussionsUrl }}" target="_blank" rel="noopener">discussion page</a> to propose new platforms or changes.</p>
 
     <h3 style="font-family: var(--font-heading); font-weight: 500; font-size: 14px; letter-spacing: 0.06em; color: var(--color-neutral-400); margin: 0 0 var(--space-2);">ZOOMED ICONS</h3>
     <div style="position: relative; margin: 0 0 var(--space-8);">
@@ -102,9 +108,13 @@ a:hover { color: var(--color-accent); text-decoration: underline; }
 class Component extends DCLogic {
   renderVals() {
     const platformIcons = (typeof window !== 'undefined' && window.PLATFORM_ICONS) || [];
+    const SITE = (typeof window !== 'undefined' && window.SITE_CONFIG) || {};
     return {
       platformIcons,
+      metaTitle: SITE.title || 'Platforms legend — Vertex Order',
+      metaDescription: SITE.description || '',
       helpWantedItems: (typeof window !== 'undefined' && window.HELP_WANTED_ITEMS) || [],
+      siteDiscussionsUrl: (typeof window !== 'undefined' && window.SITE_CONFIG && window.SITE_CONFIG.discussionsUrl) || '',
       footerNoticeUrl: 'https://github.com/vertex-order/platforms/blob/main/NOTICE.md',
       footerLicense: [
         { text: 'This page is ' },
