@@ -46,6 +46,10 @@
   </sc-for>
 </p>
 
+<sc-if value="{{ noticeUrl }}" hint-placeholder-val="{{ false }}">
+  <p style="color: var(--color-neutral-600); font-size: 11px; margin: var(--space-2) 0 0;">See <a href="{{ noticeUrl }}" target="_blank" rel="noopener" style="color: var(--color-neutral-500);">NOTICE</a> for third-party parts.</p>
+</sc-if>
+
 <sc-for list="{{ disclosures }}" as="para" hint-placeholder-count="0">
   <p style="color: var(--color-neutral-600); font-size: 11px; margin: var(--space-2) 0 0;">
     <sc-if value="{{ para.plain }}" hint-placeholder-val="{{ false }}">{{ para.plain }}</sc-if>
@@ -73,7 +77,7 @@
 <p style="color: var(--color-neutral-600); font-size: 11px; margin: var(--space-2) 0 0;">Not affiliated with {{ disclaimedJoined }}.</p>
 
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 620, &quot;height&quot;: 360}, &quot;credits&quot;: {&quot;editor&quot;: null, &quot;default&quot;: [], &quot;tsType&quot;: &quot;array&quot;}, &quot;lastUpdated&quot;: {&quot;editor&quot;: &quot;string&quot;, &quot;default&quot;: &quot;&quot;, &quot;tsType&quot;: &quot;string&quot;}, &quot;foundingYear&quot;: {&quot;editor&quot;: &quot;int&quot;, &quot;default&quot;: 2026, &quot;tsType&quot;: &quot;number&quot;}, &quot;license&quot;: {&quot;editor&quot;: null, &quot;default&quot;: [], &quot;tsType&quot;: &quot;array&quot;}, &quot;entities&quot;: {&quot;editor&quot;: null, &quot;default&quot;: [], &quot;tsType&quot;: &quot;array&quot;}, &quot;disclosures&quot;: {&quot;editor&quot;: null, &quot;default&quot;: [], &quot;tsType&quot;: &quot;array&quot;}, &quot;showFairUse&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 620, &quot;height&quot;: 360}, &quot;credits&quot;: {&quot;editor&quot;: null, &quot;default&quot;: [], &quot;tsType&quot;: &quot;array&quot;}, &quot;lastUpdated&quot;: {&quot;editor&quot;: &quot;string&quot;, &quot;default&quot;: &quot;&quot;, &quot;tsType&quot;: &quot;string&quot;}, &quot;foundingYear&quot;: {&quot;editor&quot;: &quot;int&quot;, &quot;default&quot;: 2026, &quot;tsType&quot;: &quot;number&quot;}, &quot;license&quot;: {&quot;editor&quot;: null, &quot;default&quot;: [], &quot;tsType&quot;: &quot;array&quot;}, &quot;noticeUrl&quot;: {&quot;editor&quot;: &quot;string&quot;, &quot;default&quot;: &quot;&quot;, &quot;tsType&quot;: &quot;string&quot;}, &quot;entities&quot;: {&quot;editor&quot;: null, &quot;default&quot;: [], &quot;tsType&quot;: &quot;array&quot;}, &quot;disclosures&quot;: {&quot;editor&quot;: null, &quot;default&quot;: [], &quot;tsType&quot;: &quot;array&quot;}, &quot;showFairUse&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;}}">
 const MONTHS_LONG = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 function mapParts(parts) {
   return (parts || []).map(p => ({
@@ -114,6 +118,7 @@ class Component extends DCLogic {
       lastUpdatedText,
       copyrightYearsStr,
       license: mapParts(this.props.license),
+      noticeUrl: this.props.noticeUrl || '',
       disclosures: mapParagraphs(this.props.disclosures),
       disclaimedJoined,
       showFairUse: this.props.showFairUse !== false,
