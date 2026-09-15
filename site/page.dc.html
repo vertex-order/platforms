@@ -25,7 +25,7 @@
 body { margin: 0; background: var(--color-bg); }
 a { color: var(--color-accent-300); text-decoration: none; }
 a:hover { color: var(--color-accent); text-decoration: underline; }
-[data-theme="light"] {
+:root[data-theme="light"] {
   --color-bg: #f4f4f8;
   --color-surface: #ffffff;
   --color-text: #1c1e2a;
@@ -50,40 +50,22 @@ a:hover { color: var(--color-accent); text-decoration: underline; }
   --color-neutral-900: #f3f5fe;
   --color-divider: color-mix(in srgb, #1c1e2a 14%, transparent);
 }
-[data-theme="light"] a { color: var(--color-accent-300); }
-[data-theme="light"] a:hover { color: var(--color-accent); }
+:root[data-theme="light"] a { color: var(--color-accent-300); }
+:root[data-theme="light"] a:hover { color: var(--color-accent); }
 /* Icon tint overrides for light mode now live in PlatformIcon.dc.html itself,
    so they travel with it when it's copied to other projects. */
 </style>
 </helmet>
-<div data-theme="{{ effectiveTheme }}" style="background: var(--color-bg); color: var(--color-text); font-family: var(--font-body); min-height: 100vh;">
+<div style="background: var(--color-bg); color: var(--color-text); font-family: var(--font-body); min-height: 100vh;">
   <span id="top" style="position: absolute; top: 0; left: 0;"></span>
 
-  <div style="position: fixed; top: calc(var(--space-3) - var(--space-2)); left: 0; right: 0; z-index: 10; max-width: 760px; margin: 0 auto; padding: 0 var(--space-4); display: flex; justify-content: flex-end; align-items: center; pointer-events: none;">
-    <div style="pointer-events: auto; display: flex; align-items: center; gap: var(--space-3); background: color-mix(in srgb, var(--color-bg) 55%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-radius: var(--radius-md); padding: var(--space-2) var(--space-3);">
-      <a href="https://vertex-order.github.io" target="_blank" rel="noopener" title="More lists from Vertex Industries" style="height: 36px; display: flex; align-items: center; font-size: 12.5px; line-height: 1.15; text-align: right; color: var(--color-neutral-400); text-decoration: none; white-space: nowrap;">Check out our<br>other lists ↗</a>
-      <button onClick="{{ toggleTheme }}" title="Toggle light/dark mode" style="width: 36px; height: 36px; flex-shrink: 0; border-radius: var(--radius-md); border: 1px solid var(--color-divider); background: var(--color-surface); color: var(--color-text); display: flex; align-items: center; justify-content: center; cursor: pointer;">
-        <!-- images/ui/sun.svg + images/ui/moon-stars.svg (Bootstrap Icons, MIT) — inlined so fill:currentColor tracks the button text color -->
-        <sc-if value="{{ themeIsLight }}" hint-placeholder-val="{{ false }}">
-          <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
-            <path d="M8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6m0 1a4 4 0 1 0 0-8 4 4 0 0 0 0 8M8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0m0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13m8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5M3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8m10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0m-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707M4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708"/>
-          </svg>
-        </sc-if>
-        <sc-if value="{{ themeIsDark }}" hint-placeholder-val="{{ true }}">
-          <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
-            <path d="M6 .278a.77.77 0 0 1 .08.858 7.2 7.2 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277q.792-.001 1.533-.16a.79.79 0 0 1 .81.316.73.73 0 0 1-.031.893A8.35 8.35 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.75.75 0 0 1 6 .278M4.858 1.311A7.27 7.27 0 0 0 1.025 7.71c0 4.02 3.279 7.276 7.319 7.276a7.32 7.32 0 0 0 5.205-2.162q-.506.063-1.029.063c-4.61 0-8.343-3.714-8.343-8.29 0-1.167.242-2.278.681-3.286"/>
-            <path d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.73 1.73 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.73 1.73 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.73 1.73 0 0 0 1.097-1.097zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.16 1.16 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.16 1.16 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732z"/>
-          </svg>
-        </sc-if>
-      </button>
-    </div>
-  </div>
-
+  <dc-import name="ThemeToggle" hint-size="36px,36px"></dc-import>
   <dc-import name="BackToTop" hint-size="0,0"></dc-import>
 
   <div style="max-width: 760px; margin: 0 auto; padding: calc(var(--space-8) + var(--space-6)) var(--space-4) var(--space-8);">
     <h1 style="font-family: var(--font-heading); font-weight: 500; font-size: 32px; margin: var(--space-6) 0 var(--space-3);">Platforms legend</h1>
-    <p style="color: var(--color-neutral-300); font-size: 16px; line-height: 1.6; max-width: 620px; margin: 0 0 var(--space-6);">A working reference for tuning how platform icons render in the Vertex Order listings. The <strong style="color: var(--color-text); font-weight: 500;">Zoomed</strong> grid is roughly twice page size for easier visual tweaking; the <a href="#page-size-icons">Page size</a> grid renders each icon through <code style="font-size: 13px;">PlatformIcon.dc.html</code> at the size used in listing rows — the same data, at 1x. See our <a href="#help-wanted">Help Wanted</a> at the bottom.</p>
+    <p style="color: var(--color-neutral-300); font-size: 16px; line-height: 1.6; max-width: 620px; margin: 0 0 var(--space-3);">Looking for the order lists? Head to <a href="https://vertex-order.github.io" target="_blank" rel="noopener">vertex-order.github.io</a>.</p>
+    <p style="color: var(--color-neutral-300); font-size: 16px; line-height: 1.6; max-width: 620px; margin: 0 0 var(--space-6);">This page is internal tooling for tuning how platform icons render in the Vertex Order listings — not something you need to visit as a reader. The <strong style="color: var(--color-text); font-weight: 500;">Zoomed</strong> grid is roughly twice page size for easier visual tweaking; the <a href="#page-size-icons">Page size</a> grid renders each icon through <code style="font-size: 13px;">PlatformIcon.dc.html</code> at the size used in listing rows — the same data, at 1x. Icons are credited in full in <a href="{{ footerNoticeUrl }}" target="_blank" rel="noopener">NOTICE</a>. See our <a href="#help-wanted">Help Wanted</a> at the bottom.</p>
 
     <h3 style="font-family: var(--font-heading); font-weight: 500; font-size: 14px; letter-spacing: 0.06em; color: var(--color-neutral-400); margin: 0 0 var(--space-2);">ZOOMED ICONS</h3>
     <div style="position: relative; margin: 0 0 var(--space-8);">
@@ -112,50 +94,17 @@ a:hover { color: var(--color-accent); text-decoration: underline; }
       <dc-import name="HelpWanted" items="{{ helpWantedItems }}" hint-size="auto,220px" style="display: block;"></dc-import>
     </div>
 
-    <dc-import name="Footer" last-updated="{{ footerLastUpdated }}" license="{{ footerLicense }}" notice-url="{{ footerNoticeUrl }}" entities="{{ footerEntities }}" disclosures="{{ footerDisclosures }}" hint-size="auto,260px" style="display: block;"></dc-import>
+    <dc-import name="Footer" license="{{ footerLicense }}" notice-url="{{ footerNoticeUrl }}" entities="{{ footerEntities }}" disclosures="{{ footerDisclosures }}" hint-size="auto,260px" style="display: block;"></dc-import>
   </div>
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script>
-const LAST_UPDATED = '2026-08-01'; // ISO date, passed to Footer as last-updated
 class Component extends DCLogic {
-  state = {
-    theme: (typeof localStorage !== 'undefined' && localStorage.getItem('platformsTheme')) || null,
-    systemLight: typeof matchMedia !== 'undefined' && matchMedia('(prefers-color-scheme: light)').matches,
-  };
-  componentDidMount() {
-    if (typeof matchMedia !== 'undefined') {
-      this._mq = matchMedia('(prefers-color-scheme: light)');
-      this._mqListener = e => this.setState({ systemLight: e.matches });
-      this._mq.addEventListener('change', this._mqListener);
-    }
-  }
-  componentWillUnmount() {
-    if (this._mq) this._mq.removeEventListener('change', this._mqListener);
-  }
-  toggleTheme() {
-    const current = this.state.theme || (this.state.systemLight ? 'light' : 'dark');
-    const next = current === 'light' ? 'dark' : 'light';
-    const systemDefault = this.state.systemLight ? 'light' : 'dark';
-    if (next === systemDefault) {
-      this.setState({ theme: null });
-      localStorage.removeItem('platformsTheme');
-    } else {
-      this.setState({ theme: next });
-      localStorage.setItem('platformsTheme', next);
-    }
-  }
   renderVals() {
-    const effectiveTheme = this.state.theme || (this.state.systemLight ? 'light' : 'dark');
     const platformIcons = (typeof window !== 'undefined' && window.PLATFORM_ICONS) || [];
     return {
       platformIcons,
-      effectiveTheme,
-      themeIsLight: effectiveTheme === 'light',
-      themeIsDark: effectiveTheme !== 'light',
-      toggleTheme: () => this.toggleTheme(),
       helpWantedItems: (typeof window !== 'undefined' && window.HELP_WANTED_ITEMS) || [],
-      footerLastUpdated: LAST_UPDATED,
       footerNoticeUrl: 'https://github.com/vertex-order/platforms/blob/main/NOTICE.md',
       footerLicense: [
         { text: 'This page is ' },

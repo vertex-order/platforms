@@ -40,6 +40,7 @@ paths = [
   "site/BackToTop.dc.html",
   "site/Footer.dc.html",
   "site/HelpWanted.dc.html",
+  "site/ThemeToggle.dc.html",
   "scripts/bundle-components.py",
   "scripts/sync.py",
   "scripts/normalize-svg.py",
@@ -59,4 +60,3 @@ paths = [
   ".github/workflows/static.yml",
   ".github/dependabot.yml",
 ]
-# TODO: add the theme-swap component here once kit factors it out of its page.
