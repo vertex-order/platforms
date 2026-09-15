@@ -74,10 +74,19 @@
   <p style="color: var(--color-neutral-600); font-size: 11px; margin: var(--space-2) 0 0;">Icons considered fair use and only used for communicating historical platform availability at a glance.</p>
 </sc-if>
 
+<!-- Fixed text, not data-driven -- but gated by showAffiliateDisclosure (default
+     true): a page with store links needs this unconditionally, not as an opt-in
+     a repo could forget to ask for. A page with no store links (org, platforms)
+     sets showAffiliateDisclosure=false rather than showing an affiliate notice
+     that doesn't apply to it. -->
+<sc-if value="{{ showAffiliateDisclosure }}" hint-placeholder-val="{{ true }}">
+  <p style="color: var(--color-neutral-600); font-size: 11px; margin: var(--space-2) 0 0;">Store links may lead to optional affiliate links at no cost to you, to help support the maintenance of Vertex Order lists.</p>
+</sc-if>
+
 <p style="color: var(--color-neutral-600); font-size: 11px; margin: var(--space-2) 0 0;">Not affiliated with {{ disclaimedJoined }}.</p>
 
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 620, &quot;height&quot;: 360}, &quot;credits&quot;: {&quot;editor&quot;: null, &quot;default&quot;: [], &quot;tsType&quot;: &quot;array&quot;}, &quot;lastUpdated&quot;: {&quot;editor&quot;: &quot;string&quot;, &quot;default&quot;: &quot;&quot;, &quot;tsType&quot;: &quot;string&quot;}, &quot;foundingYear&quot;: {&quot;editor&quot;: &quot;int&quot;, &quot;default&quot;: 2026, &quot;tsType&quot;: &quot;number&quot;}, &quot;license&quot;: {&quot;editor&quot;: null, &quot;default&quot;: [], &quot;tsType&quot;: &quot;array&quot;}, &quot;noticeUrl&quot;: {&quot;editor&quot;: &quot;string&quot;, &quot;default&quot;: &quot;&quot;, &quot;tsType&quot;: &quot;string&quot;}, &quot;entities&quot;: {&quot;editor&quot;: null, &quot;default&quot;: [], &quot;tsType&quot;: &quot;array&quot;}, &quot;disclosures&quot;: {&quot;editor&quot;: null, &quot;default&quot;: [], &quot;tsType&quot;: &quot;array&quot;}, &quot;showFairUse&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 620, &quot;height&quot;: 360}, &quot;credits&quot;: {&quot;editor&quot;: null, &quot;default&quot;: [], &quot;tsType&quot;: &quot;array&quot;}, &quot;lastUpdated&quot;: {&quot;editor&quot;: &quot;string&quot;, &quot;default&quot;: &quot;&quot;, &quot;tsType&quot;: &quot;string&quot;}, &quot;foundingYear&quot;: {&quot;editor&quot;: &quot;int&quot;, &quot;default&quot;: 2026, &quot;tsType&quot;: &quot;number&quot;}, &quot;license&quot;: {&quot;editor&quot;: null, &quot;default&quot;: [], &quot;tsType&quot;: &quot;array&quot;}, &quot;noticeUrl&quot;: {&quot;editor&quot;: &quot;string&quot;, &quot;default&quot;: &quot;&quot;, &quot;tsType&quot;: &quot;string&quot;}, &quot;entities&quot;: {&quot;editor&quot;: null, &quot;default&quot;: [], &quot;tsType&quot;: &quot;array&quot;}, &quot;disclosures&quot;: {&quot;editor&quot;: null, &quot;default&quot;: [], &quot;tsType&quot;: &quot;array&quot;}, &quot;showFairUse&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;}, &quot;showAffiliateDisclosure&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;}}">
 const MONTHS_LONG = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 function mapParts(parts) {
   return (parts || []).map(p => ({
@@ -122,6 +131,7 @@ class Component extends DCLogic {
       disclosures: mapParagraphs(this.props.disclosures),
       disclaimedJoined,
       showFairUse: this.props.showFairUse !== false,
+      showAffiliateDisclosure: this.props.showAffiliateDisclosure !== false,
     };
   }
 }

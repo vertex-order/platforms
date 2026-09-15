@@ -20,6 +20,11 @@ Usage:
   python3 scripts/sync.py --update NAME  # resolve [subscribe.NAME].ref (as it
                                          # is right now) to its current HEAD
                                          # sha, repin to that sha, then pull NAME
+  python3 scripts/sync.py --update NAME --from-ref main
+                                         # reset ref to "main" first, then do
+                                         # the above — for re-pinning past an
+                                         # already-pinned SHA (see below), e.g.
+                                         # from a scheduled CI job
 
 --update resolves whatever `ref` already says, it does not know about
 branches you aren't pinned to. Once `ref` holds a commit SHA (which is what
@@ -27,7 +32,7 @@ every --update leaves behind, and it drops any trailing comment on that line
 too), that SHA already *is* its own HEAD, so a later --update is a no-op —
 "nothing to update" even though the source repo has new commits. To pull
 past that point, first put `ref` back to a branch/tag name (e.g. "main"),
-then run --update again.
+then run --update again — or do both in one step with --from-ref.
 
 Source resolution per subscription, in order:
   1. sibling checkout ../<repo-with-slash-as-dash> if it is a git repo  (git archive)
@@ -238,6 +243,9 @@ def main():
     ap.add_argument("--check-staged", action="store_true",
                      help="pre-commit guard: block hand-edited vendored files in the index")
     ap.add_argument("--update", metavar="NAME", help="repin a subscription then pull it")
+    ap.add_argument("--from-ref", metavar="REF",
+                     help="with --update: reset [subscribe.NAME].ref to REF first, so an "
+                          "already-pinned SHA can move forward again (e.g. --from-ref main)")
     args = ap.parse_args()
 
     cfg = load()
@@ -256,9 +264,16 @@ def main():
         if clash:
             sys.exit(f"[subscribe.{name}] also lists published path(s): {sorted(clash)}")
 
+    if args.from_ref and not args.update:
+        sys.exit("--from-ref requires --update")
+
     if args.update:
         if args.update not in subs:
             sys.exit(f"no [subscribe.{args.update}]")
+        if args.from_ref:
+            repin(args.update, args.from_ref)
+            cfg = load()
+            subs = cfg["subscribe"]
         _, sha = checkout(subs[args.update]["repo"], str(subs[args.update].get("ref", "main")))
         repin(args.update, sha)
         cfg = load()

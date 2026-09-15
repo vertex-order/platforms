@@ -94,7 +94,7 @@ a:hover { color: var(--color-accent); text-decoration: underline; }
       <dc-import name="HelpWanted" items="{{ helpWantedItems }}" hint-size="auto,220px" style="display: block;"></dc-import>
     </div>
 
-    <dc-import name="Footer" license="{{ footerLicense }}" notice-url="{{ footerNoticeUrl }}" entities="{{ footerEntities }}" disclosures="{{ footerDisclosures }}" hint-size="auto,260px" style="display: block;"></dc-import>
+    <dc-import name="Footer" license="{{ footerLicense }}" notice-url="{{ footerNoticeUrl }}" entities="{{ footerEntities }}" disclosures="{{ footerDisclosures }}" show-affiliate-disclosure="{{ false }}" hint-size="auto,260px" style="display: block;"></dc-import>
   </div>
 </div>
 </x-dc>
@@ -109,11 +109,11 @@ class Component extends DCLogic {
       footerLicense: [
         { text: 'This page is ' },
         { text: 'MIT', url: 'https://github.com/vertex-order/platforms/blob/main/LICENSE' },
-        { text: ' licensed — platform icons remain the property of their owners.' },
+        { text: ' licensed.' },
       ],
       footerEntities: [],
       footerDisclosures: [
-        { plain: 'Platform icons may lead to optional affiliate links at no cost to you to help support the maintenance of Vertex Order lists.' },
+        { plain: 'Platform icons remain the property of their owners.' },
       ],
     };
   }
