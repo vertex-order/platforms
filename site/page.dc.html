@@ -94,7 +94,7 @@ a:hover { color: var(--color-accent); text-decoration: underline; }
       <dc-import name="HelpWanted" items="{{ helpWantedItems }}" hint-size="auto,220px" style="display: block;"></dc-import>
     </div>
 
-    <dc-import name="Footer" license="{{ footerLicense }}" notice-url="{{ footerNoticeUrl }}" entities="{{ footerEntities }}" disclosures="{{ footerDisclosures }}" show-affiliate-disclosure="{{ false }}" hint-size="auto,260px" style="display: block;"></dc-import>
+    <dc-import name="Footer" license="{{ footerLicense }}" notice-url="{{ footerNoticeUrl }}" entities="{{ footerEntities }}" show-affiliate-disclosure="{{ false }}" hint-size="auto,260px" style="display: block;"></dc-import>
   </div>
 </div>
 </x-dc>
@@ -112,9 +112,6 @@ class Component extends DCLogic {
         { text: ' licensed.' },
       ],
       footerEntities: [],
-      footerDisclosures: [
-        { plain: 'Platform icons remain the property of their owners.' },
-      ],
     };
   }
 }

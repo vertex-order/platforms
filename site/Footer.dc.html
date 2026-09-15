@@ -44,11 +44,8 @@
     <sc-if value="{{ part.url }}" hint-placeholder-val="{{ false }}"><a href="{{ part.url }}" target="_blank" rel="noopener" style="color: var(--color-neutral-500);">{{ part.text }}</a></sc-if>
     <sc-if value="{{ part.plainText }}" hint-placeholder-val="{{ false }}">{{ part.plainText }}</sc-if>
   </sc-for>
+  <sc-if value="{{ noticeUrl }}" hint-placeholder-val="{{ false }}"> See <a href="{{ noticeUrl }}" target="_blank" rel="noopener" style="color: var(--color-neutral-500);">NOTICE</a> for third-party parts.</sc-if>
 </p>
-
-<sc-if value="{{ noticeUrl }}" hint-placeholder-val="{{ false }}">
-  <p style="color: var(--color-neutral-600); font-size: 11px; margin: var(--space-2) 0 0;">See <a href="{{ noticeUrl }}" target="_blank" rel="noopener" style="color: var(--color-neutral-500);">NOTICE</a> for third-party parts.</p>
-</sc-if>
 
 <sc-for list="{{ disclosures }}" as="para" hint-placeholder-count="0">
   <p style="color: var(--color-neutral-600); font-size: 11px; margin: var(--space-2) 0 0;">
@@ -69,9 +66,14 @@
      that actually renders PlatformIcon needs this unconditionally, not as an
      opt-in a repo could forget to ask for. A page with no platform icons at all
      (org) sets showFairUse=false rather than stretching this platform-specific
-     wording to cover unrelated content -- that gets its own line in `disclosures`. -->
+     wording to cover unrelated content -- that gets its own line in `disclosures`.
+     Covers two distinct claims in one line: fair use is a copyright argument
+     ("we're allowed to show these images"), the ownership clause is a trademark
+     acknowledgment ("we're not claiming any rights to the marks themselves") --
+     neither is restated by NOTICE (per-icon sourcing) or "Not affiliated" (a
+     relationship disclaimer, not an ownership one). -->
 <sc-if value="{{ showFairUse }}" hint-placeholder-val="{{ true }}">
-  <p style="color: var(--color-neutral-600); font-size: 11px; margin: var(--space-2) 0 0;">Icons considered fair use and only used for communicating historical platform availability at a glance.</p>
+  <p style="color: var(--color-neutral-600); font-size: 11px; margin: var(--space-2) 0 0;">Icons considered fair use and only used for communicating historical platform availability at a glance; platform icons remain the property of their owners.</p>
 </sc-if>
 
 <!-- Fixed text, not data-driven -- but gated by showAffiliateDisclosure (default
