@@ -638,10 +638,11 @@ released under **[MIT](LICENSE)** with the rest of the repo.
 
 ---
 
-## Interface icons
+## Interface icons & UI chrome
 
-The UI chrome glyphs (`site/images/ui/` — back-to-top, theme toggle) and the
-components that use them are owned by
-[vertex-order/kit](https://github.com/vertex-order/kit) and pulled in from
-there. Their sources and terms are recorded in that repo's
+The theme toggle, back-to-top control, and the components that render them
+(`site/images/ui/`, `BackToTop.dc.html`, and the rest of the vendored
+component set) are owned by [vertex-order/kit](https://github.com/vertex-order/kit)
+and pulled in via [`sync.toml`](sync.toml). Their sources and terms are
+recorded in that repo's
 [NOTICE.md](https://github.com/vertex-order/kit/blob/main/NOTICE.md).
