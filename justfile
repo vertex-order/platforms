@@ -34,6 +34,10 @@ sync-check:
 sync-update name:
     python3 scripts/sync.py --update {{name}}
 
+# CI check: fail if cross-listed duplicate game entries in site/data/ have drifted.
+check-dedup-drift:
+    python3 scripts/check-dedup-drift.py
+
 clean:
     rm -rf build
 

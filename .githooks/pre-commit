@@ -42,3 +42,13 @@ if [ -n "$staged_dc" ]; then
 	python3 "$root/scripts/bundle-components.py"
 	git add "$root/site/components.js"
 fi
+
+# 5. Fail a commit that leaves cross-listed duplicate game entries in
+#    site/data/index.js / series-*.js out of sync with each other (same
+#    dedupeKey per page.dc.html's dupGroups logic, differing
+#    description/tags/rating/length/platforms/languages). Pure validator —
+#    reads only, never stages anything.
+staged_data=$(git diff --cached --name-only --diff-filter=ACMD -- 'site/data/*.js')
+if [ -n "$staged_data" ]; then
+	python3 "$root/scripts/check-dedup-drift.py"
+fi
