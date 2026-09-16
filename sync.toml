@@ -17,7 +17,9 @@
 [publish]
 owner = "vertex-order/platforms"
 # The platform-icon micro-kit: the component, its data, and its artwork.
-# kit pulls all of it; the list repos get it transitively via kit.
+# Pulled directly by kit *and* by every list repo — not transitively
+# through kit. Expect more [subscribe.platforms] consumers as new repos
+# get added; this isn't a two-repo relationship.
 paths = [
   "site/PlatformIcon.dc.html",
   "site/data/platform-icons.js",
@@ -27,8 +29,8 @@ paths = [
 # site/ZoomedPlatformIcon.dc.html (2x wrapper — kit doesn't need it).
 
 [publish.consumers]  # for humans; sync.py ignores this
-"vertex-order/kit" = "pulls every path above; re-bundles PlatformIcon into its own components.js"
-"vertex-order/<list>" = "gets them transitively via kit"
+"vertex-order/kit" = "pulls every path above; re-bundles PlatformIcon into its own components.js for its tuning bench"
+"vertex-order/<list>" = "pulls every path above directly (not via kit) — see sync.list.toml in kit"
 
 [subscribe.kit]
 repo = "vertex-order/kit"
