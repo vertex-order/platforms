@@ -9,8 +9,11 @@
 // `key` is the stable id a series-*.js entry's platformGroups reference
 // (derived from the iconImg filename stem — kit's page.dc.html looks it up
 // here and merges this record under the entry's own fields, so an entry
-// only ever states its key, url, and whatever it overrides — never the
-// icon path/size/style/name, which live here exactly once).
+// never repeats the icon path/size/style, which live here exactly once).
+// `name` here is a catalog label — every variant that platform has ever
+// meant (e.g. Xbox One's "Physical; Digital; Enhanced; ...") — not a
+// default: an entry always states its own `name` describing what that
+// specific release actually supports, never inheriting this one.
 //
 // imgStyle carries sizing only (width/height). The light/dark tint filter is
 // owned by PlatformIcon.dc.html (the .dc-plat-img rule) and applied to every
