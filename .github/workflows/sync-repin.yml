@@ -1,9 +1,9 @@
 # Owned by vertex-order/kit — edit here. Vendored elsewhere via sync.toml;
 # don't edit the copy there.
 #
-# Weekly: repin every [subscribe.*] in sync.toml to its source repo's current
-# main and pull the resulting files (sync.py --update NAME --from-ref main).
-# If that changes anything, push it to a fixed branch and open (or update) a
+# Weekly: `just sync` (sync.py --update-all --from-ref main) — repin every
+# [subscribe.*] in sync.toml to its source repo's current main and pull the
+# resulting files. If that changes anything, push it to a fixed branch and open (or update) a
 # PR from it — a rerun with more upstream commits force-pushes the same
 # branch rather than piling up duplicate PRs, so the PR keeps moving until
 # someone reviews and merges it.
@@ -26,15 +26,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Repin every subscription to latest main and pull it
-        run: |
-          names=$(python3 -c "import tomllib; print('\n'.join(tomllib.load(open('sync.toml','rb')).get('subscribe',{}).keys()))")
-          if [ -z "$names" ]; then
-            echo "no [subscribe.*] in sync.toml — nothing to do"
-            exit 0
-          fi
-          for name in $names; do
-            python3 scripts/sync.py --update "$name" --from-ref main
-          done
+        run: python3 scripts/sync.py --update-all --from-ref main
 
       - name: Open or update a PR if anything changed
         uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
@@ -42,8 +34,8 @@ jobs:
           commit-message: "chore: repin vendored deps to latest"
           title: "chore: repin vendored deps to latest"
           body: |
-            Automated: `sync.py --update NAME --from-ref main` for every
-            `[subscribe.*]` in `sync.toml`, run weekly.
+            Automated: `just sync` (`sync.py --update-all --from-ref main`),
+            run weekly.
 
             Review the diff like any other vendored-file change before merging.
           branch: sync/repin-vendored

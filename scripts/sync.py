@@ -14,25 +14,34 @@ PR if any vendored file has drifted from its source.
 repos pull) — this script does not read it beyond refusing to clobber a
 published path.
 
-Usage:
-  python3 scripts/sync.py               # pull every subscription into the tree
-  python3 scripts/sync.py --check       # CI: exit 1 if anything drifted, no writes
-  python3 scripts/sync.py --update NAME  # resolve [subscribe.NAME].ref (as it
-                                         # is right now) to its current HEAD
-                                         # sha, repin to that sha, then pull NAME
-  python3 scripts/sync.py --update NAME --from-ref main
-                                         # reset ref to "main" first, then do
-                                         # the above — for re-pinning past an
-                                         # already-pinned SHA (see below), e.g.
-                                         # from a scheduled CI job
+Usage — two things people actually mean by "sync":
 
---update resolves whatever `ref` already says, it does not know about
-branches you aren't pinned to. Once `ref` holds a commit SHA (which is what
-every --update leaves behind, and it drops any trailing comment on that line
-too), that SHA already *is* its own HEAD, so a later --update is a no-op —
-"nothing to update" even though the source repo has new commits. To pull
-past that point, first put `ref` back to a branch/tag name (e.g. "main"),
-then run --update again — or do both in one step with --from-ref.
+  python3 scripts/sync.py --update-all --from-ref main
+                                         # `just sync`: get the latest. Repins
+                                         # every [subscribe.*] to its source's
+                                         # current main, then pulls it.
+  python3 scripts/sync.py --check       # `just sync-check`: CI gate. Exit 1
+                                         # if any vendored file has drifted
+                                         # from its currently *pinned* ref.
+                                         # No writes.
+
+Plus two less common operations:
+
+  python3 scripts/sync.py               # `just sync-restore`: reapply the
+                                         # currently pinned ref's content
+                                         # without moving the pin. Fixes a
+                                         # hand-edited vendored file.
+  python3 scripts/sync.py --update NAME [--from-ref REF]
+                                         # scoped to one subscription instead
+                                         # of all of them. Without --from-ref,
+                                         # resolves whatever `ref` already
+                                         # says — once `ref` holds a commit
+                                         # SHA (what every --update leaves
+                                         # behind), that SHA already *is* its
+                                         # own HEAD, so a later bare --update
+                                         # is a no-op. --from-ref sidesteps
+                                         # that by resetting `ref` to a
+                                         # branch/tag (e.g. "main") first.
 
 Source resolution per subscription, in order:
   1. sibling checkout ../<repo-with-slash-as-dash> if it is a git repo  (git archive)
@@ -42,7 +51,7 @@ Both paths read from the source repo's `origin` remote, not its working
 tree — path 1 runs `git fetch origin <ref>` against the sibling checkout
 before archiving. Local commits in that sibling that haven't been pushed
 (and uncommitted changes) are invisible to sync.py; push the source repo
-first, then sync/sync-update.
+first, then sync.
 
 Needs git and Python 3.11+ (tomllib). Not runnable in a design tool (no shell)
 — there the vendored files are simply the last-synced committed copies.
@@ -232,7 +241,7 @@ def check_staged(subs) -> int:
     print(f"{len(bad)} staged file(s) are vendored and don't match their source:")
     for b in bad:
         print(f"  {b}")
-    print("\nEdit these in the owning repo instead, then `just sync-update` here.")
+    print("\nEdit these in the owning repo instead, then `just sync` here.")
     print("If this really is a sync commit, run `just sync` again and re-stage.")
     return 1
 
@@ -242,9 +251,11 @@ def main():
     ap.add_argument("--check", action="store_true", help="report drift, exit 1, no writes")
     ap.add_argument("--check-staged", action="store_true",
                      help="pre-commit guard: block hand-edited vendored files in the index")
-    ap.add_argument("--update", metavar="NAME", help="repin a subscription then pull it")
+    ap.add_argument("--update", metavar="NAME", help="repin one subscription then pull it")
+    ap.add_argument("--update-all", action="store_true",
+                     help="repin every subscription then pull it (`just sync`)")
     ap.add_argument("--from-ref", metavar="REF",
-                     help="with --update: reset [subscribe.NAME].ref to REF first, so an "
+                     help="with --update/--update-all: reset ref to REF first, so an "
                           "already-pinned SHA can move forward again (e.g. --from-ref main)")
     args = ap.parse_args()
 
@@ -264,21 +275,31 @@ def main():
         if clash:
             sys.exit(f"[subscribe.{name}] also lists published path(s): {sorted(clash)}")
 
-    if args.from_ref and not args.update:
-        sys.exit("--from-ref requires --update")
+    if args.update and args.update_all:
+        sys.exit("--update and --update-all are mutually exclusive")
+    if args.from_ref and not (args.update or args.update_all):
+        sys.exit("--from-ref requires --update or --update-all")
 
-    if args.update:
+    if args.update_all:
+        targets = list(subs.keys())
+    elif args.update:
         if args.update not in subs:
             sys.exit(f"no [subscribe.{args.update}]")
+        targets = [args.update]
+    else:
+        targets = []
+
+    for name in targets:
         if args.from_ref:
-            repin(args.update, args.from_ref)
+            repin(name, args.from_ref)
             cfg = load()
             subs = cfg["subscribe"]
-        _, sha = checkout(subs[args.update]["repo"], str(subs[args.update].get("ref", "main")))
-        repin(args.update, sha)
+        _, sha = checkout(subs[name]["repo"], str(subs[name].get("ref", "main")))
+        repin(name, sha)
         cfg = load()
         subs = cfg["subscribe"]
-        subs = {args.update: subs[args.update]}
+    if targets:
+        subs = {name: subs[name] for name in targets}
 
     drift = []
     for name, sub in subs.items():
@@ -292,7 +313,7 @@ def main():
     for d in drift:
         print(f"  {d}")
     if args.check:
-        print("\nrun `just sync` and commit the result.")
+        print("\nrun `just sync-restore` and commit the result.")
         return 1
     return 0
 

@@ -4,7 +4,7 @@
 # Fail a PR (or a push to main that bypassed the pre-commit guard) whose
 # vendored files (sync.toml [subscribe.*]) have drifted from their source
 # repo at the pinned ref — hand-edited, or the ref moved without a resync.
-# Fix: `just sync` and commit the result.
+# Fix: `just sync-restore` and commit the result.
 name: Check vendored files
 
 on:

@@ -22,17 +22,19 @@ serve: build
 bundle-components:
     python3 scripts/bundle-components.py
 
-# Pull vendored files from the repos in sync.toml [subscribe.*].
+# Get the latest: repin every sync.toml [subscribe.*] to its source's
+# current main, then pull it. "Sync" always means this.
 sync:
-    python3 scripts/sync.py
+    python3 scripts/sync.py --update-all --from-ref main
 
-# CI check: fail if any vendored file drifted from its source.
+# CI check: fail if any vendored file drifted from its currently pinned ref.
 sync-check:
     python3 scripts/sync.py --check
 
-# Repin a subscription's ref to its current HEAD sha, then pull it.
-sync-update name:
-    python3 scripts/sync.py --update {{name}}
+# Reapply the currently pinned ref's content without moving the pin. Rare:
+# undoes a hand-edit to a vendored file.
+sync-restore:
+    python3 scripts/sync.py
 
 # CI check: fail if cross-listed duplicate game entries in site/data/ have drifted.
 check-dedup-drift:

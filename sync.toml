@@ -32,7 +32,7 @@ paths = [
 
 [subscribe.kit]
 repo = "vertex-order/kit"
-ref = "02521fdd9d6c76988b54e16d947d556f905fee7c"
+ref = "e991bb8b21dd37b0875ca728cae119a4588da7d9"
 paths = [
   "site/_ds/",
   "site/images/ui/",
