@@ -1,0 +1,75 @@
+# Owned by vertex-order/kit — edit here. Vendored elsewhere via sync.toml;
+# don't edit the copy there.
+#
+# First half of the automatic pair with autofix-apply.yml: computes `just
+# fix`'s output for every PR and, if anything changed, uploads it as an
+# artifact for autofix-apply.yml to push back — no maintainer action needed,
+# unlike the /fix-build comment command (fix-build.yml), which stays around
+# as a manual fallback.
+#
+# Deliberately plain `pull_request`, never `pull_request_target`: this job
+# runs `python3 scripts/*.py` straight from the PR's own branch — arbitrary,
+# untrusted code for a PR from a fork — so it must run with GitHub's normal
+# fork sandbox (no secrets, no write access; see `permissions` below). Never
+# add a token/secret to this job. The write-capable half of this pair lives
+# entirely in autofix-apply.yml, which never executes anything from the PR —
+# it only copies file *contents* out of this job's artifact and commits
+# them. That split (untrusted execution here, privileged write there, never
+# both in the same job) is the actual safety property — see "Preventing
+# pwn requests" in GitHub's own Actions security docs for the general
+# pattern this follows.
+name: Autofix (compute)
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  compute:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout PR
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Install just
+        uses: extractions/setup-just@53165ef7e734c5c07cb06b3c8e7b647c5aa16db3 # v4
+
+      - name: Run cleanup
+        run: just fix
+
+      - name: Collect changed files
+        id: diff
+        run: |
+          mkdir -p /tmp/autofix/files
+          git diff --name-only > /tmp/autofix/changed.txt
+          if [ -s /tmp/autofix/changed.txt ]; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            while IFS= read -r f; do
+              mkdir -p "/tmp/autofix/files/$(dirname "$f")"
+              cp "$f" "/tmp/autofix/files/$f"
+            done < /tmp/autofix/changed.txt
+          else
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Write PR metadata
+        if: steps.diff.outputs.changed == 'true'
+        run: |
+          cat > /tmp/autofix/pr.json <<EOF
+          {
+            "number": ${{ github.event.pull_request.number }},
+            "sha": "${{ github.event.pull_request.head.sha }}",
+            "branch": "${{ github.event.pull_request.head.ref }}",
+            "repo": "${{ github.event.pull_request.head.repo.full_name }}"
+          }
+          EOF
+
+      - name: Upload fix
+        if: steps.diff.outputs.changed == 'true'
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: autofix
+          path: /tmp/autofix
+          retention-days: 1

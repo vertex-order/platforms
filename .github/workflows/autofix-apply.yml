@@ -1,0 +1,95 @@
+# Owned by vertex-order/kit — edit here. Vendored elsewhere via sync.toml;
+# don't edit the copy there.
+#
+# Second half of the pair with autofix.yml — see that file's header for the
+# full safety rationale. This job runs with a write-capable token but never
+# executes anything from the PR: `workflow_run` always runs this workflow's
+# definition from the base branch (never the PR's copy) with no automatic
+# checkout of PR code, and every step below only moves inert file *content*
+# out of autofix.yml's artifact into a commit — it's never interpreted or
+# run. That's what makes this safe to hold `contents: write` even though
+# autofix.yml just processed a PR that could be from anyone.
+#
+# Limitation: pushing to a fork's branch only works if that PR has "Allow
+# edits from maintainers" enabled (GitHub default, but the author can turn
+# it off) — see the failure-comment step below for what happens otherwise.
+name: Autofix (apply)
+
+on:
+  workflow_run:
+    workflows: ["Autofix (compute)"]
+    types: [completed]
+
+permissions:
+  contents: read
+
+jobs:
+  apply:
+    if: github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Download fix
+        id: download
+        continue-on-error: true
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: autofix
+          path: /tmp/autofix
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Read PR metadata
+        if: steps.download.outcome == 'success'
+        id: pr
+        run: |
+          echo "number=$(jq -r .number /tmp/autofix/pr.json)" >> "$GITHUB_OUTPUT"
+          echo "sha=$(jq -r .sha /tmp/autofix/pr.json)" >> "$GITHUB_OUTPUT"
+          echo "branch=$(jq -r .branch /tmp/autofix/pr.json)" >> "$GITHUB_OUTPUT"
+          echo "repo=$(jq -r .repo /tmp/autofix/pr.json)" >> "$GITHUB_OUTPUT"
+
+      - name: Checkout PR at the exact commit autofix.yml computed against
+        if: steps.download.outcome == 'success'
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: ${{ steps.pr.outputs.repo }}
+          ref: ${{ steps.pr.outputs.sha }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Apply, commit, push
+        if: steps.download.outcome == 'success'
+        id: push
+        run: |
+          rm -f /tmp/autofix/pr.json
+          cp -r /tmp/autofix/files/. .
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            git commit -m "chore: run just fix (autofix)"
+            # Non-force: if the branch moved since autofix.yml computed this
+            # fix (more commits pushed meanwhile), this naturally refuses
+            # rather than clobbering newer work — that's deliberate, not a
+            # bug to work around.
+            if git push origin HEAD:${{ steps.pr.outputs.branch }}; then
+              echo "changed=true" >> "$GITHUB_OUTPUT"
+            else
+              echo "changed=push-failed" >> "$GITHUB_OUTPUT"
+            fi
+          fi
+
+      - name: Report push failure
+        if: steps.push.outputs.changed == 'push-failed'
+        uses: actions/github-script@d746ffe35508b1917358783b479e04febd2b8f71 # v9.0.0
+        with:
+          script: |
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: ${{ steps.pr.outputs.number }},
+              body: "Autofix computed a fix for this PR but couldn't push it back — either this branch moved since, or this PR's \"Allow edits from maintainers\" is turned off. Enable that (or run `just fix` and push it yourself), or comment `/fix-build` to retry.",
+            });

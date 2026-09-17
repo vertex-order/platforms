@@ -1,0 +1,129 @@
+# Owned by vertex-order/kit — edit here. Vendored elsewhere via sync.toml;
+# don't edit the copy there.
+#
+# Maintainer-triggered fixup for a PR that fails check-generated.yml (stale
+# components.js / non-canonical SVG serialization) — a maintainer comments
+# `/fix-build` on the PR and this runs `just build`'s cleanup steps against
+# the PR's own branch, pushing a fixup commit if anything changed.
+#
+# Deliberately NOT automatic on every PR: it runs `python3 scripts/*.py`
+# from the PR's own branch, and this workflow definition always runs from
+# the base branch's copy regardless of what a PR's own copy says (that's
+# how issue_comment triggers work) — but the *scripts it invokes* are still
+# whatever the PR's HEAD contains. Requiring a maintainer (author_association
+# in OWNER/MEMBER/COLLABORATOR) to explicitly comment first is the actual
+# safety boundary: only run this after a human with write access has looked
+# at the PR and decided its code is fine to execute. An automatic version —
+# triggered on every `pull_request`, no human in the loop — would need to
+# run untrusted PR code and hold a write-capable token in the same job,
+# which is the textbook pull_request_target vulnerability shape. Don't
+# change this to an automatic trigger without re-deriving that tradeoff.
+#
+# Runs `just fix` — the checked-in-file cleanup steps only (matches
+# check-generated.yml's scope, plus restore-headers/ensure-helmets, which
+# aren't CI-checked but are cheap to also keep clean here), not `just
+# build`'s full build/ assembly or SSR step, which produce gitignored,
+# never-committed output.
+#
+# Limitation: pushing back to a fork only works if that PR has "Allow edits
+# from maintainers" enabled (GitHub default, but the author can turn it
+# off) — see the failure-comment step below for what happens otherwise.
+name: Fix build (on comment)
+
+on:
+  issue_comment:
+    types: [created]
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  fix-build:
+    if: >
+      github.event.issue.pull_request != null &&
+      startsWith(github.event.comment.body, '/fix-build') &&
+      contains(fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'), github.event.comment.author_association)
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Acknowledge
+        uses: actions/github-script@d746ffe35508b1917358783b479e04febd2b8f71 # v9.0.0
+        with:
+          script: |
+            await github.rest.reactions.createForIssueComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              comment_id: context.payload.comment.id,
+              content: "+1",
+            });
+
+      - name: Resolve PR head
+        id: pr
+        uses: actions/github-script@d746ffe35508b1917358783b479e04febd2b8f71 # v9.0.0
+        with:
+          script: |
+            const { data: pr } = await github.rest.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number,
+            });
+            core.setOutput("repo", pr.head.repo.full_name);
+            core.setOutput("branch", pr.head.ref);
+            core.setOutput("sha", pr.head.sha);
+
+      - name: Checkout PR branch
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: ${{ steps.pr.outputs.repo }}
+          ref: ${{ steps.pr.outputs.sha }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install just
+        uses: extractions/setup-just@53165ef7e734c5c07cb06b3c8e7b647c5aa16db3 # v4
+
+      - name: Run cleanup
+        run: just fix
+
+      - name: Commit and push fix
+        id: push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            git commit -m "chore: run just fix (via /fix-build)"
+            if git push origin HEAD:${{ steps.pr.outputs.branch }}; then
+              echo "changed=true" >> "$GITHUB_OUTPUT"
+            else
+              echo "changed=push-failed" >> "$GITHUB_OUTPUT"
+            fi
+          fi
+
+      - name: Report push failure
+        if: steps.push.outputs.changed == 'push-failed'
+        uses: actions/github-script@d746ffe35508b1917358783b479e04febd2b8f71 # v9.0.0
+        with:
+          script: |
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: "`/fix-build` produced changes but couldn't push them back — this PR's branch likely has \"Allow edits from maintainers\" turned off. Enable that (or push the fix yourself with `just fix`).",
+            });
+
+      - name: Report no changes
+        if: steps.push.outputs.changed == 'false'
+        uses: actions/github-script@d746ffe35508b1917358783b479e04febd2b8f71 # v9.0.0
+        with:
+          script: |
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: "`/fix-build` found nothing to fix — build artifacts already match source.",
+            });

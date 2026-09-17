@@ -6,6 +6,12 @@
 # `mv ... || true` makes that a no-op rather than a fork: kit has no entry
 # page, platforms and every list have `page.dc.html`.
 
+# Regenerate every checked-in generated/normalized file (no build/ assembly)
+# — what CI's fix-build.yml runs against a PR branch, and what `build`
+# depends on. Kept as its own recipe so both call one source of truth
+# instead of listing the same five recipes in two places.
+fix: strip-metadata normalize-svg restore-headers ensure-helmets bundle-components
+
 # Assemble the deployable site into build/ (gitignored, matches CI).
 #
 # The last step prerenders the entry page's initial content so it paints
@@ -16,7 +22,7 @@
 # build`/`just serve` — just without the prerender, same blank-then-hydrate
 # behavior as before this feature. A Node-present failure here is a real
 # bug and fails the build, same as any other step.
-build: strip-metadata normalize-svg restore-headers ensure-helmets bundle-components
+build: fix
     rm -rf build
     mkdir build
     cp -r site/. build/
