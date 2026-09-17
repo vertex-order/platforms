@@ -24,7 +24,7 @@ build: strip-metadata normalize-svg restore-headers ensure-helmets bundle-compon
     if command -v node >/dev/null 2>&1; then \
         if [ -f build/index.html ]; then npm install --no-fund --no-audit --silent && node scripts/ssr-render.js build; fi; \
     else \
-        echo "just build: node not on PATH — skipping SSR prerender (build/index.html ships blank-then-hydrate)"; \
+        echo "just build: node not on PATH — skipped SSR prerender (build/index.html ships blank-then-hydrate). Install Node (https://nodejs.org, or see .node-version) to get it locally."; \
     fi
 
 # Build then serve build/ locally, like the real deploy.
