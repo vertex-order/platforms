@@ -75,6 +75,11 @@ class Component extends DCLogic {
   renderVals() {
     const linked = !!this.props.href;
     const muted = !!this.props.muted;
+    const terminated = !!this.props.terminated;
+    // A terminated entry always wants the "struck through, dimmed" look —
+    // an entry states `terminated: true` alone; `contentOpacity`/`strikeColor`
+    // stay overridable for anything that isn't the standard terminated case
+    // (e.g. a "no results yet" dimming that isn't a termination at all).
     return {
       linked,
       unlinkedDefault: !linked && !muted,
@@ -82,7 +87,8 @@ class Component extends DCLogic {
       suffixFontSize: this.props.suffixFontSize || '10.8px',
       suffixFontVariant: this.props.suffixSmallCaps ? 'small-caps' : 'normal',
       suffixOffsetY: this.props.suffixOffsetY || 0,
-      strikeColor: this.props.strikeColor || 'var(--color-neutral-500)',
+      strikeColor: this.props.strikeColor || (terminated ? 'currentColor' : 'var(--color-neutral-500)'),
+      contentOpacity: this.props.contentOpacity != null ? this.props.contentOpacity : (terminated ? 0.5 : 1),
       scale: this.props.scale || 1,
     };
   }
