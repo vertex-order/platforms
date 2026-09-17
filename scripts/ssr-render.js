@@ -10,12 +10,31 @@
 // reimplementation) against build-time defaults (no localStorage entries =>
 // the same defaults support.js already falls back to for a first-time
 // visitor), waits for it to settle, then serializes the resulting DOM back
-// over the entry file. The client boot path is untouched — support.js still
-// calls ReactDOM.createRoot(...).render() on load (site/support.js:198-200),
-// a full client-side remount, not a hydrate() — so it cleanly overwrites
-// this prerendered shell once it reads the visitor's real localStorage
-// prefs (theme, order, checked progress). This step only removes the blank
-// paint before that happens; it changes no runtime behavior.
+// over the entry file.
+//
+// The client boot path (support.js's boot(), site/support.js:152-199) finds
+// the entry file's <x-dc> element and *destructively* replaces it with a
+// freshly created <div id="dc-root"> it then mounts React into
+// (dc.replaceWith(hostEl), site/support.js:168) — so running that same
+// boot() here, in-process, to produce the snapshot, consumes the one
+// <x-dc> the file had. Naively serializing the post-boot DOM ships a file
+// with no <x-dc> left in it at all: a real visitor's browser runs boot()
+// again, parseDcDocument() finds no <x-dc> (site/support.js:27-28),
+// returns null, and boot() silently no-ops — no React root ever mounts,
+// no event handler ever attaches, forever. The page LOOKS complete (it's a
+// real settled render) and throws nothing, so this shipped fully inert on
+// every deploy since this script was added.
+//
+// The fix: keep a copy of the *original*, untouched <x-dc>...</x-dc> block
+// (captured from `html` below, before jsdom ever parses/mutates it) and
+// splice it back into the serialized output as a sibling placed right
+// before the snapshot div — renamed from id="dc-root" to id="dc-root-ssr"
+// so the client's real, fresh div doesn't collide with it. A visitor's
+// browser now paints the id="dc-root-ssr" snapshot immediately (no blank
+// flash — the original goal), then boot() finds the *real* <x-dc>, mounts
+// a live React tree in a new div it creates itself, and a small inline
+// script (appended below, output-only — never touches site/) removes the
+// now-superseded snapshot once that live #dc-root shows up.
 //
 // Document URL is a fake https:// origin (SSR_ORIGIN below), not file:// —
 // file:// is an opaque origin in jsdom (and in real browsers), and
@@ -144,6 +163,16 @@ async function main() {
   const entryPath = path.join(buildDir, entryFile);
   const html = fs.readFileSync(entryPath, 'utf8');
 
+  // Captured from the untouched source string, before jsdom (and boot())
+  // ever sees it — see the <x-dc> consumption note above. Same open/close
+  // matching support.js's own parseDcText() uses (site/support.js:41-43).
+  const xDcOpenMatch = /<x-dc(?:\s[^>]*)?>/.exec(html);
+  const xDcCloseIdx = html.lastIndexOf('</x-dc>');
+  if (!xDcOpenMatch || xDcCloseIdx === -1) {
+    throw new Error(entryPath + ': no <x-dc>...</x-dc> found — can\'t preserve it for re-mount');
+  }
+  const originalXDcBlock = html.slice(xDcOpenMatch.index, xDcCloseIdx + '</x-dc>'.length);
+
   const dom = new JSDOM(html, {
     url: SSR_ORIGIN + '/' + entryFile,
     runScripts: 'dangerously',
@@ -191,6 +220,23 @@ async function main() {
   } finally {
     restoreSri(window.document);
     let out = '<!DOCTYPE html>\n' + window.document.documentElement.outerHTML;
+
+    // Re-insert the original <x-dc> (see the top-of-file note) as a sibling
+    // right before the settled snapshot, and rename the snapshot's id out
+    // of #dc-root's way. There's exactly one id="dc-root" opening tag —
+    // boot() creates it fresh each time it runs (site/support.js:167-168).
+    const SNAPSHOT_MARKER = '<div id="dc-root">';
+    if (!out.includes(SNAPSHOT_MARKER)) {
+      throw new Error(entryPath + ': expected exactly one <div id="dc-root"> in the settled render');
+    }
+    out = out.replace(SNAPSHOT_MARKER, originalXDcBlock + '\n<div id="dc-root-ssr">');
+    // Removes the now-superseded snapshot once the client's real boot() has
+    // mounted its own live #dc-root over the <x-dc> above. Output-only —
+    // never written to site/, so it has no effect on the dev/preview flow
+    // (that HTML never runs through this script).
+    const CLEANUP_SCRIPT = '<script>(function(){var s=document.getElementById("dc-root-ssr");if(!s)return;new MutationObserver(function(_,o){if(document.getElementById("dc-root")){s.remove();o.disconnect();}}).observe(document.body,{childList:true,subtree:true});})();</script>';
+    out = out.replace('</body>', CLEANUP_SCRIPT + '</body>');
+
     // Elements the runtime builds by string-concatenating an absolute base
     // (e.g. data/index.js's dynamically-injected <script src> for each
     // series file, resolved against SSR_ORIGIN) bake that absolute URL into
