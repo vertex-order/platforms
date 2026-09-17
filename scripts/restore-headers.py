@@ -11,10 +11,10 @@ markdown, and support.js. When a file's header is fully missing, this
 inserts one naming the owner sync.toml implies (this repo's own
 [publish].owner for a path under [publish].paths, or a [subscribe.<name>].repo
 for a path under that subscription) -- but sync.toml only tells you where
-*this* repo fetches a path from, not who first authored it: a repo that
-pulls PlatformIcon.dc.html transitively through kit's own [subscribe.kit]
-would have this script infer owner "kit" for a file actually owned by
-"platforms". So a header that's already present and well-formed, for *any*
+*this* repo fetches a path from, not who first authored it: if some future
+path were ever subscribed transitively (repo A pulls it from repo B, which
+itself only pulled it from repo C), this script would infer owner "B" for a
+file actually owned by "C". So a header that's already present and well-formed, for *any*
 vertex-order/* owner, is left completely alone (only its wrapping is
 normalized) -- sync.toml's inferred owner is strictly a fallback for
 filling in a blank, never a value that overwrites one already there. This

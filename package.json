@@ -1,0 +1,13 @@
+{
+  "name": "vertex-order-kit",
+  "private": true,
+  "description": "Build-time only. Node drives scripts/ssr-render.js (`just build`'s SSR step) via jsdom; react/react-dom are pinned to the exact versions site/support.js loads from unpkg at runtime (site/support.js REACT_URL/REACT_DOM_URL), so the prerendered markup matches what the client re-renders. Never shipped to the browser.",
+  "engines": {
+    "node": ">=24"
+  },
+  "devDependencies": {
+    "jsdom": "30.0.1",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  }
+}

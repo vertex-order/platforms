@@ -34,7 +34,7 @@ paths = [
 
 [subscribe.kit]
 repo = "vertex-order/kit"
-ref = "e991bb8b21dd37b0875ca728cae119a4588da7d9"
+ref = "3a41bddd820ea96a1ec8b488ec36b84cc7e8c79d"
 paths = [
   "site/_ds/",
   "site/images/ui/",
@@ -45,6 +45,7 @@ paths = [
   "site/Metadata.dc.html",
   "site/ThemeToggle.dc.html",
   "scripts/bundle-components.py",
+  "scripts/ssr-render.js",
   "scripts/sync.py",
   "scripts/normalize-svg.py",
   "scripts/restore-headers.py",
@@ -53,6 +54,11 @@ paths = [
   "scripts/trim-svg.py",
   "svgo.config.mjs",
   "justfile",
+  "package.json",
+  "package-lock.json",
+  ".npmrc",
+  ".node-version",
+  ".gitignore",
   ".editorconfig",
   ".gitattributes",
   ".claude/settings.json",

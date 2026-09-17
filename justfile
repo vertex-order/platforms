@@ -7,11 +7,25 @@
 # page, platforms and every list have `page.dc.html`.
 
 # Assemble the deployable site into build/ (gitignored, matches CI).
+#
+# The last step prerenders the entry page's initial content so it paints
+# real markup before support.js boots, instead of today's blank shell — see
+# scripts/ssr-render.js's header comment for how. It needs Node; CI (which
+# does the real deploy, static.yml) always has it, so this always runs
+# there. Locally, a contributor without Node still gets a working `just
+# build`/`just serve` — just without the prerender, same blank-then-hydrate
+# behavior as before this feature. A Node-present failure here is a real
+# bug and fails the build, same as any other step.
 build: strip-metadata normalize-svg restore-headers ensure-helmets bundle-components
     rm -rf build
     mkdir build
     cp -r site/. build/
     mv build/page.dc.html build/index.html 2>/dev/null || true
+    if command -v node >/dev/null 2>&1; then \
+        if [ -f build/index.html ]; then npm install --no-fund --no-audit --silent && node scripts/ssr-render.js build; fi; \
+    else \
+        echo "just build: node not on PATH — skipping SSR prerender (build/index.html ships blank-then-hydrate)"; \
+    fi
 
 # Build then serve build/ locally, like the real deploy.
 serve: build

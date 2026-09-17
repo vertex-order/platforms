@@ -7,6 +7,9 @@ _references/
 # workflow build output (generated in CI, never committed)
 build/
 
+# npm deps for scripts/ssr-render.js (build-time only, never shipped)
+node_modules/
+
 # auto-generated thumbnail cache
 .thumbnail
 
@@ -18,4 +21,5 @@ site/github.md
 site/CLAUDE.md
 site/.claude/
 site/uploads/
+site/screenshots/
 site/*.png

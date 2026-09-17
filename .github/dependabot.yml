@@ -2,8 +2,7 @@
 # don't edit the copy there.
 version: 2
 updates:
-  # Keep the SHA-pinned actions in .github/workflows/ current. No npm entry:
-  # the only Node tool (svgo) runs via `npx` from the justfile, not a manifest.
+  # Keep the SHA-pinned actions in .github/workflows/ current.
   - package-ecosystem: github-actions
     directory: "/"
     schedule:
@@ -12,6 +11,23 @@ updates:
       default-days: 7
     groups:
       actions:
+        patterns:
+          - "*"
+    commit-message:
+      prefix: "chore"
+
+  # package.json's build-time-only deps for scripts/ssr-render.js (jsdom,
+  # and react/react-dom pinned to match site/support.js's own CDN load —
+  # see that script's header comment). svgo still runs via `npx`, not a
+  # manifest entry, so it's not covered here.
+  - package-ecosystem: npm
+    directory: "/"
+    schedule:
+      interval: weekly
+    cooldown:
+      default-days: 7
+    groups:
+      npm:
         patterns:
           - "*"
     commit-message:
