@@ -1,0 +1,60 @@
+/* site/data/theme.css (css) — per-repo, not vendored from kit (see kit's
+   docs/init-list.md "Theme colors"). page.dc.html links this after
+   Nocturne's own stylesheet (site/_ds/nocturne-*/styles.css), so these
+   --color-* values override its defaults. Delete a line to fall back to the
+   Nocturne default for that token; a repo that never edits this file keeps
+   kit's look unchanged. Only the color custom properties are here —
+   spacing, radius, shadow, and font tokens stay in the shared Nocturne
+   stylesheet. */
+
+:root[data-theme="dark"] {
+  --color-bg: #161826;
+  --color-surface: #232532;
+  --color-text: #e9e9ed;
+  --color-accent: #9184d9;
+  --color-accent-100: #f5f4ff;
+  --color-accent-200: #e7e5fe;
+  --color-accent-300: #d2cefd;
+  --color-accent-400: #b5abfc;
+  --color-accent-500: #968ae0;
+  --color-accent-600: #796cbf;
+  --color-accent-700: #5d5294;
+  --color-accent-800: #423a6a;
+  --color-accent-900: #2b2741;
+  --color-neutral-100: #f3f5fe;
+  --color-neutral-200: #e4e7f5;
+  --color-neutral-300: #cfd3e5;
+  --color-neutral-400: #b2b6ca;
+  --color-neutral-500: #9397ab;
+  --color-neutral-600: #75798c;
+  --color-neutral-700: #595d6c;
+  --color-neutral-800: #3f424d;
+  --color-neutral-900: #292b31;
+  --color-divider: color-mix(in srgb, #e9e9ed 16%, transparent);
+}
+
+:root[data-theme="light"] {
+  --color-bg: #f4f4f8;
+  --color-surface: #ffffff;
+  --color-text: #1c1e2a;
+  --color-accent: #6f63b5;
+  --color-accent-100: #2b2741;
+  --color-accent-200: #423a6a;
+  --color-accent-300: #5d5294;
+  --color-accent-400: #796cbf;
+  --color-accent-500: #968ae0;
+  --color-accent-600: #b5abfc;
+  --color-accent-700: #d2cefd;
+  --color-accent-800: #e7e5fe;
+  --color-accent-900: #f5f4ff;
+  --color-neutral-100: #292b31;
+  --color-neutral-200: #3f424d;
+  --color-neutral-300: #595d6c;
+  --color-neutral-400: #75798c;
+  --color-neutral-500: #9397ab;
+  --color-neutral-600: #b2b6ca;
+  --color-neutral-700: #cfd3e5;
+  --color-neutral-800: #e4e7f5;
+  --color-neutral-900: #f3f5fe;
+  --color-divider: color-mix(in srgb, #1c1e2a 14%, transparent);
+}

@@ -26,35 +26,13 @@
 <helmet>
 <link rel="stylesheet" href="_ds/nocturne-dd511f00-0314-498c-83ef-49f001a371b0/styles.css">
 <script src="_ds/nocturne-dd511f00-0314-498c-83ef-49f001a371b0/_ds_bundle.js"></script>
+<!-- data/theme.css: per-repo color overrides, not vendored -- see kit's
+     docs/init-list.md "Theme colors" -->
+<link rel="stylesheet" href="data/theme.css">
 <style>
 body { margin: 0; background: var(--color-bg); }
 a { color: var(--color-accent-300); text-decoration: none; }
 a:hover { color: var(--color-accent); text-decoration: underline; }
-:root[data-theme="light"] {
-  --color-bg: #f4f4f8;
-  --color-surface: #ffffff;
-  --color-text: #1c1e2a;
-  --color-accent: #6f63b5;
-  --color-accent-100: #2b2741;
-  --color-accent-200: #423a6a;
-  --color-accent-300: #5d5294;
-  --color-accent-400: #796cbf;
-  --color-accent-500: #968ae0;
-  --color-accent-600: #b5abfc;
-  --color-accent-700: #d2cefd;
-  --color-accent-800: #e7e5fe;
-  --color-accent-900: #f5f4ff;
-  --color-neutral-100: #292b31;
-  --color-neutral-200: #3f424d;
-  --color-neutral-300: #595d6c;
-  --color-neutral-400: #75798c;
-  --color-neutral-500: #9397ab;
-  --color-neutral-600: #b2b6ca;
-  --color-neutral-700: #cfd3e5;
-  --color-neutral-800: #e4e7f5;
-  --color-neutral-900: #f3f5fe;
-  --color-divider: color-mix(in srgb, #1c1e2a 14%, transparent);
-}
 :root[data-theme="light"] a { color: var(--color-accent-300); }
 :root[data-theme="light"] a:hover { color: var(--color-accent); }
 /* Icon tint overrides for light mode now live in PlatformIcon.dc.html itself,
