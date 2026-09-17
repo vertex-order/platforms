@@ -34,11 +34,12 @@ paths = [
 
 [subscribe.kit]
 repo = "vertex-order/kit"
-ref = "623f49f38dde6f99d26da8a2d6fc528696f054a3"
+ref = "c4732d3033f49d34f7ebbc0647669c01e57ac92f"
 paths = [
   "site/_ds/",
   "site/images/ui/",
   "site/support.js",
+  "site/theme-dev.js",
   "site/BackToTop.dc.html",
   "site/Footer.dc.html",
   "site/HelpWanted.dc.html",

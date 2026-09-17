@@ -12,6 +12,9 @@
 <helmet>
 <link rel="stylesheet" href="_ds/nocturne-dd511f00-0314-498c-83ef-49f001a371b0/styles.css">
 <script src="_ds/nocturne-dd511f00-0314-498c-83ef-49f001a371b0/_ds_bundle.js"></script>
+<!-- data/theme.css: per-repo color overrides, not vendored -- see docs/init-list.md "Theme colors" -->
+<link rel="stylesheet" href="data/theme.css">
+<script src="./theme-dev.js"></script>
 </helmet>
 <button onClick="{{ toggleTheme }}" title="Toggle light/dark mode" style="position: fixed; top: var(--space-4); right: var(--space-4); z-index: 10; width: 36px; height: 36px; border-radius: var(--radius-md); border: 1px solid var(--color-divider); background: var(--color-surface); color: var(--color-text); display: flex; align-items: center; justify-content: center; cursor: pointer;" style-hover="border-color: var(--color-accent-600);" style-focus="outline: 2px solid var(--color-accent); outline-offset: 2px;">
   {{ themeIconEl }}

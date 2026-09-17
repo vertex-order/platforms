@@ -12,6 +12,9 @@
 <helmet>
 <link rel="stylesheet" href="_ds/nocturne-dd511f00-0314-498c-83ef-49f001a371b0/styles.css">
 <script src="_ds/nocturne-dd511f00-0314-498c-83ef-49f001a371b0/_ds_bundle.js"></script>
+<!-- data/theme.css: per-repo color overrides, not vendored -- see docs/init-list.md "Theme colors" -->
+<link rel="stylesheet" href="data/theme.css">
+<script src="./theme-dev.js"></script>
 </helmet>
 <sc-if value="{{ visible }}" hint-placeholder-val="{{ false }}">
   <div style="position: fixed; bottom: var(--space-4); left: 0; right: 0; z-index: 10; max-width: {{ contentWidthPx }}; margin: 0 auto; padding: 0 var(--space-4); display: flex; justify-content: flex-end; pointer-events: none;">
