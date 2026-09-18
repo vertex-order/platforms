@@ -1,6 +1,6 @@
 /* site/data/theme.css (css) — per-repo, not vendored from kit (see kit's
    docs/init-list.md "Theme colors"). page.dc.html links this after
-   Nocturne's own stylesheet (site/_ds/nocturne-*/styles.css), so these
+   Nocturne's own stylesheet (site/_ds/nocturne-.../styles.css), so these
    --color-* values override its defaults. Delete a line to fall back to the
    Nocturne default for that token; a repo that never edits this file keeps
    kit's look unchanged. Only the color custom properties are here —
