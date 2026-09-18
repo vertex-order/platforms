@@ -57,101 +57,12 @@
 
 const fs = require('fs');
 const path = require('path');
-const { JSDOM, requestInterceptor } = require('jsdom');
-
-const SETTLE_POLL_MS = 50;
-const SETTLE_STABLE_TICKS = 3;
-const SETTLE_TIMEOUT_MS = 20000;
-const SSR_ORIGIN = 'https://ssr-render.internal';
-
-// Exact CDN URLs site/support.js hardcodes (REACT_URL / REACT_DOM_URL) —
-// keep in sync if that pin ever moves.
-const REACT_CDN_URL = 'https://unpkg.com/react@18.3.1/umd/react.production.min.js';
-const REACT_DOM_CDN_URL = 'https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js';
-// Same exact hashes as support.js's REACT_SRI/REACT_DOM_SRI — needed only
-// because jsdom sets these via the `.integrity` IDL property (support.js's
-// loadScript(), site/support.js:1825-1833), and jsdom 30 doesn't reflect
-// that property to the content attribute (verified empirically — .src and
-// .crossOrigin reflect, .integrity silently doesn't). Without restoreSri()
-// below, the serialized page would silently ship these two <script> tags
-// with no integrity check at all.
-const REACT_SRI = 'sha384-DGyLxAyjq0f9SPpVevD6IgztCFlnMF6oW/XQGmfe+IsZ8TqEiDrcHkMLKI6fiB/Z';
-const REACT_DOM_SRI = 'sha384-gTGxhz21lVGYNMcdJOyq01Edg0jhn/c22nsx0kyqP0TxaV5WVdsSH1fSDUf5YJj1';
-
-const MIME_BY_EXT = {
-  '.js': 'application/javascript',
-  '.mjs': 'application/javascript',
-  '.css': 'text/css',
-  '.svg': 'image/svg+xml',
-  '.html': 'text/html',
-};
-
-function fileResponse(absPath) {
-  const body = fs.readFileSync(absPath);
-  const type = MIME_BY_EXT[path.extname(absPath).toLowerCase()] || 'application/octet-stream';
-  return new Response(body, { headers: { 'Content-Type': type } });
-}
-
-// Resolves a same-origin resource (support.js, data/*.js, dynamically
-// injected series-*.js, every *.dc.html a dc-import fetches) straight off
-// build/ on disk, plus the two pinned React/ReactDOM CDN URLs from
-// node_modules — no network dependency for this build step. Returns null for
-// anything else (e.g. the bootstrap-icons CDN stylesheet), which callers
-// fall back to the real network for, harmlessly.
-function resolveLocal(url, buildDir) {
-  if (url === REACT_CDN_URL) {
-    return fileResponse(path.resolve(__dirname, '..', 'node_modules', 'react', 'umd', 'react.production.min.js'));
-  }
-  if (url === REACT_DOM_CDN_URL) {
-    return fileResponse(path.resolve(__dirname, '..', 'node_modules', 'react-dom', 'umd', 'react-dom.production.min.js'));
-  }
-  if (url.startsWith(SSR_ORIGIN + '/')) {
-    const pathname = new URL(url).pathname;
-    return fileResponse(path.join(buildDir, decodeURIComponent(pathname)));
-  }
-  return null;
-}
-
-// Governs <script src>/<link>/<iframe> element loads (the CDN React/ReactDOM
-// tags, dynamically-injected series-*.js) — NOT plain fetch() calls, which
-// dc-import/x-import use directly and which jsdom doesn't route through
-// this at all (see window.fetch below).
-function makeInterceptor(buildDir) {
-  return requestInterceptor((request) => resolveLocal(request.url, buildDir) || undefined);
-}
-
-// jsdom drops the integrity attribute when it's set via the IDL property
-// (see the REACT_SRI comment above) — restore it by exact src match so the
-// shipped page keeps real SRI protection on the CDN scripts.
-function restoreSri(document) {
-  const bySrc = { [REACT_CDN_URL]: REACT_SRI, [REACT_DOM_CDN_URL]: REACT_DOM_SRI };
-  document.querySelectorAll('script[src]').forEach((el) => {
-    const sri = bySrc[el.getAttribute('src')];
-    if (sri && !el.getAttribute('integrity')) el.setAttribute('integrity', sri);
-  });
-}
-
-function waitForSettle(window) {
-  return new Promise((resolve, reject) => {
-    const start = Date.now();
-    let last = null;
-    let stableTicks = 0;
-    const tick = () => {
-      const el = window.document.getElementById('dc-root');
-      const snapshot = el ? el.innerHTML : null;
-      if (snapshot && snapshot === last) stableTicks++;
-      else { stableTicks = 0; last = snapshot; }
-      if (snapshot && stableTicks >= SETTLE_STABLE_TICKS) return resolve();
-      if (Date.now() - start > SETTLE_TIMEOUT_MS) {
-        if (!snapshot) return reject(new Error('#dc-root never rendered within ' + SETTLE_TIMEOUT_MS + 'ms'));
-        console.warn('[ssr-render] settle timeout — writing best-effort render');
-        return resolve();
-      }
-      setTimeout(tick, SETTLE_POLL_MS);
-    };
-    setTimeout(tick, SETTLE_POLL_MS);
-  });
-}
+const {
+  SSR_ORIGIN,
+  bootDom,
+  restoreSri,
+  waitForStableElement,
+} = require('./ssr-lib');
 
 async function main() {
   const buildDir = process.argv[2];
@@ -173,50 +84,14 @@ async function main() {
   }
   const originalXDcBlock = html.slice(xDcOpenMatch.index, xDcCloseIdx + '</x-dc>'.length);
 
-  const dom = new JSDOM(html, {
-    url: SSR_ORIGIN + '/' + entryFile,
-    runScripts: 'dangerously',
-    pretendToBeVisual: true,
-    resources: { interceptors: [makeInterceptor(path.resolve(buildDir))] },
-    beforeParse(window) {
-      // dc-import/x-import call fetch() directly (site/support.js:1208,1652)
-      // rather than going through an element jsdom's resource loader governs
-      // — jsdom doesn't give window.fetch a body of its own, so without this
-      // every component/data fetch throws "fetch is not defined".
-      const buildDirAbs = path.resolve(buildDir);
-      window.fetch = function (input, init) {
-        // dc-import passes bare relative paths ("./FAQ.dc.html") — resolve
-        // against the document like a real fetch() would before matching or
-        // falling through to Node's fetch, which requires an absolute URL.
-        const raw = String(input && input.url ? input.url : input);
-        const url = new URL(raw, window.location.href).href;
-        const local = resolveLocal(url, buildDirAbs);
-        if (local) return Promise.resolve(local);
-        return fetch(url, init);
-      };
-      // jsdom doesn't implement matchMedia; page.dc.html's own script calls
-      // it for theme detection at build time. No real OS preference exists
-      // here, so this reports "no light preference" — the same "dark"
-      // fallback the client itself uses before it ever reads a real one.
-      window.matchMedia = function () {
-        return {
-          matches: false,
-          media: '',
-          addEventListener() {},
-          removeEventListener() {},
-          addListener() {},
-          removeListener() {},
-        };
-      };
-    },
-  });
+  const dom = bootDom(html, { url: SSR_ORIGIN + '/' + entryFile, buildDir: path.resolve(buildDir) });
   const { window } = dom;
   window.addEventListener('error', (e) => {
     console.error('[ssr-render]', e.error || e.message);
   });
 
   try {
-    await waitForSettle(window);
+    await waitForStableElement(window, 'dc-root');
   } finally {
     restoreSri(window.document);
     let out = '<!DOCTYPE html>\n' + window.document.documentElement.outerHTML;

@@ -1,0 +1,42 @@
+# Owned by vertex-order/kit — edit here. Vendored elsewhere via sync.toml;
+# don't edit the copy there.
+#
+# Fail a PR (or a push to main that bypassed the pre-commit guard) whose
+# scripts/*.py or scripts/*.js don't parse. Syntax-only -- stdlib
+# `py_compile` / `node --check` -- neither imports nor executes the file,
+# so this is cheap and can't be fooled by an import-time side effect. See
+# `just check-py` / `just check-js`.
+name: Check syntax
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  python-syntax:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Compile-check every scripts/*.py
+        run: python3 -m py_compile scripts/*.py
+
+  js-syntax:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Install Node
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: ".node-version"
+
+      - name: Syntax-check every scripts/*.js
+        run: |
+          for f in scripts/*.js; do
+            node --check "$f" || exit 1
+          done

@@ -29,6 +29,7 @@ build: fix
     mv build/page.dc.html build/index.html 2>/dev/null || true
     if command -v node >/dev/null 2>&1; then \
         if [ -f build/index.html ]; then npm install --no-fund --no-audit --silent && node scripts/ssr-render.js build; fi; \
+        if [ -f build/index.html ] && [ -f tests/site/verify-ssr.js ]; then node tests/site/verify-ssr.js build; fi; \
     else \
         echo "just build: node not on PATH — skipped SSR prerender (build/index.html ships blank-then-hydrate). Install Node (https://nodejs.org, or see .node-version) to get it locally."; \
     fi
@@ -36,6 +37,19 @@ build: fix
 # Build then serve build/ locally, like the real deploy.
 serve: build
     cd build && python -m http.server 8000
+
+# Fast, no-build regression checks for kit-owned design tokens and their
+# var() fallback consistency — see docs/testing.md. tests/site/ isn't
+# vendored (not in sync.toml [publish]), so this recipe only does anything
+# in kit itself; elsewhere it's an inert entry pulled in with the rest of
+# this shared justfile.
+check-tokens:
+    node tests/site/check-token-snapshot.js
+    node tests/site/check-var-fallbacks.js
+
+# Kit's full test suite: the fast checks above, plus `build`, which itself
+# runs tests/site/verify-ssr.js against the real build output when present.
+test: check-tokens build
 
 # Regenerate site/components.js — inlines every *.dc.html so <dc-import>
 # resolves without a fetch() (needed for opening a page over file://).
@@ -59,6 +73,38 @@ sync-restore:
 # CI check: fail if cross-listed duplicate game entries in site/data/ have drifted.
 check-dedup-drift:
     python3 scripts/check-dedup-drift.py
+
+# CI check: lint every CSS file with stylelint (see .stylelintrc.cjs) --
+# mainly to catch CSS that fails to parse at all, e.g. a comment that closes
+# earlier than intended (a literal */ inside /* ... */). Scans the whole
+# site/ tree (minus vendored site/_ds/), so it also covers each repo's own
+# un-vendored site/data/theme.css, not just kit's own CSS.
+#
+# Node-optional locally, same shape as `build`'s SSR step: a contributor
+# without Node (or without having run `npm install`) just skips it, same
+# as before this check existed. CI always has Node, so it always runs
+# there -- see .github/workflows/check-css.yml.
+check-css:
+    if command -v node >/dev/null 2>&1; then \
+        npm install --no-fund --no-audit --silent && npx stylelint "site/**/*.css"; \
+    else \
+        echo "just check-css: node not on PATH — skipped stylelint CSS check. Install Node (https://nodejs.org, or see .node-version) to get it locally; CI always runs it."; \
+    fi
+
+# CI check: fail if any scripts/*.py has a syntax error. Syntax-only (does
+# not import or run the file) -- stdlib py_compile, no external tools.
+check-py:
+    python3 -m py_compile scripts/*.py
+
+# CI check: fail if any scripts/*.js has a syntax error. Syntax-only (node
+# --check parses without executing). Node-optional locally, same shape as
+# check-css -- see .github/workflows/check-syntax.yml.
+check-js:
+    if command -v node >/dev/null 2>&1; then \
+        for f in scripts/*.js; do node --check "$f" || exit 1; done; \
+    else \
+        echo "just check-js: node not on PATH — skipped syntax check. Install Node (https://nodejs.org, or see .node-version) to get it locally; CI always runs it."; \
+    fi
 
 clean:
     rm -rf build

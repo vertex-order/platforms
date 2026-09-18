@@ -52,3 +52,43 @@ staged_data=$(git diff --cached --name-only --diff-filter=ACMD -- 'site/data/*.j
 if [ -n "$staged_data" ]; then
 	python3 "$root/scripts/check-dedup-drift.py"
 fi
+
+# 6. Lint staged CSS with stylelint (see .stylelintrc.cjs) -- mainly to
+#    catch CSS that fails to parse at all, e.g. a comment that closes
+#    earlier than intended (a literal */ inside /* ... */), which silently
+#    drops whatever rule follows with no console error. Pure validator —
+#    reads only, never stages anything. Runs on any *.css, including a
+#    per-repo file like site/data/theme.css that sync.toml never vendors.
+#
+#    Node-optional, unlike every other step above: this hook is otherwise
+#    pure Python, and a contributor who hasn't run `npm install` shouldn't
+#    have a commit blocked over it. CI (check-css.yml) always has Node and
+#    always runs this, so it's still a hard gate before merge.
+staged_css=$(git diff --cached --name-only --diff-filter=ACM -- '*.css')
+if [ -n "$staged_css" ]; then
+	if command -v node >/dev/null 2>&1 && [ -x "$root/node_modules/.bin/stylelint" ]; then
+		"$root/node_modules/.bin/stylelint" $staged_css
+	else
+		echo "pre-commit: skipping stylelint CSS check on: $staged_css (run 'npm install' to enable locally; CI always runs it)"
+	fi
+fi
+
+# 7. Fail a commit whose staged scripts/*.py doesn't compile. Syntax-only
+#    (stdlib py_compile doesn't import or run the file) -- pure Python, no
+#    external tools.
+staged_py=$(git diff --cached --name-only --diff-filter=ACM -- 'scripts/*.py')
+if [ -n "$staged_py" ]; then
+	python3 -m py_compile $staged_py
+fi
+
+# 8. Fail a commit whose staged scripts/*.js has a syntax error (node
+#    --check parses without executing). Node-optional, same reasoning as
+#    the stylelint step above -- CI (check-syntax.yml) always runs it.
+staged_js=$(git diff --cached --name-only --diff-filter=ACM -- 'scripts/*.js')
+if [ -n "$staged_js" ]; then
+	if command -v node >/dev/null 2>&1; then
+		for f in $staged_js; do node --check "$root/$f" || exit 1; done
+	else
+		echo "pre-commit: skipping node --check on: $staged_js (CI always runs it)"
+	fi
+fi

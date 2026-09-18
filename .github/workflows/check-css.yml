@@ -1,0 +1,37 @@
+# Owned by vertex-order/kit — edit here. Vendored elsewhere via sync.toml;
+# don't edit the copy there.
+#
+# Fail a PR (or a push to main that bypassed the pre-commit guard) whose
+# CSS doesn't parse cleanly -- see .stylelintrc.cjs and `just check-css` for
+# why (mainly: a comment closing earlier than intended, a literal */ inside
+# /* ... */, silently corrupting whatever rule follows). Scans the whole
+# site/ tree (minus vendored site/_ds/), so it also catches this in a
+# per-repo file like site/data/theme.css that sync.toml never vendors.
+#
+# Unlike the pre-commit hook's stylelint step, this always runs: CI always
+# has Node, so there's no "skip if not installed" case here.
+name: Check CSS syntax
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  css-syntax:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Install Node
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: ".node-version"
+
+      - name: Install dependencies
+        run: npm install --no-fund --no-audit
+
+      - name: Lint CSS
+        run: npx stylelint "site/**/*.css"
