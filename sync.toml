@@ -48,6 +48,7 @@ paths = [
   "site/ThemeToggle.dc.html",
   "scripts/bundle-components.py",
   "scripts/ssr-render.js",
+  "scripts/ssr-lib.js",
   "scripts/sync.py",
   "scripts/normalize-svg.py",
   "scripts/restore-headers.py",
