@@ -1,0 +1,31 @@
+# Owned by vertex-order/kit — edit here. Vendored elsewhere via sync.toml;
+# don't edit the copy there.
+#
+# Fail a PR (or a push to main that bypassed the pre-commit guard) whose
+# scripts/*.js, .github/**/*.yml, hand-written *.json, or *.css isn't
+# prettier-formatted. Run via `npx` -- not a project dependency, so the
+# version is pinned in the command itself (and in justfile's
+# check-format/.githooks/pre-commit, which must match). See
+# `just check-format`, .prettierignore, and docs/tooling.md.
+name: Check format
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  prettier:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Install Node
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: ".node-version"
+
+      - name: Format-check with prettier
+        run: npx --yes prettier@3 --check "scripts/*.js" ".github/**/*.yml" "**/*.json" "site/**/*.css"

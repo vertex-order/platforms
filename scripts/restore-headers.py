@@ -28,10 +28,12 @@ Usage:
   python3 scripts/restore-headers.py             # whole site/ tree
   python3 scripts/restore-headers.py PATH [PATH...]  # only these files
 """
+
 import re
 import sys
-import tomllib
 from pathlib import Path
+
+import tomllib
 
 ROOT = Path(__file__).resolve().parent.parent
 SITE = ROOT / "site"
@@ -68,9 +70,12 @@ def owner_for(rel, owned):
         return owned[rel_s]
     best = None
     for p, owner in owned.items():
-        if p.endswith("/") and rel_s.startswith(p):
-            if best is None or len(p) > len(best[0]):
-                best = (p, owner)
+        if (
+            p.endswith("/")
+            and rel_s.startswith(p)
+            and (best is None or len(p) > len(best[0]))
+        ):
+            best = (p, owner)
     return best[1] if best else None
 
 
@@ -87,7 +92,7 @@ def ensure_dc_html_header(path, owner):
         f"<!-- {path.name} — owned by {existing.group(1) if existing else owner}. Edit here.\n"
         "     Vendored elsewhere via sync.toml; don't edit the copy there. -->\n"
     )
-    rest = text[existing.end():] if existing else text
+    rest = text[existing.end() :] if existing else text
     if existing and text == header + rest:
         return False
     path.write_text(header + rest, encoding="utf-8", newline="\n")
@@ -105,7 +110,7 @@ def ensure_css_header(path, owner):
         f"/* Owned by {existing.group(1) if existing else owner} — edit here. "
         "Vendored elsewhere via sync.toml; don't edit the copy there. */\n"
     )
-    rest = text[existing.end():] if existing else text
+    rest = text[existing.end() :] if existing else text
     if existing and text == header + rest:
         return False
     path.write_text(header + rest, encoding="utf-8", newline="\n")
@@ -114,8 +119,12 @@ def ensure_css_header(path, owner):
 
 def ensure_md_header(path, owner):
     text = path.read_text(encoding="utf-8")
-    if re.search(r"^> Owned by vertex-order/[\w.-]+ — edit here\. Vendored elsewhere via sync\.toml;\n"
-                 r"> don't edit the copy there\.\n", text, flags=re.MULTILINE):
+    if re.search(
+        r"^> Owned by vertex-order/[\w.-]+ — edit here\. Vendored elsewhere via sync\.toml;\n"
+        r"> don't edit the copy there\.\n",
+        text,
+        flags=re.MULTILINE,
+    ):
         return False
     block = (
         f"> Owned by {owner} — edit here. Vendored elsewhere via sync.toml;\n"
@@ -139,7 +148,7 @@ def ensure_support_js_header(path):
         return False
     m = re.match(r"(?:^//[^\n]*\n)+", text)
     if m:
-        text = text[m.end():]
+        text = text[m.end() :]
     path.write_text(SUPPORT_JS_HEADER + text, encoding="utf-8", newline="\n")
     return True
 

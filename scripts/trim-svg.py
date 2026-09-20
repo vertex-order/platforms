@@ -31,6 +31,7 @@ Bails on a whole file -- leaving it untouched -- when safety isn't provable:
 Run order: svgo -> this -> normalize-svg.py (all three are `just trim-svg`).
 Conservative by construction; still, eyeball the diff.
 """
+
 import math
 import re
 import sys
@@ -99,8 +100,7 @@ def arc_bbox(x0, y0, rx, ry, phi_deg, fa, fs, x, y):
         return -a if ux * vy - uy * vx < 0 else a
 
     t1 = ang(1, 0, (dx2 - cxp) / rx, (dy2 - cyp) / ry)
-    dt = ang((dx2 - cxp) / rx, (dy2 - cyp) / ry,
-             (-dx2 - cxp) / rx, (-dy2 - cyp) / ry)
+    dt = ang((dx2 - cxp) / rx, (dy2 - cyp) / ry, (-dx2 - cxp) / rx, (-dy2 - cyp) / ry)
     if not fs and dt > 0:
         dt -= 2 * math.pi
     elif fs and dt < 0:
@@ -126,11 +126,11 @@ def split_subpaths(d):
         return []
     subs = []
     toks = list(tokenize(d))
-    px = py = 0.0            # current point
-    sx = sy = 0.0            # current subpath start
-    cpx = cpy = None         # last cubic/quad control (for S/T)
+    px = py = 0.0  # current point
+    sx = sy = 0.0  # current subpath start
+    cpx = cpy = None  # last cubic/quad control (for S/T)
     last_cmd = None
-    cur = None               # subpath being built
+    cur = None  # subpath being built
 
     def bump(x, y):
         cur["bb"][0] = min(cur["bb"][0], x)
@@ -143,7 +143,7 @@ def split_subpaths(d):
 
     def read(k):
         nonlocal ti
-        vals = toks[ti:ti + k]
+        vals = toks[ti : ti + k]
         if len(vals) != k or any(isinstance(v, str) for v in vals):
             raise ParseError("short parameter list")
         ti += k
@@ -187,9 +187,13 @@ def split_subpaths(d):
                 cur["span"][1] = start_char
                 cur["end"] = (px, py)
                 subs.append(cur)
-            cur = {"span": [start_char, len(d)], "start": (x, y),
-                   "end": None, "bb": [x, y, x, y],
-                   "first_pair_cmd_index": ci - 1}
+            cur = {
+                "span": [start_char, len(d)],
+                "start": (x, y),
+                "end": None,
+                "bb": [x, y, x, y],
+                "first_pair_cmd_index": ci - 1,
+            }
             px, py = x, y
             sx, sy = x, y
             last_cmd = cmd
@@ -220,8 +224,14 @@ def split_subpaths(d):
         elif cl == "c":
             x1, y1, x2, y2, x, y = read(6)
             if rel:
-                x1, y1, x2, y2, x, y = (px + x1, py + y1, px + x2, py + y2,
-                                        px + x, py + y)
+                x1, y1, x2, y2, x, y = (
+                    px + x1,
+                    py + y1,
+                    px + x2,
+                    py + y2,
+                    px + x,
+                    py + y,
+                )
             for a, b in ((x1, y1), (x2, y2), (x, y)):
                 bump(a, b)
             cpx, cpy = x2, y2
@@ -306,13 +316,12 @@ def rewrite_d(d, vb):
     # coordinate pair of a kept subpath whenever a preceding subpath was cut
     out = []
     prev_end = (0.0, 0.0)
-    prev_kept_touches = True  # first kept subpath: pen is 0,0 (absolute rules)
     gap_since_kept = False
     for s in subs:
         if outside(s["bb"], vb):
             gap_since_kept = True
             continue
-        span = d[s["span"][0]:s["span"][1]]
+        span = d[s["span"][0] : s["span"][1]]
         if gap_since_kept:
             # the leading moveto now sits after a different (or no) subpath
             mcmd = span[0]
@@ -321,14 +330,14 @@ def rewrite_d(d, vb):
             m2 = NUMBER.search(body, mnum.end())
             tx, ty = s["start"]
             if mcmd == "m" and not out:
-                nx, ny = tx, ty                 # first cmd: 'm' is absolute
+                nx, ny = tx, ty  # first cmd: 'm' is absolute
             elif mcmd == "M":
                 nx, ny = tx, ty
             else:
                 nx, ny = tx - prev_end[0], ty - prev_end[1]
             sep = "" if fmt(ny).startswith("-") else " "
             new_pair = f"{fmt(nx)}{sep}{fmt(ny)}"
-            span = mcmd + body[:mnum.start()] + new_pair + body[m2.end():]
+            span = mcmd + body[: mnum.start()] + new_pair + body[m2.end() :]
             gap_since_kept = False
         out.append(span)
         prev_end = s["end"]

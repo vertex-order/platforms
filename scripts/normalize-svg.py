@@ -14,6 +14,7 @@ check-in regardless of what the exporter produced.
 Runs alongside strip-c2pa.py -- from the pre-commit hook, `just build`, and
 on demand via `just normalize-svg`. Pure Python, no svgo/lxml.
 """
+
 import re
 import sys
 from pathlib import Path

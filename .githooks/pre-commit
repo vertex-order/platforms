@@ -90,6 +90,18 @@ if [ -n "$staged_py" ]; then
 	python3 -m py_compile $staged_py
 fi
 
+# 7b. Lint + format-check staged scripts/*.py with ruff, run via `uvx` --
+#     not a project dependency, see docs/tooling.md. uv-optional, same
+#     reasoning as the stylelint step above -- CI (check-ruff.yml) always
+#     runs it.
+if [ -n "$staged_py" ]; then
+	if command -v uvx >/dev/null 2>&1; then
+		uvx ruff@0.16 check $staged_py && uvx ruff@0.16 format --check $staged_py
+	else
+		echo "pre-commit: skipping ruff check on: $staged_py (install uv to enable locally; CI always runs it)"
+	fi
+fi
+
 # 8. Fail a commit whose staged scripts/*.js has a syntax error (node
 #    --check parses without executing). Node-optional, same reasoning as
 #    the stylelint step above -- CI (check-syntax.yml) always runs it.
@@ -99,5 +111,19 @@ if [ -n "$staged_js" ]; then
 		for f in $staged_js; do node --check "$root/$f" || exit 1; done
 	else
 		echo "pre-commit: skipping node --check on: $staged_js (CI always runs it)"
+	fi
+fi
+
+# 9. Format-check staged scripts/*.js, .github/**/*.yml, *.json, and *.css
+#    with prettier, run via `npx` -- not a project dependency, see
+#    docs/tooling.md and .prettierignore for what's excluded and why.
+#    Node-optional, same reasoning as the stylelint step above -- CI
+#    (check-format.yml) always runs it.
+staged_fmt=$(git diff --cached --name-only --diff-filter=ACM -- 'scripts/*.js' '.github/**/*.yml' '*.json' '*.css')
+if [ -n "$staged_fmt" ]; then
+	if command -v npx >/dev/null 2>&1; then
+		npx --yes prettier@3 --check $staged_fmt
+	else
+		echo "pre-commit: skipping prettier check on: $staged_fmt (CI always runs it)"
 	fi
 fi

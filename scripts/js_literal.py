@@ -30,6 +30,7 @@ function values -- none of those appear in current site/data/*.js.
 
 No external deps.
 """
+
 import re
 
 __all__ = ["ParseError", "parse_value", "parse_value_after"]
@@ -43,10 +44,21 @@ _WS_RE = re.compile(r"\s+")
 _LINE_COMMENT_RE = re.compile(r"//[^\n]*")
 _IDENT_RE = re.compile(r"[A-Za-z_$][A-Za-z0-9_$]*")
 _NUMBER_RE = re.compile(r"-?\d+(\.\d+)?([eE][+-]?\d+)?")
-_SPREAD_RE = re.compile(r"\.\.\.[A-Za-z_$][A-Za-z0-9_$]*(?:\.[A-Za-z_$][A-Za-z0-9_$]*)*")
+_SPREAD_RE = re.compile(
+    r"\.\.\.[A-Za-z_$][A-Za-z0-9_$]*(?:\.[A-Za-z_$][A-Za-z0-9_$]*)*"
+)
 _DOTTED_RE = r"[A-Za-z_$][A-Za-z0-9_$]*(?:\.[A-Za-z_$][A-Za-z0-9_$]*)*"
 _MEMBER_EXPR_RE = re.compile(rf"{_DOTTED_RE}(?:\s*&&\s*{_DOTTED_RE})?")
-_ESCAPES = {'"': '"', "'": "'", "\\": "\\", "n": "\n", "t": "\t", "r": "\r", "b": "\b", "f": "\f"}
+_ESCAPES = {
+    '"': '"',
+    "'": "'",
+    "\\": "\\",
+    "n": "\n",
+    "t": "\t",
+    "r": "\r",
+    "b": "\b",
+    "f": "\f",
+}
 
 
 def _skip_trivia(s, i):
@@ -81,7 +93,7 @@ def _parse_string(s, i):
                 raise ParseError("unterminated escape")
             e = s[i]
             if e == "u":
-                out.append(chr(int(s[i + 1:i + 5], 16)))
+                out.append(chr(int(s[i + 1 : i + 5], 16)))
                 i += 5
                 continue
             out.append(_ESCAPES.get(e, e))
@@ -98,16 +110,18 @@ def _parse_object(s, i):
         return obj, i + 1
     while True:
         i = _skip_trivia(s, i)
-        if s[i] in ("\"", "'"):
+        if s[i] in ('"', "'"):
             key, i = _parse_string(s, i)
         else:
             m = _IDENT_RE.match(s, i)
             if not m:
-                raise ParseError(f"expected object key at offset {i}: {s[i:i + 40]!r}")
+                raise ParseError(
+                    f"expected object key at offset {i}: {s[i : i + 40]!r}"
+                )
             key, i = m.group(0), m.end()
         i = _skip_trivia(s, i)
         if s[i] != ":":
-            raise ParseError(f"expected ':' at offset {i}: {s[i:i + 40]!r}")
+            raise ParseError(f"expected ':' at offset {i}: {s[i : i + 40]!r}")
         i = _skip_trivia(s, i + 1)
         obj[key], i = _parse_value(s, i)
         i = _skip_trivia(s, i)
@@ -118,7 +132,7 @@ def _parse_object(s, i):
             continue
         if s[i] == "}":
             return obj, i + 1
-        raise ParseError(f"expected ',' or '}}' at offset {i}: {s[i:i + 40]!r}")
+        raise ParseError(f"expected ',' or '}}' at offset {i}: {s[i : i + 40]!r}")
 
 
 def _parse_array(s, i):
@@ -142,7 +156,7 @@ def _parse_array(s, i):
             continue
         if s[i] == "]":
             return arr, i + 1
-        raise ParseError(f"expected ',' or ']' at offset {i}: {s[i:i + 40]!r}")
+        raise ParseError(f"expected ',' or ']' at offset {i}: {s[i : i + 40]!r}")
 
 
 def _parse_value(s, i):
@@ -152,7 +166,7 @@ def _parse_value(s, i):
         return _parse_object(s, i)
     if c == "[":
         return _parse_array(s, i)
-    if c in ("\"", "'"):
+    if c in ('"', "'"):
         return _parse_string(s, i)
     if s.startswith("true", i):
         return True, i + 4
@@ -174,7 +188,7 @@ def _parse_value(s, i):
         # source text, which is enough for schema validation (every real use is
         # in a plain string-typed field).
         return m.group(0), m.end()
-    raise ParseError(f"unexpected token at offset {i}: {s[i:i + 40]!r}")
+    raise ParseError(f"unexpected token at offset {i}: {s[i : i + 40]!r}")
 
 
 def parse_value(s, i=0):

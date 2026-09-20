@@ -25,6 +25,7 @@ but nothing here depends on that name.
 
 No external deps. Run: python3 scripts/bundle-components.py
 """
+
 import json
 import sys
 from pathlib import Path
@@ -68,7 +69,7 @@ def main():
         "//   - No shell (design tool, flat dir): rebuild this file by hand to match\n"
         "//     this exact shape — IIFE + `var C` map + loop into window.__resourceBlobs.\n"
         "//     One C entry per sibling *.dc.html that is not the entry page, sorted by\n"
-        "//     filename, key \"./\"+filename, value the file's full source as a\n"
+        '//     filename, key "./"+filename, value the file\'s full source as a\n'
         "//     JSON string (2-space indent, non-ASCII kept literal). Do not rename\n"
         "//     the window.__resourceBlobs global — support.js reads it; a different\n"
         "//     name or shape silently no-ops. Full procedure: .claude/CLAUDE.md.\n"
@@ -77,7 +78,7 @@ def main():
         "  window.__resourceBlobs = window.__resourceBlobs || {};\n"
         "  for (var k in C) {\n"
         "    if (!window.__resourceBlobs[k]) {\n"
-        "      window.__resourceBlobs[k] = new Blob([C[k]], { type: \"text/html\" });\n"
+        '      window.__resourceBlobs[k] = new Blob([C[k]], { type: "text/html" });\n'
         "    }\n"
         "  }\n"
         "})();\n",

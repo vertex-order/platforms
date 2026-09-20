@@ -80,7 +80,7 @@ sync-restore:
 # parallel job (for a clear per-check pass/fail in the PR UI, and so one
 # failure doesn't block reporting the others) -- this is for a local
 # all-in-one before you push.
-check: check-py check-js check-css check-dedup-drift check-data sync-check
+check: check-py check-ruff check-js check-format check-css check-dedup-drift check-data sync-check
 
 # CI check: fail if cross-listed duplicate game entries in site/data/ have drifted.
 check-dedup-drift:
@@ -123,6 +123,49 @@ check-js:
         for f in scripts/*.js; do node --check "$f" || exit 1; done; \
     else \
         echo "just check-js: node not on PATH — skipped syntax check. Install Node (https://nodejs.org, or see .node-version) to get it locally; CI always runs it."; \
+    fi
+
+# CI check: lint + format-check scripts/*.py with ruff, run via `uvx` --
+# not a project dependency (no requirements.txt/pyproject.toml added just
+# for this; see docs/tooling.md). uvx-optional locally, same shape as
+# check-css: a contributor without uv just skips it. CI always has uv, so
+# it always runs there -- see .github/workflows/check-ruff.yml.
+check-ruff:
+    if command -v uvx >/dev/null 2>&1; then \
+        uvx ruff@0.16 check scripts/ && uvx ruff@0.16 format --check scripts/; \
+    else \
+        echo "just check-ruff: uvx not on PATH — skipped ruff lint/format check. Install uv (https://docs.astral.sh/uv/, e.g. 'curl -LsSf https://astral.sh/uv/install.sh | sh') to get it locally; CI always runs it."; \
+    fi
+
+# CI check: format-check scripts/*.js, .github/**/*.yml, hand-written
+# *.json, and *.css with prettier, run via `npx` -- not a project
+# dependency, same reasoning as check-ruff. See .prettierignore for what's
+# excluded and why (mainly site/data/*.js and site/components.js, which
+# have their own deliberate/generated shape prettier would otherwise
+# fight). npx-optional locally, same shape as check-css. CI always has
+# Node, so it always runs there -- see .github/workflows/check-format.yml.
+check-format:
+    if command -v npx >/dev/null 2>&1; then \
+        npx --yes prettier@3 --check "scripts/*.js" ".github/**/*.yml" "**/*.json" "site/**/*.css"; \
+    else \
+        echo "just check-format: npx not on PATH — skipped prettier format check. Install Node (https://nodejs.org, or see .node-version) to get it locally; CI always runs it."; \
+    fi
+
+# Auto-fix formatting: ruff format (scripts/*.py) + prettier --write
+# (scripts/*.js, .github/**/*.yml, *.json, *.css). Not part of `fix`/
+# `build` -- those regenerate derived artifacts; this rewrites your own
+# source style, so it's run by hand. Same tool-optional guards as
+# check-ruff/check-format.
+format:
+    if command -v uvx >/dev/null 2>&1; then \
+        uvx ruff@0.16 format scripts/; \
+    else \
+        echo "just format: uvx not on PATH — skipped ruff format."; \
+    fi
+    if command -v npx >/dev/null 2>&1; then \
+        npx --yes prettier@3 --write "scripts/*.js" ".github/**/*.yml" "**/*.json" "site/**/*.css"; \
+    else \
+        echo "just format: npx not on PATH — skipped prettier --write."; \
     fi
 
 clean:

@@ -30,13 +30,14 @@ rather than silently no-op-ing.
 No external deps (stdlib json/re only, plus scripts/js_literal.py). Run:
 python3 scripts/validate-data.py
 """
+
 import json
 import re
 import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from js_literal import ParseError, parse_value  # noqa: E402
+from js_literal import ParseError, parse_value
 
 ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "site" / "data"
@@ -56,7 +57,9 @@ def find_declarations(text):
         schema_ref = m.group(1)
         am = _NEXT_ASSIGN_RE.search(text, m.end())
         if not am:
-            raise ParseError(f"'// schema: {schema_ref}' directive has no following assignment")
+            raise ParseError(
+                f"'// schema: {schema_ref}' directive has no following assignment"
+            )
         instance, _ = parse_value(text, am.end())
         yield schema_ref, instance
 
@@ -65,6 +68,7 @@ def find_declarations(text):
 # Minimal JSON Schema (2020-12) validator -- exactly the keyword subset
 # schemas/*.schema.json use. See module docstring.
 # ---------------------------------------------------------------------------
+
 
 class SchemaStore:
     def __init__(self, base_dir):
@@ -141,7 +145,9 @@ def validate(instance, schema, current_file, store, path, errors):
         return
 
     if "$ref" in schema:
-        target, root_doc, target_file = _resolve_ref(schema["$ref"], current_file, store)
+        target, _root_doc, target_file = _resolve_ref(
+            schema["$ref"], current_file, store
+        )
         validate(instance, target, target_file, store, path, errors)
         return
 
@@ -149,36 +155,54 @@ def validate(instance, schema, current_file, store, path, errors):
         types = schema["type"]
         types = types if isinstance(types, list) else [types]
         if not any(_type_matches(instance, t) for t in types):
-            errors.append(f"{_path_str(path)}: expected type {types!r}, got {type(instance).__name__}: {instance!r}")
+            errors.append(
+                f"{_path_str(path)}: expected type {types!r}, got {type(instance).__name__}: {instance!r}"
+            )
             return
 
     if "const" in schema:
         expected = schema["const"]
-        ok = (instance is expected) if isinstance(expected, bool) else (
-            not isinstance(instance, bool) and instance == expected
+        ok = (
+            (instance is expected)
+            if isinstance(expected, bool)
+            else (not isinstance(instance, bool) and instance == expected)
         )
         if not ok:
-            errors.append(f"{_path_str(path)}: expected const {expected!r}, got {instance!r}")
+            errors.append(
+                f"{_path_str(path)}: expected const {expected!r}, got {instance!r}"
+            )
 
     if "enum" in schema and instance not in schema["enum"]:
         errors.append(f"{_path_str(path)}: {instance!r} not one of {schema['enum']!r}")
 
     if isinstance(instance, str):
         if "pattern" in schema and not re.search(schema["pattern"], instance):
-            errors.append(f"{_path_str(path)}: {instance!r} doesn't match pattern {schema['pattern']!r}")
+            errors.append(
+                f"{_path_str(path)}: {instance!r} doesn't match pattern {schema['pattern']!r}"
+            )
         if "minLength" in schema and len(instance) < schema["minLength"]:
-            errors.append(f"{_path_str(path)}: {instance!r} shorter than minLength {schema['minLength']}")
+            errors.append(
+                f"{_path_str(path)}: {instance!r} shorter than minLength {schema['minLength']}"
+            )
 
     if isinstance(instance, (int, float)) and not isinstance(instance, bool):
         if "minimum" in schema and instance < schema["minimum"]:
-            errors.append(f"{_path_str(path)}: {instance!r} below minimum {schema['minimum']}")
+            errors.append(
+                f"{_path_str(path)}: {instance!r} below minimum {schema['minimum']}"
+            )
         if "maximum" in schema and instance > schema["maximum"]:
-            errors.append(f"{_path_str(path)}: {instance!r} above maximum {schema['maximum']}")
+            errors.append(
+                f"{_path_str(path)}: {instance!r} above maximum {schema['maximum']}"
+            )
 
     if isinstance(instance, list):
         if "minItems" in schema and len(instance) < schema["minItems"]:
-            errors.append(f"{_path_str(path)}: has {len(instance)} item(s), needs at least {schema['minItems']}")
-        if schema.get("uniqueItems") and len(instance) != len({json.dumps(x, sort_keys=True) for x in instance}):
+            errors.append(
+                f"{_path_str(path)}: has {len(instance)} item(s), needs at least {schema['minItems']}"
+            )
+        if schema.get("uniqueItems") and len(instance) != len(
+            {json.dumps(x, sort_keys=True) for x in instance}
+        ):
             errors.append(f"{_path_str(path)}: items are not unique")
         if "items" in schema:
             for i, item in enumerate(instance):
@@ -187,23 +211,31 @@ def validate(instance, schema, current_file, store, path, errors):
     if isinstance(instance, dict):
         props = schema.get("properties", {})
         if "minProperties" in schema and len(instance) < schema["minProperties"]:
-            errors.append(f"{_path_str(path)}: has {len(instance)} propertie(s), needs at least {schema['minProperties']}")
+            errors.append(
+                f"{_path_str(path)}: has {len(instance)} propertie(s), needs at least {schema['minProperties']}"
+            )
         if "required" in schema:
             for key in schema["required"]:
                 if key not in instance:
-                    errors.append(f"{_path_str(path)}: missing required property {key!r}")
+                    errors.append(
+                        f"{_path_str(path)}: missing required property {key!r}"
+                    )
         if "dependentRequired" in schema:
             for key, needs in schema["dependentRequired"].items():
                 if key in instance:
                     for need in needs:
                         if need not in instance:
-                            errors.append(f"{_path_str(path)}: {key!r} present but {need!r} is missing")
+                            errors.append(
+                                f"{_path_str(path)}: {key!r} present but {need!r} is missing"
+                            )
         ap = schema.get("additionalProperties", True)
         for key, val in instance.items():
             if key in props:
                 validate(val, props[key], current_file, store, path + [key], errors)
             elif ap is False:
-                errors.append(f"{_path_str(path)}: additional property {key!r} not allowed")
+                errors.append(
+                    f"{_path_str(path)}: additional property {key!r} not allowed"
+                )
             elif ap is not True:
                 validate(val, ap, current_file, store, path + [key], errors)
 
@@ -223,14 +255,18 @@ def validate(instance, schema, current_file, store, path, errors):
             for sub_errors in branch_errors:
                 errors.extend(sub_errors)
         elif combinator == "anyOf" and matches == 0:
-            errors.append(f"{_path_str(path)}: matched none of {len(branches)} anyOf branch(es)")
+            errors.append(
+                f"{_path_str(path)}: matched none of {len(branches)} anyOf branch(es)"
+            )
         elif combinator == "oneOf" and matches != 1:
-            errors.append(f"{_path_str(path)}: matched {matches} of {len(branches)} oneOf branch(es) (want exactly 1)")
+            errors.append(
+                f"{_path_str(path)}: matched {matches} of {len(branches)} oneOf branch(es) (want exactly 1)"
+            )
 
 
 def check(label, instance, schema_ref, store, findings):
     try:
-        schema, root_doc, target_file = _resolve_ref(schema_ref, "", store)
+        schema, _root_doc, target_file = _resolve_ref(schema_ref, "", store)
     except (FileNotFoundError, KeyError) as e:
         findings.append((label, [f"'// schema: {schema_ref}' doesn't resolve: {e}"]))
         return
@@ -269,7 +305,9 @@ def main():
                 print(f"    {e}")
         return 1
 
-    print(f"validate-data: checked {checked} declared schema(s) across site/data/*.js, no errors")
+    print(
+        f"validate-data: checked {checked} declared schema(s) across site/data/*.js, no errors"
+    )
     return 0
 
 

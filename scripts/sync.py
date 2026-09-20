@@ -56,6 +56,7 @@ first, then sync.
 Needs git and Python 3.11+ (tomllib). Not runnable in a design tool (no shell)
 — there the vendored files are simply the last-synced committed copies.
 """
+
 from __future__ import annotations
 
 import argparse
@@ -64,8 +65,9 @@ import shutil
 import subprocess
 import sys
 import tempfile
-import tomllib
 from pathlib import Path
+
+import tomllib
 
 ROOT = Path(__file__).resolve().parent.parent
 TOML = ROOT / "sync.toml"
@@ -73,8 +75,12 @@ TOML = ROOT / "sync.toml"
 
 def run(cmd, **kw):
     return subprocess.run(
-        cmd, check=True, capture_output=True,
-        encoding="utf-8", errors="replace", **kw,
+        cmd,
+        check=True,
+        capture_output=True,
+        encoding="utf-8",
+        errors="replace",
+        **kw,
     )
 
 
@@ -114,7 +120,8 @@ def checkout(repo: str, ref: str, fetch: bool = True) -> tuple[Path, str]:
                 sha = run(["git", "-C", str(sib), "rev-parse", ref]).stdout.strip()
                 tar = subprocess.run(
                     ["git", "-C", str(sib), "archive", "--format=tar", ref],
-                    check=True, capture_output=True,
+                    check=True,
+                    capture_output=True,
                 ).stdout
                 (tmp / "t.tar").write_bytes(tar)
                 (tmp / "tree").mkdir(exist_ok=True)
@@ -125,9 +132,30 @@ def checkout(repo: str, ref: str, fetch: bool = True) -> tuple[Path, str]:
                 continue
     url = f"https://github.com/{repo}.git"
     dest = tmp / "tree"
-    run(["git", "clone", "--quiet", "--filter=blob:none", "--no-checkout", url, str(dest)])
+    run(
+        [
+            "git",
+            "clone",
+            "--quiet",
+            "--filter=blob:none",
+            "--no-checkout",
+            url,
+            str(dest),
+        ]
+    )
     run(["git", "-C", str(dest), "fetch", "--quiet", "origin", ref])
-    run(["git", "-C", str(dest), "-c", "advice.detachedHead=false", "checkout", "--quiet", ref])
+    run(
+        [
+            "git",
+            "-C",
+            str(dest),
+            "-c",
+            "advice.detachedHead=false",
+            "checkout",
+            "--quiet",
+            ref,
+        ]
+    )
     sha = run(["git", "-C", str(dest), "rev-parse", "HEAD"]).stdout.strip()
     shutil.rmtree(dest / ".git", ignore_errors=True)
     return dest, sha
@@ -170,7 +198,9 @@ def sync_one(name, sub, *, check, drift):
                 if localdir.is_dir():
                     for p in sorted(localdir.rglob("*")):
                         if p.is_file() and p.relative_to(ROOT) not in seen:
-                            print(f"  ! local extra not in {name}: {p.relative_to(ROOT)}")
+                            print(
+                                f"  ! local extra not in {name}: {p.relative_to(ROOT)}"
+                            )
     finally:
         shutil.rmtree(tree.parent, ignore_errors=True)
     return sha
@@ -194,13 +224,17 @@ def repin(name, sha):
 
 
 def spec_matches(relposix: str, spec: str) -> bool:
-    return relposix == spec.rstrip("/") if not spec.endswith("/") else (
-        relposix == spec.rstrip("/") or relposix.startswith(spec)
+    return (
+        relposix == spec.rstrip("/")
+        if not spec.endswith("/")
+        else (relposix == spec.rstrip("/") or relposix.startswith(spec))
     )
 
 
 def staged_files():
-    out = run(["git", "diff", "--cached", "--name-only", "--diff-filter=ACM"], cwd=ROOT).stdout
+    out = run(
+        ["git", "diff", "--cached", "--name-only", "--diff-filter=ACM"], cwd=ROOT
+    ).stdout
     return [line for line in out.splitlines() if line]
 
 
@@ -229,7 +263,10 @@ def check_staged(subs) -> int:
         tree, _sha = trees[key]
         srcfile = tree / relposix
         staged_bytes = subprocess.run(
-            ["git", "show", f":{relposix}"], cwd=ROOT, check=True, capture_output=True,
+            ["git", "show", f":{relposix}"],
+            cwd=ROOT,
+            check=True,
+            capture_output=True,
         ).stdout
         if not srcfile.is_file() or staged_bytes != srcfile.read_bytes():
             bad.append(f"{relposix}  (vendored from {name})")
@@ -248,15 +285,28 @@ def check_staged(subs) -> int:
 
 def main():
     ap = argparse.ArgumentParser(description="cross-repo vendored-file sync")
-    ap.add_argument("--check", action="store_true", help="report drift, exit 1, no writes")
-    ap.add_argument("--check-staged", action="store_true",
-                     help="pre-commit guard: block hand-edited vendored files in the index")
-    ap.add_argument("--update", metavar="NAME", help="repin one subscription then pull it")
-    ap.add_argument("--update-all", action="store_true",
-                     help="repin every subscription then pull it (`just sync`)")
-    ap.add_argument("--from-ref", metavar="REF",
-                     help="with --update/--update-all: reset ref to REF first, so an "
-                          "already-pinned SHA can move forward again (e.g. --from-ref main)")
+    ap.add_argument(
+        "--check", action="store_true", help="report drift, exit 1, no writes"
+    )
+    ap.add_argument(
+        "--check-staged",
+        action="store_true",
+        help="pre-commit guard: block hand-edited vendored files in the index",
+    )
+    ap.add_argument(
+        "--update", metavar="NAME", help="repin one subscription then pull it"
+    )
+    ap.add_argument(
+        "--update-all",
+        action="store_true",
+        help="repin every subscription then pull it (`just sync`)",
+    )
+    ap.add_argument(
+        "--from-ref",
+        metavar="REF",
+        help="with --update/--update-all: reset ref to REF first, so an "
+        "already-pinned SHA can move forward again (e.g. --from-ref main)",
+    )
     args = ap.parse_args()
 
     cfg = load()
@@ -273,7 +323,9 @@ def main():
     for name, sub in subs.items():
         clash = pub.intersection(sub.get("paths", []))
         if clash:
-            sys.exit(f"[subscribe.{name}] also lists published path(s): {sorted(clash)}")
+            sys.exit(
+                f"[subscribe.{name}] also lists published path(s): {sorted(clash)}"
+            )
 
     if args.update and args.update_all:
         sys.exit("--update and --update-all are mutually exclusive")

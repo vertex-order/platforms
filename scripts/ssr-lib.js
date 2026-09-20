@@ -12,33 +12,39 @@
 // ssr-render.js already gets right. See ssr-render.js's header comment
 // for the full "why" of each piece; this file only hosts the mechanics.
 
-'use strict';
+"use strict";
 
-const fs = require('fs');
-const path = require('path');
-const { JSDOM, requestInterceptor } = require('jsdom');
+const fs = require("fs");
+const path = require("path");
+const { JSDOM, requestInterceptor } = require("jsdom");
 
-const SSR_ORIGIN = 'https://ssr-render.internal';
+const SSR_ORIGIN = "https://ssr-render.internal";
 
 // Exact CDN URLs site/support.js hardcodes (REACT_URL / REACT_DOM_URL) --
 // keep in sync if that pin ever moves.
-const REACT_CDN_URL = 'https://unpkg.com/react@18.3.1/umd/react.production.min.js';
-const REACT_DOM_CDN_URL = 'https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js';
-const REACT_SRI = 'sha384-DGyLxAyjq0f9SPpVevD6IgztCFlnMF6oW/XQGmfe+IsZ8TqEiDrcHkMLKI6fiB/Z';
-const REACT_DOM_SRI = 'sha384-gTGxhz21lVGYNMcdJOyq01Edg0jhn/c22nsx0kyqP0TxaV5WVdsSH1fSDUf5YJj1';
+const REACT_CDN_URL =
+  "https://unpkg.com/react@18.3.1/umd/react.production.min.js";
+const REACT_DOM_CDN_URL =
+  "https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js";
+const REACT_SRI =
+  "sha384-DGyLxAyjq0f9SPpVevD6IgztCFlnMF6oW/XQGmfe+IsZ8TqEiDrcHkMLKI6fiB/Z";
+const REACT_DOM_SRI =
+  "sha384-gTGxhz21lVGYNMcdJOyq01Edg0jhn/c22nsx0kyqP0TxaV5WVdsSH1fSDUf5YJj1";
 
 const MIME_BY_EXT = {
-  '.js': 'application/javascript',
-  '.mjs': 'application/javascript',
-  '.css': 'text/css',
-  '.svg': 'image/svg+xml',
-  '.html': 'text/html',
+  ".js": "application/javascript",
+  ".mjs": "application/javascript",
+  ".css": "text/css",
+  ".svg": "image/svg+xml",
+  ".html": "text/html",
 };
 
 function fileResponse(absPath) {
   const body = fs.readFileSync(absPath);
-  const type = MIME_BY_EXT[path.extname(absPath).toLowerCase()] || 'application/octet-stream';
-  return new Response(body, { headers: { 'Content-Type': type } });
+  const type =
+    MIME_BY_EXT[path.extname(absPath).toLowerCase()] ||
+    "application/octet-stream";
+  return new Response(body, { headers: { "Content-Type": type } });
 }
 
 // Resolves a same-origin resource (support.js, data/*.js, dynamically
@@ -49,12 +55,30 @@ function fileResponse(absPath) {
 // the real network for, harmlessly.
 function resolveLocal(url, buildDir) {
   if (url === REACT_CDN_URL) {
-    return fileResponse(path.resolve(__dirname, '..', 'node_modules', 'react', 'umd', 'react.production.min.js'));
+    return fileResponse(
+      path.resolve(
+        __dirname,
+        "..",
+        "node_modules",
+        "react",
+        "umd",
+        "react.production.min.js",
+      ),
+    );
   }
   if (url === REACT_DOM_CDN_URL) {
-    return fileResponse(path.resolve(__dirname, '..', 'node_modules', 'react-dom', 'umd', 'react-dom.production.min.js'));
+    return fileResponse(
+      path.resolve(
+        __dirname,
+        "..",
+        "node_modules",
+        "react-dom",
+        "umd",
+        "react-dom.production.min.js",
+      ),
+    );
   }
-  if (url.startsWith(SSR_ORIGIN + '/')) {
+  if (url.startsWith(SSR_ORIGIN + "/")) {
     const pathname = new URL(url).pathname;
     return fileResponse(path.join(buildDir, decodeURIComponent(pathname)));
   }
@@ -64,17 +88,22 @@ function resolveLocal(url, buildDir) {
 // Governs <script src>/<link>/<iframe> element loads -- NOT plain fetch()
 // calls, which dc-import/x-import use directly (see installFetchShim).
 function makeInterceptor(buildDir) {
-  return requestInterceptor((request) => resolveLocal(request.url, buildDir) || undefined);
+  return requestInterceptor(
+    (request) => resolveLocal(request.url, buildDir) || undefined,
+  );
 }
 
 // jsdom drops the integrity attribute when it's set via the IDL property
 // -- restore it by exact src match so a serialized page keeps real SRI
 // protection on the CDN scripts.
 function restoreSri(document) {
-  const bySrc = { [REACT_CDN_URL]: REACT_SRI, [REACT_DOM_CDN_URL]: REACT_DOM_SRI };
-  document.querySelectorAll('script[src]').forEach((el) => {
-    const sri = bySrc[el.getAttribute('src')];
-    if (sri && !el.getAttribute('integrity')) el.setAttribute('integrity', sri);
+  const bySrc = {
+    [REACT_CDN_URL]: REACT_SRI,
+    [REACT_DOM_CDN_URL]: REACT_DOM_SRI,
+  };
+  document.querySelectorAll("script[src]").forEach((el) => {
+    const sri = bySrc[el.getAttribute("src")];
+    if (sri && !el.getAttribute("integrity")) el.setAttribute("integrity", sri);
   });
 }
 
@@ -104,7 +133,7 @@ function installMatchMediaShim(window) {
   window.matchMedia = function () {
     return {
       matches: false,
-      media: '',
+      media: "",
       addEventListener() {},
       removeEventListener() {},
       addListener() {},
@@ -122,7 +151,7 @@ function installMatchMediaShim(window) {
 function bootDom(html, { url, buildDir }) {
   const dom = new JSDOM(html, {
     url,
-    runScripts: 'dangerously',
+    runScripts: "dangerously",
     pretendToBeVisual: true,
     resources: { interceptors: [makeInterceptor(buildDir)] },
     beforeParse(window) {
@@ -150,11 +179,21 @@ function waitForStableElement(window, id, opts = {}) {
       const el = window.document.getElementById(id);
       const snapshot = el ? el.innerHTML : null;
       if (snapshot && snapshot === last) ticks++;
-      else { ticks = 0; last = snapshot; }
+      else {
+        ticks = 0;
+        last = snapshot;
+      }
       if (snapshot && ticks >= stableTicks) return resolve(el);
       if (Date.now() - start > timeoutMs) {
-        if (!snapshot) return reject(new Error('#' + id + ' never rendered within ' + timeoutMs + 'ms'));
-        console.warn('[ssr-lib] settle timeout waiting on #' + id + ' -- resolving best-effort');
+        if (!snapshot)
+          return reject(
+            new Error("#" + id + " never rendered within " + timeoutMs + "ms"),
+          );
+        console.warn(
+          "[ssr-lib] settle timeout waiting on #" +
+            id +
+            " -- resolving best-effort",
+        );
         return resolve(el);
       }
       setTimeout(tick, pollMs);

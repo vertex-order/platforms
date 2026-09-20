@@ -56,13 +56,15 @@ Runs unchanged in kit (checks its own fixture data) and every list repo.
 
 No external deps. Run: python3 scripts/check-dedup-drift.py
 """
+
 import re
 import sys
 import unicodedata
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from js_literal import ParseError, parse_value_after as _parse_value_after  # noqa: E402
+from js_literal import ParseError
+from js_literal import parse_value_after as _parse_value_after
 
 SITE = Path(__file__).resolve().parent.parent / "site"
 DATA = SITE / "data"
@@ -100,6 +102,7 @@ def load_series(slug):
 # a non-empty array, so an empty tags array falls through to ''.
 # ---------------------------------------------------------------------------
 
+
 def title_date_key(d):
     """Mirrors titleDateKey(): full-precision string for a title_date
     value -- itself if already a string, the year as a string for a plain
@@ -123,7 +126,7 @@ def dedupe_key(game):
     else:
         tags = game.get("tags")
         subtitle_key = " · ".join(tags) if tags else ""
-    return f'{game.get("title", "")}|{subtitle_key}|{title_date_key(game.get("title_date"))}'
+    return f"{game.get('title', '')}|{subtitle_key}|{title_date_key(game.get('title_date'))}"
 
 
 # ---------------------------------------------------------------------------
@@ -214,7 +217,11 @@ def sub_slug(node, parent):
         return slugify_title(node["subtitle"]) + (f"-{yr}" if yr else "")
     has_own = node.get("title") is not None
     title = node.get("title") if has_own else (parent.get("title") if parent else None)
-    title_date = node.get("title_date") if has_own else (parent.get("title_date") if parent else None)
+    title_date = (
+        node.get("title_date")
+        if has_own
+        else (parent.get("title_date") if parent else None)
+    )
     if title:
         yr = title_date_year(title_date)
         return slugify_title(title) + (f"-{yr}" if yr else "")
@@ -307,7 +314,10 @@ def main():
         print("check-dedup-drift: no site/data/index.js, nothing to check")
         return 0
     except (ParseError, IndexError, ValueError) as e:
-        print(f"check-dedup-drift: failed to parse site/data/index.js: {e}", file=sys.stderr)
+        print(
+            f"check-dedup-drift: failed to parse site/data/index.js: {e}",
+            file=sys.stderr,
+        )
         return 1
 
     entries = []  # (slug, index, game)
@@ -330,7 +340,9 @@ def main():
         for label, raw_keys in COMPARED_FIELDS.items():
             snapshots = [field_snapshot(g, raw_keys, label) for _, _, g in members]
             if any(snap != snapshots[0] for snap in snapshots[1:]):
-                where = ", ".join(f"series-{slug}.js games[{idx}]" for slug, idx, _ in members)
+                where = ", ".join(
+                    f"series-{slug}.js games[{idx}]" for slug, idx, _ in members
+                )
                 entry_title = members[0][2].get("title", "?")
                 findings.append(f"  {entry_title!r} ({where}): {label} differs")
 
@@ -344,22 +356,30 @@ def main():
 
     if findings or key_findings or year_findings:
         if findings:
-            print(f"check-dedup-drift: {len(findings)} drift finding(s) across {len(dup_groups)} duplicate group(s):")
+            print(
+                f"check-dedup-drift: {len(findings)} drift finding(s) across {len(dup_groups)} duplicate group(s):"
+            )
             for finding in findings:
                 print(finding)
-            print("Fix: reconcile the duplicate entries so description/tags/rating/length/platforms/languages match.")
+            print(
+                "Fix: reconcile the duplicate entries so description/tags/rating/length/platforms/languages match."
+            )
         if key_findings:
             print(f"check-dedup-drift: {len(key_findings)} entry-key finding(s):")
             for finding in key_findings:
                 print(f"  {finding}")
         if year_findings:
-            print(f"check-dedup-drift: {len(year_findings)} title/year redundancy finding(s):")
+            print(
+                f"check-dedup-drift: {len(year_findings)} title/year redundancy finding(s):"
+            )
             for finding in year_findings:
                 print(f"  {finding}")
         return 1
 
-    print(f"check-dedup-drift: checked {len(dup_groups)} duplicate group(s) across {len(entries)} entries, "
-          f"{len(order)} series' entry keys, and title/year redundancy, no drift")
+    print(
+        f"check-dedup-drift: checked {len(dup_groups)} duplicate group(s) across {len(entries)} entries, "
+        f"{len(order)} series' entry keys, and title/year redundancy, no drift"
+    )
     return 0
 
 

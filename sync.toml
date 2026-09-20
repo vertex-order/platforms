@@ -34,9 +34,11 @@ paths = [
 
 [subscribe.kit]
 repo = "vertex-order/kit"
-ref = "fab81950029dd55b00c49b749337f494d626e73e"
+ref = "05a03054eb99dfc19538cffaaa9cd37c6e5c2fcd"
 paths = [
   "docs/cache.md",
+  "docs/tooling.md",
+  ".prettierignore",
   "schemas/platform-icons.schema.json",
   "site/_ds/",
   "site/images/ui/",
@@ -78,6 +80,8 @@ paths = [
   ".github/workflows/check-generated.yml",
   ".github/workflows/check-vendored.yml",
   ".github/workflows/check-data.yml",
+  ".github/workflows/check-ruff.yml",
+  ".github/workflows/check-format.yml",
   ".github/workflows/check-dedup-drift.yml",
   ".github/workflows/check-css.yml",
   ".github/workflows/check-syntax.yml",

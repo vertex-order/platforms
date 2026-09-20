@@ -1,0 +1,32 @@
+# Owned by vertex-order/kit — edit here. Vendored elsewhere via sync.toml;
+# don't edit the copy there.
+#
+# Fail a PR (or a push to main that bypassed the pre-commit guard) whose
+# scripts/*.py doesn't pass ruff's lint + format check. Run via `uvx` --
+# not a project dependency, so there's no requirements.txt/pyproject.toml
+# pin here; the version is pinned in the command itself (and in
+# justfile's check-ruff/.githooks/pre-commit, which must match). See
+# `just check-ruff` and docs/tooling.md.
+name: Check Python lint/format
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  ruff:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@bec219d24cd3e171d82865faccec33120bb574f4 # v10.1.0
+
+      - name: Lint scripts/*.py
+        run: uvx ruff@0.16 check scripts/
+
+      - name: Format-check scripts/*.py
+        run: uvx ruff@0.16 format --check scripts/

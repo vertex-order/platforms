@@ -1,0 +1,15 @@
+# Owned by vertex-order/kit — edit here. Vendored elsewhere via sync.toml;
+# don't edit the copy there.
+#
+# Generated/vendored/data files prettier would otherwise fight or that
+# must stay byte-identical to their source -- see justfile's check-format
+# recipe. site/data/*.js in particular is deliberately hand-styled (single
+# quotes, one entry per line, etc.) and not "code" prettier should have an
+# opinion on.
+site/_ds/
+site/components.js
+site/data/*.js
+build/
+node_modules/
+package-lock.json
+tests/

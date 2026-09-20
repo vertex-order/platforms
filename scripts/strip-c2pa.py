@@ -14,6 +14,7 @@ targeted regex on the known <metadata>/xmlns:c2pa shape; PNG stripping
 is a chunk allowlist so unrelated ancillary chunks (pHYs, gAMA, sRGB,
 iCCP, ...) are preserved rather than nuked wholesale.
 """
+
 import re
 import struct
 import sys
@@ -30,7 +31,7 @@ def strip_svg(path):
     with open(path, encoding="utf-8") as f:
         content = f.read()
     stripped = re.sub(r'\s*xmlns:c2pa="[^"]*"', "", content)
-    stripped = re.sub(r"<metadata\b[^>]*>.*?</metadata>", "", stripped, flags=re.S)
+    stripped = re.sub(r"<metadata\b[^>]*>.*?</metadata>", "", stripped, flags=re.DOTALL)
     if stripped != content:
         with open(path, "w", encoding="utf-8") as f:
             f.write(stripped)
@@ -48,8 +49,8 @@ def strip_png(path):
     i = 8
     changed = False
     while i < len(data):
-        length = struct.unpack(">I", data[i:i + 4])[0]
-        ctype = data[i + 4:i + 8].decode("latin1")
+        length = struct.unpack(">I", data[i : i + 4])[0]
+        ctype = data[i + 4 : i + 8].decode("latin1")
         chunk_end = i + 8 + length + 4
         if ctype in PNG_C2PA_CHUNKS:
             changed = True
@@ -80,9 +81,12 @@ def main(paths):
     for path in iter_files(paths):
         path = str(path)
         lower = path.lower()
-        if lower.endswith(".svg") and strip_svg(path):
-            changed.append(path)
-        elif lower.endswith(".png") and strip_png(path):
+        if (
+            lower.endswith(".svg")
+            and strip_svg(path)
+            or lower.endswith(".png")
+            and strip_png(path)
+        ):
             changed.append(path)
     return changed
 

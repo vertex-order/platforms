@@ -19,6 +19,7 @@ Usage:
   python3 scripts/ensure-helmets.py             # whole site/ tree
   python3 scripts/ensure-helmets.py PATH [PATH...]  # only these files
 """
+
 import re
 import sys
 from pathlib import Path
@@ -51,7 +52,9 @@ def ensure_helmet(path, block):
     text = path.read_text(encoding="utf-8")
     if is_entry_page(path) or "<helmet>" in text:
         return False
-    new_text, n = re.subn(r"(<x-dc>\n)", r"\1" + block.replace("\\", "\\\\"), text, count=1)
+    new_text, n = re.subn(
+        r"(<x-dc>\n)", r"\1" + block.replace("\\", "\\\\"), text, count=1
+    )
     if n == 0:
         return False
     path.write_text(new_text, encoding="utf-8", newline="\n")

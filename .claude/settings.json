@@ -17,9 +17,7 @@
       "Bash(git config *)",
       "Bash(echo \"EXITCODE:$?\")"
     ],
-    "additionalDirectories": [
-      "\\tmp"
-    ]
+    "additionalDirectories": ["\\tmp"]
   },
   "enabledPlugins": {
     "ponytail@ponytail": true
