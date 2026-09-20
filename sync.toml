@@ -34,7 +34,7 @@ paths = [
 
 [subscribe.kit]
 repo = "vertex-order/kit"
-ref = "f4756cad33b9b16513f2f714876bdfb8256e74bc"
+ref = "2fb0d09395a51feaea53c41f831464b1e1d6f140"
 paths = [
   "docs/cache.md",
   "schemas/platform-icons.schema.json",
@@ -51,6 +51,8 @@ paths = [
   "scripts/ssr-render.js",
   "scripts/ssr-lib.js",
   "scripts/sync.py",
+  "scripts/js_literal.py",
+  "scripts/validate-data.py",
   "scripts/normalize-svg.py",
   "scripts/restore-headers.py",
   "scripts/ensure-helmets.py",
@@ -74,6 +76,7 @@ paths = [
   ".github/workflows/autofix-apply.yml",
   ".github/workflows/check-generated.yml",
   ".github/workflows/check-vendored.yml",
+  ".github/workflows/check-data.yml",
   ".github/workflows/check-css.yml",
   ".github/workflows/check-syntax.yml",
   ".github/workflows/sync-repin.yml",

@@ -53,6 +53,15 @@ if [ -n "$staged_data" ]; then
 	python3 "$root/scripts/check-dedup-drift.py"
 fi
 
+# 5b. Fail a commit whose staged site/data/*.js (or a staged
+#     schemas/*.schema.json change, which could newly reject existing data)
+#     doesn't match its schema -- see scripts/validate-data.py. Pure
+#     validator, pure Python, no external deps -- always runs.
+staged_schemas=$(git diff --cached --name-only --diff-filter=ACMD -- 'schemas/*.schema.json')
+if [ -n "$staged_data" ] || [ -n "$staged_schemas" ]; then
+	python3 "$root/scripts/validate-data.py"
+fi
+
 # 6. Lint staged CSS with stylelint (see .stylelintrc.cjs) -- mainly to
 #    catch CSS that fails to parse at all, e.g. a comment that closes
 #    earlier than intended (a literal */ inside /* ... */), which silently

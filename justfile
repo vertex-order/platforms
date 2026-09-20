@@ -74,6 +74,13 @@ sync-restore:
 check-dedup-drift:
     python3 scripts/check-dedup-drift.py
 
+# CI check: fail if any site/data/*.js doesn't match its schemas/*.schema.json
+# (only checks a pair when both sides exist -- see scripts/validate-data.py).
+# Pure Python, no external deps -- unlike check-css/check-js, always runs,
+# even without Node.
+check-data:
+    python3 scripts/validate-data.py
+
 # CI check: lint every CSS file with stylelint (see .stylelintrc.cjs) --
 # mainly to catch CSS that fails to parse at all, e.g. a comment that closes
 # earlier than intended (a literal */ inside /* ... */). Scans the whole
