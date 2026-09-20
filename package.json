@@ -1,14 +1,16 @@
 {
   "name": "vertex-order-kit",
   "private": true,
-  "description": "Build-time only. Node drives scripts/ssr-render.js (`just build`'s SSR step) via jsdom; react/react-dom are pinned to the exact versions site/support.js loads from unpkg at runtime (site/support.js REACT_URL/REACT_DOM_URL), so the prerendered markup matches what the client re-renders. Never shipped to the browser.",
+  "description": "Build-time only. Node drives scripts/ssr-render.js (`just build`'s SSR step) via jsdom; react/react-dom are pinned to the exact versions site/support.js loads from unpkg at runtime (site/support.js REACT_URL/REACT_DOM_URL), so the prerendered markup matches what the client re-renders. Never shipped to the browser. dependencies/devDependencies split is: needed to produce the build artifact (jsdom/react/react-dom) vs. needed only to lint it (stylelint) -- `npm install` here always installs both regardless (nothing in this repo's pipeline ever does a --omit=dev install), so the split documents intent rather than gating what gets installed.",
   "engines": {
     "node": ">=24"
   },
-  "devDependencies": {
+  "dependencies": {
     "jsdom": "30.0.1",
     "react": "18.3.1",
-    "react-dom": "18.3.1",
+    "react-dom": "18.3.1"
+  },
+  "devDependencies": {
     "stylelint": "17.15.0",
     "stylelint-config-recommended": "18.0.0"
   }
