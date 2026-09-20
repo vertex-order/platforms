@@ -34,7 +34,7 @@ paths = [
 
 [subscribe.kit]
 repo = "vertex-order/kit"
-ref = "2fb0d09395a51feaea53c41f831464b1e1d6f140"
+ref = "29f6415ddaf02e03b1a5b832939e7bcd62df51e4"
 paths = [
   "docs/cache.md",
   "schemas/platform-icons.schema.json",

@@ -70,6 +70,18 @@ sync-check:
 sync-restore:
     python3 scripts/sync.py
 
+# Every fast validation check in one command -- what a PR needs to pass
+# before merge, minus the two that don't fit a single local recipe:
+# check-tokens (kit-only -- reads tests/site/, which isn't vendored, so it
+# errors elsewhere instead of being inert like everywhere else in this
+# file; see `test`) and check-generated (components.js/SVG staleness --
+# `just build` already regenerates both, so there's no separate check for
+# it to fail locally). CI still runs each of the recipes below as its own
+# parallel job (for a clear per-check pass/fail in the PR UI, and so one
+# failure doesn't block reporting the others) -- this is for a local
+# all-in-one before you push.
+check: check-py check-js check-css check-dedup-drift check-data sync-check
+
 # CI check: fail if cross-listed duplicate game entries in site/data/ have drifted.
 check-dedup-drift:
     python3 scripts/check-dedup-drift.py
