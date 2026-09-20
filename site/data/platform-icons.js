@@ -22,6 +22,7 @@
 // nintendo-snes uses grayscale to keep its multi-colour logo legible).
 //
 // Classic script (not a module) so it loads via a plain <script src>.
+// schema: platform-icons.schema.json
 window.PLATFORM_ICONS = [
     { key: 'windows', iconImg: 'images/platforms/windows.svg', iconSize: 16, imgStyle: 'width: auto; height: 16px;', name: 'Windows (PC; Handheld; Digital)' },
     { key: 'macos', iconImg: 'images/platforms/macos.svg', iconSize: 16.5, imgStyle: 'width: auto; height: 16.5px;', name: 'macOS' },

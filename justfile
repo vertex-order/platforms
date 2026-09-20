@@ -86,10 +86,10 @@ check: check-py check-js check-css check-dedup-drift check-data sync-check
 check-dedup-drift:
     python3 scripts/check-dedup-drift.py
 
-# CI check: fail if any site/data/*.js doesn't match its schemas/*.schema.json
-# (only checks a pair when both sides exist -- see scripts/validate-data.py).
-# Pure Python, no external deps -- unlike check-css/check-js, always runs,
-# even without Node.
+# CI check: fail if any site/data/*.js doesn't match the schema it declares
+# with its own `// schema: <name>.schema.json` comment -- see
+# scripts/validate-data.py. Pure Python, no external deps -- unlike
+# check-css/check-js, always runs, even without Node.
 check-data:
     python3 scripts/validate-data.py
 
