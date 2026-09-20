@@ -5,10 +5,26 @@
 A few checks in this repo run a real linter/formatter (ruff for Python,
 prettier for JS/YAML/JSON/CSS) without adding it as a project dependency
 anywhere -- no `requirements.txt`, no `pyproject.toml`, and (for prettier)
-no entry in `package.json` either, unlike `stylelint`/`jsdom`/`react`,
-which *are* real `package.json` devDependencies because `just build`'s
-SSR step and `check-css` need them present as installed packages, not
-just runnable once.
+no entry in `package.json` either, unlike `jsdom`/`react`/`react-dom`,
+which *are* real `package.json` devDependencies because `scripts/ssr-render.js`
+(`just build`'s SSR step) actually `require()`s them at build time -- not
+just runnable once, needed present as installed packages.
+
+`stylelint` is a real devDependency too, but not for that reason -- tested
+and confirmed it can't cleanly go ephemeral like the others. Its config
+(`.stylelintrc.cjs`) uses `extends: "stylelint-config-recommended"`, and
+stylelint resolves that via Node's module resolution starting from the
+config file's own location, not from wherever `npx` happened to fetch
+stylelint to. An `npx -p stylelint -p stylelint-config-recommended stylelint`
+invocation installs both packages fine but still fails to resolve the
+`extends` -- they land in npx's isolated temp cache dir, which isn't in
+this repo's module resolution path. `--config-basedir` can point at that
+temp dir explicitly and it does work, but the path is a randomized
+npm-cache hash, not something scriptable across machines or CI runs. The
+only way around it would be dropping `extends` and inlining
+`stylelint-config-recommended`'s ruleset directly into `.stylelintrc.cjs`
+-- which trades the dependency for silently drifting out of sync with
+that package's own future updates. Not done.
 
 `npx <pkg>@<version>` (Node) and `uvx <pkg>@<version>` (Python, via
 [uv](https://docs.astral.sh/uv/)) fetch, cache, and run a tool for one
@@ -36,6 +52,27 @@ contributor has installed locally.
 with `curl -LsSf https://astral.sh/uv/install.sh | sh` (or see
 https://docs.astral.sh/uv/getting-started/installation/), a single static
 binary, no dependencies of its own.
+
+## `uv.toml` and the supply-chain age guard
+
+`uv.toml` (repo root) sets `exclude-newer = "7 days"` -- a supply-chain
+guard: uv refuses to resolve to any package version uploaded more
+recently than that, so a just-published/compromised release can't get
+pulled in the moment it lands. It only constrains which version an
+existing pin (e.g. `ruff@0.16`) resolves to within its own range -- it
+doesn't replace the pin.
+
+**This does not apply automatically.** Confirmed by testing, not
+assumed: `uv tool run` (`uvx`) never discovers a project-level `uv.toml`
+by walking up from the current directory the way `uv sync`/`uv add` do --
+it only reads a user-global config (`~/.config/uv/uv.toml` on Linux/macOS,
+`%APPDATA%\uv\uv.toml` on Windows), which is per-machine and not something
+CI or another contributor has. Every `uvx` invocation in this repo must
+therefore set `UV_CONFIG_FILE=uv.toml` (or pass `--config-file uv.toml`)
+explicitly to pick it up -- already done in `just check-ruff`/`just
+format`, `.githooks/pre-commit`, and `check-ruff.yml`'s job-level `env:`.
+Adding a new `uvx`-based check later means remembering this the same way
+it means remembering the version pin.
 
 ## Current ephemeral tools
 

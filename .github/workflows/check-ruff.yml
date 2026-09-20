@@ -18,6 +18,10 @@ on:
 jobs:
   ruff:
     runs-on: ubuntu-latest
+    env:
+      # uvx never discovers a project uv.toml on its own (confirmed by
+      # testing, not assumed) -- this points it at uv.toml's exclude-newer.
+      UV_CONFIG_FILE: uv.toml
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1

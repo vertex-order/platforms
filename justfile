@@ -127,12 +127,14 @@ check-js:
 
 # CI check: lint + format-check scripts/*.py with ruff, run via `uvx` --
 # not a project dependency (no requirements.txt/pyproject.toml added just
-# for this; see docs/tooling.md). uvx-optional locally, same shape as
-# check-css: a contributor without uv just skips it. CI always has uv, so
-# it always runs there -- see .github/workflows/check-ruff.yml.
+# for this; see docs/tooling.md). UV_CONFIG_FILE points uvx at uv.toml's
+# exclude-newer -- uvx never discovers a project uv.toml on its own, so
+# this must be set explicitly every time. uvx-optional locally, same shape
+# as check-css: a contributor without uv just skips it. CI always has uv,
+# so it always runs there -- see .github/workflows/check-ruff.yml.
 check-ruff:
     if command -v uvx >/dev/null 2>&1; then \
-        uvx ruff@0.16 check scripts/ && uvx ruff@0.16 format --check scripts/; \
+        export UV_CONFIG_FILE=uv.toml; uvx ruff@0.16 check scripts/ && uvx ruff@0.16 format --check scripts/; \
     else \
         echo "just check-ruff: uvx not on PATH — skipped ruff lint/format check. Install uv (https://docs.astral.sh/uv/, e.g. 'curl -LsSf https://astral.sh/uv/install.sh | sh') to get it locally; CI always runs it."; \
     fi
@@ -158,7 +160,7 @@ check-format:
 # check-ruff/check-format.
 format:
     if command -v uvx >/dev/null 2>&1; then \
-        uvx ruff@0.16 format scripts/; \
+        UV_CONFIG_FILE=uv.toml uvx ruff@0.16 format scripts/; \
     else \
         echo "just format: uvx not on PATH — skipped ruff format."; \
     fi

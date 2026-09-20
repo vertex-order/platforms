@@ -1,0 +1,16 @@
+# Owned by vertex-order/kit — edit here. Vendored elsewhere via sync.toml;
+# don't edit the copy there.
+#
+# `uv tool run` (uvx) never discovers a project-level uv.toml on its own --
+# confirmed by testing, not assumed; see docs/tooling.md. Every `uvx`
+# invocation for this repo's tools (justfile's check-ruff/format,
+# .githooks/pre-commit, .github/workflows/check-ruff.yml) must pass
+# `UV_CONFIG_FILE=uv.toml` (or `--config-file uv.toml`) explicitly for this
+# to take effect -- it is not automatic.
+#
+# exclude-newer: a supply-chain guard against a just-published/compromised
+# package version -- refuses to resolve to anything uploaded more recently
+# than this. Only bites within the version range our uvx pins already
+# allow (e.g. `ruff@0.16` still lets uv pick the latest 0.16.x patch); it
+# doesn't replace the pin, it constrains it.
+exclude-newer = "7 days"
