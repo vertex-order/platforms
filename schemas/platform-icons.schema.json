@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "platform-icons.schema.json",
+  "description": "The window.PLATFORM_ICONS value in site/data/platform-icons.js -- owned by vertex-order/platforms, vendored into kit and every list repo via sync.toml. `key` is what a series entry's platformGroups[][].key looks up to merge icon/size/style/name in. Render-only props that a per-entry platformGroups item can also set (href, itemName, terminated, strikeColor, contentOpacity, nonJpTag, muted, scale, prefix) are NOT catalog fields -- they never belong in this file, only in a series entry's own platformGroups item.",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "key": {
+        "type": "string",
+        "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+        "description": "Stable id, by convention the iconImg filename stem."
+      },
+      "iconImg": {
+        "type": "string",
+        "description": "Path, e.g. 'images/platforms/steam.svg'."
+      },
+      "iconSize": { "type": "number" },
+      "imgStyle": {
+        "type": "string",
+        "description": "Raw inline CSS, sizing only by convention. May also carry a `filter:` escape hatch to opt out of the standard light/dark tint (e.g. nintendo-snes uses grayscale to keep its multi-colour logo legible)."
+      },
+      "name": {
+        "type": "string",
+        "description": "Catalog label: every variant this platform has ever meant, e.g. 'Xbox One (Physical; Digital; Enhanced; Xbox One X Enhanced; 360 Compatibility)'. A series entry never inherits this whole -- only its base label (stripped of a trailing \"(...)\") via its own `paren`."
+      },
+      "jpTag": {
+        "type": "boolean",
+        "description": "Catalog default \"(jp)\" marker, overridable per platformGroups item."
+      },
+      "suffix": { "type": "string" },
+      "suffixFontSize": { "type": "string" },
+      "suffixOffsetY": { "type": "number" },
+      "suffixSmallCaps": { "type": "boolean" },
+      "icon": {
+        "type": "string",
+        "description": "Bootstrap Icons class, alternative to iconImg. No current catalog entry uses this."
+      },
+      "text": {
+        "type": "string",
+        "description": "Plain text badge, alternative to iconImg. No current catalog entry uses this."
+      }
+    },
+    "required": ["key", "name"],
+    "additionalProperties": false
+  },
+  "minItems": 1
+}

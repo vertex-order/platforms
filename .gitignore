@@ -4,6 +4,9 @@
 _reference/
 _references/
 
+# local planning notes, not for the repo history
+.plan/
+
 # workflow build output (generated in CI, never committed)
 build/
 
