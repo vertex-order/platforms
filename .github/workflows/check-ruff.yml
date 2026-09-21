@@ -7,6 +7,13 @@
 # pin here; the version is pinned in the command itself (and in
 # justfile's check-ruff/.githooks/pre-commit, which must match). See
 # `just check-ruff` and docs/tooling.md.
+#
+# Only checks scripts/*.py this repo actually owns (scripts/sync.py
+# --unvendored): a file matching some [subscribe.*] spec is a vendored
+# byte-for-byte copy the owning repo's own CI already checked, so
+# re-running it here would only ever pass. Checkout still runs (it's how
+# we can even read sync.toml), but setup-uv and the actual lint/format run
+# -- the real CI-minutes cost -- don't, when nothing is left to check.
 name: Check Python lint/format
 
 on:
@@ -26,11 +33,24 @@ jobs:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
+      - name: Check whether scripts/*.py is vendored here
+        id: vendored
+        run: |
+          files=$(python3 scripts/sync.py --unvendored scripts/*.py)
+          if [ -z "$files" ]; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            echo "scripts/*.py is vendored from kit here, already checked upstream — skipping."
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Install uv
+        if: steps.vendored.outputs.skip != 'true'
         uses: astral-sh/setup-uv@bec219d24cd3e171d82865faccec33120bb574f4 # v10.1.0
 
-      - name: Lint scripts/*.py
-        run: uvx ruff@0.16 check scripts/
-
-      - name: Format-check scripts/*.py
-        run: uvx ruff@0.16 format --check scripts/
+      - name: Lint + format-check scripts/*.py
+        if: steps.vendored.outputs.skip != 'true'
+        run: |
+          files=$(python3 scripts/sync.py --unvendored scripts/*.py)
+          uvx ruff@0.16 check $files
+          uvx ruff@0.16 format --check $files

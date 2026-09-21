@@ -80,7 +80,7 @@ sync-restore:
 # parallel job (for a clear per-check pass/fail in the PR UI, and so one
 # failure doesn't block reporting the others) -- this is for a local
 # all-in-one before you push.
-check: check-py check-ruff check-js check-format check-css check-dedup-drift check-data sync-check
+check: check-py check-ruff check-js check-oxlint check-format check-css check-toml check-actions check-schemas check-dedup-drift check-data sync-check
 
 # CI check: fail if cross-listed duplicate game entries in site/data/ have drifted.
 check-dedup-drift:
@@ -115,12 +115,17 @@ check-css:
 check-py:
     python3 -m py_compile scripts/*.py
 
-# CI check: fail if any scripts/*.js has a syntax error. Syntax-only (node
-# --check parses without executing). Node-optional locally, same shape as
-# check-css -- see .github/workflows/check-syntax.yml.
+# CI check: fail if any scripts/*.js or site/data/*.js has a syntax error.
+# Syntax-only (node --check parses without executing) -- site/data/*.js
+# isn't valid JSON (single-quoted strings, unquoted keys, comments), but
+# it IS valid JS, so node --check reads it fine even though a JSON parser
+# can't; this is a cheap syntax gate ahead of scripts/js_literal.py's own
+# parser, which does the real value-extraction work for
+# validate-data.py/check-dedup-drift.py. Node-optional locally, same shape
+# as check-css -- see .github/workflows/check-syntax.yml.
 check-js:
     if command -v node >/dev/null 2>&1; then \
-        for f in scripts/*.js; do node --check "$f" || exit 1; done; \
+        for f in scripts/*.js site/data/*.js; do node --check "$f" || exit 1; done; \
     else \
         echo "just check-js: node not on PATH — skipped syntax check. Install Node (https://nodejs.org, or see .node-version) to get it locally; CI always runs it."; \
     fi
@@ -132,9 +137,19 @@ check-js:
 # this must be set explicitly every time. uvx-optional locally, same shape
 # as check-css: a contributor without uv just skips it. CI always has uv,
 # so it always runs there -- see .github/workflows/check-ruff.yml.
+#
+# Only checks scripts/*.py this repo actually owns (scripts/sync.py
+# --unvendored) -- a file matching some [subscribe.*] spec is a vendored
+# byte-for-byte copy the owning repo's own CI already checked, so
+# re-running it here would only ever pass. In kit itself, --unvendored is
+# a no-op (nothing there is vendored from kit), so this still runs for
+# real. Empty result -> skip entirely, no npx/uvx cost paid.
 check-ruff:
-    if command -v uvx >/dev/null 2>&1; then \
-        export UV_CONFIG_FILE=uv.toml; uvx ruff@0.16 check scripts/ && uvx ruff@0.16 format --check scripts/; \
+    files=$(python3 scripts/sync.py --unvendored scripts/*.py); \
+    if [ -z "$files" ]; then \
+        echo "just check-ruff: scripts/*.py is all vendored here, already checked upstream — skipping."; \
+    elif command -v uvx >/dev/null 2>&1; then \
+        export UV_CONFIG_FILE=uv.toml; uvx ruff@0.16 check $files && uvx ruff@0.16 format --check $files; \
     else \
         echo "just check-ruff: uvx not on PATH — skipped ruff lint/format check. Install uv (https://docs.astral.sh/uv/, e.g. 'curl -LsSf https://astral.sh/uv/install.sh | sh') to get it locally; CI always runs it."; \
     fi
@@ -151,6 +166,105 @@ check-format:
         npx --yes prettier@3 --check "scripts/*.js" ".github/**/*.yml" "**/*.json" "site/**/*.css"; \
     else \
         echo "just check-format: npx not on PATH — skipped prettier format check. Install Node (https://nodejs.org, or see .node-version) to get it locally; CI always runs it."; \
+    fi
+
+# CI check: lint scripts/*.js with oxlint, run via `npx` -- not a project
+# dependency, same reasoning as check-format. Catches real mistakes
+# prettier's pure formatting can't (e.g. an unsafe `finally` block).
+# npx-optional locally, same shape as check-css. CI always has Node, so it
+# always runs there -- see .github/workflows/check-oxlint.yml.
+#
+# Only lints scripts/*.js this repo actually owns -- see check-ruff's
+# comment, same scripts/sync.py --unvendored mechanism.
+check-oxlint:
+    files=$(python3 scripts/sync.py --unvendored scripts/*.js); \
+    if [ -z "$files" ]; then \
+        echo "just check-oxlint: scripts/*.js is all vendored here, already checked upstream — skipping."; \
+    elif command -v npx >/dev/null 2>&1; then \
+        npx --yes oxlint@1.82.0 $files; \
+    else \
+        echo "just check-oxlint: npx not on PATH — skipped oxlint. Install Node (https://nodejs.org, or see .node-version) to get it locally; CI always runs it."; \
+    fi
+
+# CI check: validate GitHub Actions workflow YAML against the real
+# published schemas, run via `npx` -- not a project dependency. Not
+# `actionlint` itself (the well-known Go tool) -- that npm package is
+# wasm-wrapped with no CLI bin, so `npx actionlint` errors outright;
+# @action-validator/cli is a separate, real implementation that does have
+# one. Scoped to .github/workflows/*.yml only -- dependabot.yml and
+# ISSUE_TEMPLATE/*.yml aren't workflow-shaped and this tool has no other
+# mode, so it just fails them if pointed there. npx-optional locally, same
+# shape as check-css. CI always has Node, so it always runs there -- see
+# .github/workflows/check-actions.yml.
+#
+# Only validates .github/workflows/*.yml this repo actually owns -- see
+# check-ruff's comment, same scripts/sync.py --unvendored mechanism.
+check-actions:
+    files=$(python3 scripts/sync.py --unvendored .github/workflows/*.yml); \
+    if [ -z "$files" ]; then \
+        echo "just check-actions: .github/workflows/*.yml is all vendored here, already checked upstream — skipping."; \
+    elif command -v npx >/dev/null 2>&1; then \
+        for f in $files; do \
+            npx --yes -p @action-validator/core@0.6.0 -p @action-validator/cli@0.6.0 action-validator "$f" || exit 1; \
+        done; \
+    else \
+        echo "just check-actions: npx not on PATH — skipped workflow validation. Install Node (https://nodejs.org, or see .node-version) to get it locally; CI always runs it."; \
+    fi
+
+# CI check: lint + format-check every *.toml with taplo, run via `npx` --
+# not a project dependency. Piped through stdin (`taplo lint -`), not
+# passed as a file argument or glob -- npx's fetched taplo silently finds
+# 0 files when given a path directly on this setup (untracked upstream
+# quirk, not worth chasing further since stdin works reliably). One
+# process per file rather than one combined invocation for the same
+# reason. npx-optional locally, same shape as check-css. CI always has
+# Node, so it always runs there -- see .github/workflows/check-toml.yml.
+#
+# Only lints/format-checks *.toml this repo actually owns -- see
+# check-ruff's comment, same scripts/sync.py --unvendored mechanism.
+# sync.toml itself never matches (every repo's own [subscribe.kit] shape
+# genuinely differs); sync.list.toml/uv.toml, where present, do.
+check-toml:
+    files=$(python3 scripts/sync.py --unvendored *.toml); \
+    if [ -z "$files" ]; then \
+        echo "just check-toml: *.toml is all vendored here, already checked upstream — skipping."; \
+    elif command -v npx >/dev/null 2>&1; then \
+        for f in $files; do \
+            cat "$f" | npx --yes @taplo/cli@0.7.0 lint - || exit 1; \
+            cat "$f" | npx --yes @taplo/cli@0.7.0 fmt --check - || exit 1; \
+        done; \
+    else \
+        echo "just check-toml: npx not on PATH — skipped taplo lint/format check. Install Node (https://nodejs.org, or see .node-version) to get it locally; CI always runs it."; \
+    fi
+
+# CI check: validate every schemas/*.schema.json is well-formed JSON
+# Schema (2020-12), run via `npx` -- not a project dependency. An
+# independent cross-check scripts/validate-data.py's own hand-rolled
+# validator can't give itself (it has no concept of "this schema file
+# itself is malformed" -- e.g. a typo'd "propertie" instead of
+# "properties" silently no-ops there but is a real error here).
+# --strict=false only silences ajv's advisory nag about this repo's two
+# union-type fields (title_italic/subtitle_italic accepting string|bool),
+# not a real error. npx-optional locally, same shape as check-css. CI
+# always has Node, so it always runs there -- see
+# .github/workflows/check-schemas.yml.
+#
+# Skipped entirely if schemas/*.schema.json is all vendored (scripts/sync.py
+# --unvendored, same mechanism as check-ruff) -- e.g. a full list repo,
+# where the whole schemas/ dir is one [subscribe.kit] entry. Where it isn't
+# (e.g. org: two local schemas alongside two vendored ones) this still
+# compiles the *full* glob, not just the unvendored files -- a local
+# schema's $ref can point at a vendored one (common.schema.json), so
+# dropping the vendored files here would break resolution rather than
+# just skip redundant checking of them.
+check-schemas:
+    files=$(python3 scripts/sync.py --unvendored schemas/*.schema.json 2>/dev/null); \
+    if [ -z "$files" ]; then \
+        echo "just check-schemas: schemas/*.schema.json is all vendored here, already checked upstream — skipping."; \
+    elif command -v npx >/dev/null 2>&1; then \
+        npx --yes ajv-cli@5.0.0 compile -s "schemas/*.schema.json" --spec=draft2020 --strict=false; \
+    else \
+        echo "just check-schemas: npx not on PATH — skipped ajv schema check. Install Node (https://nodejs.org, or see .node-version) to get it locally; CI always runs it."; \
     fi
 
 # Auto-fix formatting: ruff format (scripts/*.py) + prettier --write

@@ -79,8 +79,19 @@ it means remembering the version pin.
 | Tool | Covers | Local recipe | CI workflow |
 | --- | --- | --- | --- |
 | `ruff` (via `uvx`) | `scripts/*.py` lint + format | `just check-ruff` | `check-ruff.yml` |
-| `prettier` (via `npx`) | `scripts/*.js`, `.github/**/*.yml`, hand-written `*.json`, `*.css` | `just check-format` | `check-format.yml` |
+| `oxlint` (via `npx`) | `scripts/*.js` lint | `just check-oxlint` | `check-oxlint.yml` |
+| `prettier` (via `npx`) | `scripts/*.js`, `.github/**/*.yml`, hand-written `*.json`, `*.css` format | `just check-format` | `check-format.yml` |
+| `@action-validator/cli` (via `npx`) | `.github/workflows/*.yml` schema validation | `just check-actions` | `check-actions.yml` |
+| `@taplo/cli` (via `npx`) | `*.toml` lint + format | `just check-toml` | `check-toml.yml` |
+| `ajv-cli` (via `npx`) | `schemas/*.schema.json` meta-validation | `just check-schemas` | `check-schemas.yml` |
 | `svgo` (via `npx`) | one-time SVG trimming, not a CI gate | `just trim-svg` | -- |
+
+`@action-validator/cli` is *not* `actionlint` (the well-known Go tool) --
+that npm package (`actionlint`) is wasm-wrapped with no CLI `bin`, so
+`npx actionlint` errors outright with "could not determine executable to
+run" (confirmed by testing). `@action-validator/cli` is a separate, real
+implementation with an actual CLI, validating against the same published
+GitHub Actions JSON schemas.
 
 `just format` runs `ruff format` + `prettier --write` for a local
 auto-fix; same tool-optional guards, not part of `fix`/`build` (those
@@ -94,9 +105,51 @@ generated artifact with its own regeneration path
 `stylelint`'s equivalent exclusion (`site/_ds/`, vendored Claude Design
 output) lives in `.stylelintrc.cjs` instead, since it predates this file.
 
-Not covered yet: a YAML *semantic* linter/validator (something like
-`actionlint` for the GitHub Actions workflow files specifically, catching
-a bad `on:`/`needs:`/expression rather than just a formatting nit) and a
-JS linter (`eslint` -- prettier only reformats, it doesn't flag e.g. an
-unused variable the way `ruff check` does for Python). Same pattern would
-apply if either gets added later.
+Considered and skipped: Biome and oxlint+oxfmt as a prettier/eslint
+replacement. Tested directly -- Biome silently ignores `.yml` entirely (no
+YAML support at all: pointed at a `.yml` file, it reports "0 files
+processed", no error, nothing checked), so it can't replace `prettier`
+here without still needing `prettier` (or something else) for workflow
+YAML anyway -- more moving parts, not fewer, for this repo's small JS/CSS
+surface. `svglint` (a real, separate SVG *linter* -- distinct from `svgo`,
+which optimizes/rewrites and has no check-only mode) and `html-validate`
+(parses `*.dc.html`'s custom tags/`{{ }}` bindings fine, but its default
+ruleset actively conflicts with real conventions here -- flags every
+`onClick` as wrong case, flags intentional inline `style=`, doesn't know
+`<helmet>` -- and would need real per-project config before it's usable)
+were also tested and skipped for now, cost/benefit not clearly worth it
+yet.
+
+## Skipping vendored content: `scripts/sync.py --unvendored`
+
+Every check above whose target can be entirely vendored (`scripts/*.py`,
+`scripts/*.js`, `.github/workflows/*.yml`, `*.toml`, `schemas/*.schema.json`)
+filters its file list through `scripts/sync.py --unvendored <paths...>`
+first, which prints back only the paths that do *not* match some
+`[subscribe.*]` spec in this repo's own `sync.toml`. A file that *is*
+vendored is a byte-for-byte copy of something the owning repo's own CI
+already checked (guaranteed by `check-vendored.yml`) -- re-running the
+same tool against the same bytes here would only ever pass, and CI
+minutes are the scarcer resource than local dev time. When the filtered
+list comes back empty, the recipe/workflow skips the expensive part
+entirely (in CI: everything after an early "is anything left to check"
+step, so `setup-uv`/`setup-node` and the actual `npx`/`uvx` download don't
+run either -- checkout still does, since reading `sync.toml` needs it).
+
+This is a per-*file* check, not a per-*repo* one (a cruder "is this repo
+kit" flag was tried first and replaced) -- `spec_matches()` (already used
+by the pre-commit vendored-file guard) handles a directory-style spec
+(`"schemas/"` vendors every file under it) as a prefix match, so a
+partial subscription like org's `schemas/` -- two files vendored from
+kit, two of its own alongside them -- correctly narrows to just the two
+real ones instead of skipping (or wrongly running against) the whole
+directory. `check-schemas` is the one exception that still compiles the
+*full* glob once it decides to run at all: a local schema's `$ref` can
+point at a vendored one, so dropping the vendored files from the actual
+`ajv-cli` invocation (as opposed to just the skip-or-not decision) would
+break resolution rather than skip redundant checking.
+
+`--unvendored` is a plain filter with no other side effects -- safe to
+call as many times as a recipe needs (the gate check and the real
+invocation each recompute it rather than pass a value between steps,
+since the computation itself is fast and local, no network).

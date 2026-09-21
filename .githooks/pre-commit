@@ -90,25 +90,39 @@ if [ -n "$staged_py" ]; then
 	python3 -m py_compile $staged_py
 fi
 
-# 7b. Lint + format-check staged scripts/*.py with ruff, run via `uvx` --
-#     not a project dependency, see docs/tooling.md. UV_CONFIG_FILE points
-#     uvx at uv.toml's exclude-newer -- uvx never discovers a project
-#     uv.toml on its own, so this must be set explicitly. uv-optional,
-#     same reasoning as the stylelint step above -- CI (check-ruff.yml)
-#     always runs it.
+# 7b. Lint + format-check staged scripts/*.py this repo actually owns
+#     (scripts/sync.py --unvendored -- a staged file matching some
+#     [subscribe.*] spec is byte-identical to what its owning repo's CI
+#     already checked, per step 2's guard above) with ruff, run via `uvx`
+#     -- not a project dependency, see docs/tooling.md. UV_CONFIG_FILE
+#     points uvx at uv.toml's exclude-newer -- uvx never discovers a
+#     project uv.toml on its own, so this must be set explicitly.
+#     uv-optional, same reasoning as the stylelint step above -- CI
+#     (check-ruff.yml) always runs it.
 if [ -n "$staged_py" ]; then
-	if command -v uvx >/dev/null 2>&1; then
-		export UV_CONFIG_FILE="$root/uv.toml"
-		uvx ruff@0.16 check $staged_py && uvx ruff@0.16 format --check $staged_py
-	else
-		echo "pre-commit: skipping ruff check on: $staged_py (install uv to enable locally; CI always runs it)"
+	owned_py=$(python3 "$root/scripts/sync.py" --unvendored $staged_py)
+	if [ -n "$owned_py" ]; then
+		if command -v uvx >/dev/null 2>&1; then
+			export UV_CONFIG_FILE="$root/uv.toml"
+			# Two statements, not `a && b` -- set -e famously does NOT
+			# abort on a failing command that's the left side of `&&`
+			# (its exit status counts as "already tested" by the
+			# operator itself), even as a bare statement. Confirmed by
+			# testing, not assumed.
+			uvx ruff@0.16 check $owned_py
+			uvx ruff@0.16 format --check $owned_py
+		else
+			echo "pre-commit: skipping ruff check on: $owned_py (install uv to enable locally; CI always runs it)"
+		fi
 	fi
 fi
 
-# 8. Fail a commit whose staged scripts/*.js has a syntax error (node
-#    --check parses without executing). Node-optional, same reasoning as
-#    the stylelint step above -- CI (check-syntax.yml) always runs it.
-staged_js=$(git diff --cached --name-only --diff-filter=ACM -- 'scripts/*.js')
+# 8. Fail a commit whose staged scripts/*.js or site/data/*.js has a
+#    syntax error (node --check parses without executing). site/data/*.js
+#    isn't valid JSON but is valid JS -- see check-js's justfile comment.
+#    Node-optional, same reasoning as the stylelint step above -- CI
+#    (check-syntax.yml) always runs it.
+staged_js=$(git diff --cached --name-only --diff-filter=ACM -- 'scripts/*.js' 'site/data/*.js')
 if [ -n "$staged_js" ]; then
 	if command -v node >/dev/null 2>&1; then
 		for f in $staged_js; do node --check "$root/$f" || exit 1; done
@@ -117,16 +131,102 @@ if [ -n "$staged_js" ]; then
 	fi
 fi
 
-# 9. Format-check staged scripts/*.js, .github/**/*.yml, *.json, and *.css
-#    with prettier, run via `npx` -- not a project dependency, see
-#    docs/tooling.md and .prettierignore for what's excluded and why.
-#    Node-optional, same reasoning as the stylelint step above -- CI
-#    (check-format.yml) always runs it.
+# 9. Lint staged scripts/*.js this repo actually owns (scripts/sync.py
+#    --unvendored, see step 7b) with oxlint, run via `npx` -- not a
+#    project dependency, see docs/tooling.md. Node-optional, same
+#    reasoning as the stylelint step above -- CI (check-oxlint.yml)
+#    always runs it.
+staged_scripts_js=$(git diff --cached --name-only --diff-filter=ACM -- 'scripts/*.js')
+if [ -n "$staged_scripts_js" ]; then
+	owned_scripts_js=$(python3 "$root/scripts/sync.py" --unvendored $staged_scripts_js)
+	if [ -n "$owned_scripts_js" ]; then
+		if command -v npx >/dev/null 2>&1; then
+			npx --yes oxlint@1.82.0 $owned_scripts_js
+		else
+			echo "pre-commit: skipping oxlint on: $owned_scripts_js (CI always runs it)"
+		fi
+	fi
+fi
+
+# 10. Format-check staged scripts/*.js, .github/**/*.yml, *.json, and *.css
+#     with prettier, run via `npx` -- not a project dependency, see
+#     docs/tooling.md and .prettierignore for what's excluded and why.
+#     Node-optional, same reasoning as the stylelint step above -- CI
+#     (check-format.yml) always runs it.
 staged_fmt=$(git diff --cached --name-only --diff-filter=ACM -- 'scripts/*.js' '.github/**/*.yml' '*.json' '*.css')
 if [ -n "$staged_fmt" ]; then
 	if command -v npx >/dev/null 2>&1; then
 		npx --yes prettier@3 --check $staged_fmt
 	else
 		echo "pre-commit: skipping prettier check on: $staged_fmt (CI always runs it)"
+	fi
+fi
+
+# 11. Validate staged .github/workflows/*.yml this repo actually owns
+#     (scripts/sync.py --unvendored, see step 7b) against the real GitHub
+#     Actions schemas, run via `npx` -- not a project dependency, see
+#     docs/tooling.md (not `actionlint` itself -- that npm package has no
+#     CLI). Node-optional, same reasoning as the stylelint step above --
+#     CI (check-actions.yml) always runs it.
+staged_workflows=$(git diff --cached --name-only --diff-filter=ACM -- '.github/workflows/*.yml')
+if [ -n "$staged_workflows" ]; then
+	owned_workflows=$(python3 "$root/scripts/sync.py" --unvendored $staged_workflows)
+	if [ -n "$owned_workflows" ]; then
+		if command -v npx >/dev/null 2>&1; then
+			for f in $owned_workflows; do
+				npx --yes -p @action-validator/core@0.6.0 -p @action-validator/cli@0.6.0 action-validator "$root/$f" || exit 1
+			done
+		else
+			echo "pre-commit: skipping action-validator on: $owned_workflows (CI always runs it)"
+		fi
+	fi
+fi
+
+# 12. Lint + format-check staged *.toml this repo actually owns
+#     (scripts/sync.py --unvendored -- sync.toml itself never matches,
+#     every repo's own [subscribe.kit] shape genuinely differs;
+#     sync.list.toml/uv.toml, where present, do) with taplo, run via
+#     `npx` -- not a project dependency, see docs/tooling.md (piped
+#     through stdin -- npx's fetched taplo doesn't discover a file
+#     path/glob argument directly, see justfile's check-toml).
+#     Node-optional, same reasoning as the stylelint step above -- CI
+#     (check-toml.yml) always runs it.
+staged_toml=$(git diff --cached --name-only --diff-filter=ACM -- '*.toml')
+if [ -n "$staged_toml" ]; then
+	owned_toml=$(python3 "$root/scripts/sync.py" --unvendored $staged_toml)
+	if [ -n "$owned_toml" ]; then
+		if command -v npx >/dev/null 2>&1; then
+			for f in $owned_toml; do
+				cat "$root/$f" | npx --yes @taplo/cli@0.7.0 lint - || exit 1
+				cat "$root/$f" | npx --yes @taplo/cli@0.7.0 fmt --check - || exit 1
+			done
+		else
+			echo "pre-commit: skipping taplo on: $owned_toml (CI always runs it)"
+		fi
+	fi
+fi
+
+# 13. Validate staged schemas/*.schema.json is well-formed JSON Schema
+#     (2020-12), run via `npx` -- not a project dependency, see
+#     docs/tooling.md. --strict=false only silences ajv's advisory nag
+#     about this repo's two union-type fields, not a real error.
+#     Skipped only if EVERY schemas/*.schema.json (not just the staged
+#     ones) is vendored (scripts/sync.py --unvendored) -- unlike the
+#     other steps above, this always compiles the *full* glob when it
+#     runs at all, never just the staged/unvendored subset: a local
+#     schema's $ref can point at a vendored one (e.g. org's own schemas
+#     alongside kit's common.schema.json), so dropping the vendored files
+#     would break resolution rather than just skip redundant checking of
+#     them. Node-optional, same reasoning as the stylelint step above --
+#     CI (check-schemas.yml) always runs it.
+staged_schema_files=$(git diff --cached --name-only --diff-filter=ACM -- 'schemas/*.schema.json')
+if [ -n "$staged_schema_files" ]; then
+	owned_schemas=$(python3 "$root/scripts/sync.py" --unvendored schemas/*.schema.json 2>/dev/null)
+	if [ -n "$owned_schemas" ]; then
+		if command -v npx >/dev/null 2>&1; then
+			npx --yes ajv-cli@5.0.0 compile -s "schemas/*.schema.json" --spec=draft2020 --strict=false
+		else
+			echo "pre-commit: skipping ajv schema check on: $staged_schema_files (CI always runs it)"
+		fi
 	fi
 fi

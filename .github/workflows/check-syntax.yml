@@ -2,10 +2,11 @@
 # don't edit the copy there.
 #
 # Fail a PR (or a push to main that bypassed the pre-commit guard) whose
-# scripts/*.py or scripts/*.js don't parse. Syntax-only -- stdlib
-# `py_compile` / `node --check` -- neither imports nor executes the file,
-# so this is cheap and can't be fooled by an import-time side effect. See
-# `just check-py` / `just check-js`.
+# scripts/*.py or scripts/*.js/site/data/*.js don't parse. Syntax-only --
+# stdlib `py_compile` / `node --check` -- neither imports nor executes the
+# file, so this is cheap and can't be fooled by an import-time side
+# effect. site/data/*.js isn't valid JSON but is valid JS -- see
+# `just check-js`'s comment. See also `just check-py`.
 name: Check syntax
 
 on:
@@ -35,8 +36,8 @@ jobs:
         with:
           node-version-file: ".node-version"
 
-      - name: Syntax-check every scripts/*.js
+      - name: Syntax-check every scripts/*.js and site/data/*.js
         run: |
-          for f in scripts/*.js; do
+          for f in scripts/*.js site/data/*.js; do
             node --check "$f" || exit 1
           done

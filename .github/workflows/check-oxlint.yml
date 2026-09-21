@@ -1,0 +1,49 @@
+# Owned by vertex-order/kit — edit here. Vendored elsewhere via sync.toml;
+# don't edit the copy there.
+#
+# Fail a PR (or a push to main that bypassed the pre-commit guard) whose
+# scripts/*.js has a real lint problem prettier's pure formatting can't
+# catch. Run via `npx` -- not a project dependency, so the version is
+# pinned in the command itself (and in justfile's check-oxlint/
+# .githooks/pre-commit, which must match). See `just check-oxlint` and
+# docs/tooling.md.
+#
+# Only checks scripts/*.js this repo actually owns (scripts/sync.py
+# --unvendored) -- see check-ruff.yml's comment, same reasoning.
+name: Check JS lint
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  oxlint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Check whether scripts/*.js is vendored here
+        id: vendored
+        run: |
+          files=$(python3 scripts/sync.py --unvendored scripts/*.js)
+          if [ -z "$files" ]; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            echo "scripts/*.js is vendored from kit here, already checked upstream — skipping."
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Install Node
+        if: steps.vendored.outputs.skip != 'true'
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: ".node-version"
+
+      - name: Lint scripts/*.js
+        if: steps.vendored.outputs.skip != 'true'
+        run: |
+          files=$(python3 scripts/sync.py --unvendored scripts/*.js)
+          npx --yes oxlint@1.82.0 $files

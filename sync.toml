@@ -28,13 +28,13 @@ paths = [
 # platforms-only, not published: site/page.dc.html (the tuning bench),
 # site/ZoomedPlatformIcon.dc.html (2x wrapper — kit doesn't need it).
 
-[publish.consumers]  # for humans; sync.py ignores this
+[publish.consumers] # for humans; sync.py ignores this
 "vertex-order/kit" = "pulls every path above; re-bundles PlatformIcon into its own components.js for its tuning bench"
 "vertex-order/<list>" = "pulls every path above directly (not via kit) — see sync.list.toml in kit"
 
 [subscribe.kit]
 repo = "vertex-order/kit"
-ref = "07875b0c234f2b54b3e49d3eaa93f8fde6187063"
+ref = "b4a15746419ba03c2117dbe12c316f914996dc54"
 paths = [
   "docs/cache.md",
   "docs/tooling.md",
@@ -83,6 +83,10 @@ paths = [
   ".github/workflows/check-data.yml",
   ".github/workflows/check-ruff.yml",
   ".github/workflows/check-format.yml",
+  ".github/workflows/check-oxlint.yml",
+  ".github/workflows/check-actions.yml",
+  ".github/workflows/check-toml.yml",
+  ".github/workflows/check-schemas.yml",
   ".github/workflows/check-dedup-drift.yml",
   ".github/workflows/check-css.yml",
   ".github/workflows/check-syntax.yml",

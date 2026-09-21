@@ -231,6 +231,24 @@ def spec_matches(relposix: str, spec: str) -> bool:
     )
 
 
+def unvendored(subs, paths: list[str]) -> list[str]:
+    """Filter `paths` down to the ones NOT matching any [subscribe.*] spec in
+    this repo's own sync.toml -- i.e. genuinely owned here, not a vendored
+    copy of content some upstream repo's own CI already checked. Used by
+    check-*.yml/justfile recipes that would otherwise redundantly re-run an
+    npx/uvx-fetched tool against byte-identical vendored content (e.g.
+    scripts/*.py, .github/workflows/*.yml) -- and, since this matches
+    per-file/per-spec rather than "is this repo kit," it also correctly
+    handles a partial subscription like org's schemas/ (two files vendored,
+    two of its own alongside them)."""
+    specs = [spec for sub in subs.values() for spec in sub.get("paths", [])]
+    return [
+        p
+        for p in paths
+        if not any(spec_matches(Path(p).as_posix(), spec) for spec in specs)
+    ]
+
+
 def staged_files():
     out = run(
         ["git", "diff", "--cached", "--name-only", "--diff-filter=ACM"], cwd=ROOT
@@ -294,6 +312,15 @@ def main():
         help="pre-commit guard: block hand-edited vendored files in the index",
     )
     ap.add_argument(
+        "--unvendored",
+        nargs="+",
+        metavar="PATH",
+        help="print, one per line, the given paths that do NOT match any "
+        "[subscribe.*] spec here (i.e. genuinely owned by this repo) -- "
+        "for a check script to skip the vendored rest, already checked "
+        "upstream",
+    )
+    ap.add_argument(
         "--update", metavar="NAME", help="repin one subscription then pull it"
     )
     ap.add_argument(
@@ -311,6 +338,20 @@ def main():
 
     cfg = load()
     subs = cfg.get("subscribe") or {}
+
+    if args.unvendored is not None:
+        # Explicit "\n" only -- Windows' default text-mode stdout translates
+        # "\n" to "\r\n", and a shell capturing this via $(...) only strips
+        # the trailing newline of the whole capture, not a "\r" stuck to
+        # the end of each earlier line -- every path but the last would
+        # otherwise carry an invisible, invalid trailing character once
+        # word-split apart by the caller.
+        if hasattr(sys.stdout, "reconfigure"):
+            sys.stdout.reconfigure(newline="\n")
+        for p in unvendored(subs, args.unvendored):
+            print(p)
+        return 0
+
     if not subs:
         if not args.check_staged:
             print("no [subscribe.*] in sync.toml — nothing to do")

@@ -99,52 +99,55 @@ async function main() {
     console.error("[ssr-render]", e.error || e.message);
   });
 
-  try {
-    await waitForStableElement(window, "dc-root");
-  } finally {
-    restoreSri(window.document);
-    let out = "<!DOCTYPE html>\n" + window.document.documentElement.outerHTML;
+  // Not wrapped in try/finally: every error here already propagates to
+  // main().catch() below and exits the process either way, so a `finally`
+  // bought no real cleanup guarantee -- it only risked the classic
+  // unsafe-finally bug, where the SNAPSHOT_MARKER throw a few lines down
+  // would silently overwrite whatever real error waitForStableElement
+  // threw (oxlint: no-unsafe-finally).
+  await waitForStableElement(window, "dc-root");
+  restoreSri(window.document);
+  let out = "<!DOCTYPE html>\n" + window.document.documentElement.outerHTML;
 
-    // Re-insert the original <x-dc> (see the top-of-file note) as a sibling
-    // right before the settled snapshot, and rename the snapshot's id out
-    // of #dc-root's way. There's exactly one id="dc-root" opening tag —
-    // boot() creates it fresh each time it runs (site/support.js:167-168).
-    const SNAPSHOT_MARKER = '<div id="dc-root">';
-    if (!out.includes(SNAPSHOT_MARKER)) {
-      throw new Error(
-        entryPath +
-          ': expected exactly one <div id="dc-root"> in the settled render',
-      );
-    }
-    out = out.replace(
-      SNAPSHOT_MARKER,
-      originalXDcBlock + '\n<div id="dc-root-ssr">',
+  // Re-insert the original <x-dc> (see the top-of-file note) as a sibling
+  // right before the settled snapshot, and rename the snapshot's id out
+  // of #dc-root's way. There's exactly one id="dc-root" opening tag —
+  // boot() creates it fresh each time it runs (site/support.js:167-168).
+  const SNAPSHOT_MARKER = '<div id="dc-root">';
+  if (!out.includes(SNAPSHOT_MARKER)) {
+    throw new Error(
+      entryPath +
+        ': expected exactly one <div id="dc-root"> in the settled render',
     );
-    // Removes the now-superseded snapshot once the client's real boot() has
-    // mounted its own live #dc-root over the <x-dc> above. Output-only —
-    // never written to site/, so it has no effect on the dev/preview flow
-    // (that HTML never runs through this script).
-    const CLEANUP_SCRIPT =
-      '<script>(function(){var s=document.getElementById("dc-root-ssr");if(!s)return;new MutationObserver(function(_,o){if(document.getElementById("dc-root")){s.remove();o.disconnect();}}).observe(document.body,{childList:true,subtree:true});})();</script>';
-    out = out.replace("</body>", CLEANUP_SCRIPT + "</body>");
-
-    // Elements the runtime builds by string-concatenating an absolute base
-    // (e.g. data/index.js's dynamically-injected <script src> for each
-    // series file, resolved against SSR_ORIGIN) bake that absolute URL into
-    // the attribute value itself, not just the live resolution — strip it
-    // back to relative so nothing in the shipped page ever points at this
-    // build-only fake origin. Harmless either way once loaded (the client's
-    // own boot re-runs and re-injects these fresh against the real origin),
-    // but a leaked ssr-render.internal URL would otherwise sit in the page
-    // as a guaranteed-failing request.
-    out = out
-      .split(SSR_ORIGIN + "/")
-      .join("./")
-      .split(SSR_ORIGIN)
-      .join(".");
-    fs.writeFileSync(entryPath, out);
-    window.close();
   }
+  out = out.replace(
+    SNAPSHOT_MARKER,
+    originalXDcBlock + '\n<div id="dc-root-ssr">',
+  );
+  // Removes the now-superseded snapshot once the client's real boot() has
+  // mounted its own live #dc-root over the <x-dc> above. Output-only —
+  // never written to site/, so it has no effect on the dev/preview flow
+  // (that HTML never runs through this script).
+  const CLEANUP_SCRIPT =
+    '<script>(function(){var s=document.getElementById("dc-root-ssr");if(!s)return;new MutationObserver(function(_,o){if(document.getElementById("dc-root")){s.remove();o.disconnect();}}).observe(document.body,{childList:true,subtree:true});})();</script>';
+  out = out.replace("</body>", CLEANUP_SCRIPT + "</body>");
+
+  // Elements the runtime builds by string-concatenating an absolute base
+  // (e.g. data/index.js's dynamically-injected <script src> for each
+  // series file, resolved against SSR_ORIGIN) bake that absolute URL into
+  // the attribute value itself, not just the live resolution — strip it
+  // back to relative so nothing in the shipped page ever points at this
+  // build-only fake origin. Harmless either way once loaded (the client's
+  // own boot re-runs and re-injects these fresh against the real origin),
+  // but a leaked ssr-render.internal URL would otherwise sit in the page
+  // as a guaranteed-failing request.
+  out = out
+    .split(SSR_ORIGIN + "/")
+    .join("./")
+    .split(SSR_ORIGIN)
+    .join(".");
+  fs.writeFileSync(entryPath, out);
+  window.close();
   console.log("[ssr-render] wrote static render: " + entryPath);
 }
 
