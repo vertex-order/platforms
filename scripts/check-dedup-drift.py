@@ -1,51 +1,55 @@
 #!/usr/bin/env python3
 # Owned by vertex-order/kit — edit here. Vendored elsewhere via sync.toml;
 # don't edit the copy there.
-"""Flag drift between duplicate/cross-listed game entries in site/data/, and
+"""Flag drift between duplicate/cross-listed media entries in site/data/, and
 duplicate stable entry/pilcrow keys.
 
 ## Dedup drift
 
-A game can be legitimately hand-cross-listed in two series (e.g. a Picture
-Book tie-in also listed under its parent game's series). site/page.dc.html
-dedupes these at render time (`dupGroups`, ~line 772) so checking one
-checkbox checks both. That relies on the two hand-typed copies staying in
-sync -- nothing enforces it. This script finds every group of entries
-sharing page.dc.html's dedupe key (title|subtitleKey|title_date) and
-fails if their description/tags/rating/length/platforms/languages
-disagree. It intentionally does not look inside extras/alt/alts
-(other-version sub-entries) -- only the entry itself.
+A release can be legitimately hand-cross-listed in two series (e.g. a
+Picture Book tie-in also listed under its parent game's series). Only each
+media[] slot's *primary* release (`releases[0]`) is ever cross-listed this
+way -- site/page.dc.html dedupes these at render time (`dupGroups`, from
+each slot's primary) so checking one checkbox checks both. That relies on
+the two hand-typed copies staying in sync -- nothing enforces it. This
+script finds every group of primary releases sharing page.dc.html's dedupe
+key (title|subtitleKey|titleDate) and fails if their
+description/tags/ratings/length/platforms/languages disagree. It
+intentionally does not look inside releases[1:] or versions[] (inline-or/
+other-version sub-entries) -- only each slot's primary release.
 
 ## Entry-key collisions
 
-site/page.dc.html derives a stable pilcrow/checked-state key per entry
-(`entrySlug`/`subSlug`/`withDedupeSuffix`, ~line 282) from `title` +
-title_date's year (or an explicit `id:`), and for an extras/alt.extras
-sub-entry from its own `subtitle`/`title` + year, or (for a bare
-inheriting sub-entry with neither) the *parent* entry's `title` + year.
-That derivation has its own last-resort dedupe suffix (`-2`, `-3`...) so
-a collision never breaks rendering outright, but a suffixed key is a
-code smell -- it means two different things now render under
-near-identical anchors, e.g. `#entry-VII-remaster-2012` and
-`...-2012-2`, and links to the second are one accidental data reorder
-away from drifting back to the first. This script mirrors that same
-derivation in Python and fails on any collision (entry-level or within
-one entry's extras/alt.extras), and on any sub-entry with no derivable
-label at all -- authors should either fix the underlying `subtitle`/
-`title` or add an explicit `id:` rather than ship the review depending
-on the fallback.
+site/page.dc.html derives a stable pilcrow/checked-state key per media[]
+slot (`entrySlug`/`subSlug`/`withDedupeSuffix`) from its primary release's
+`title` + titleDate's year (or an explicit `id:`), and for a versions[]
+sub-entry (on any release, not just the primary) from its own
+`subtitle`/`title` + year, or (for a bare inheriting sub-entry with
+neither) its *own release's* `title` + year. That derivation has its own
+last-resort dedupe suffix (`-2`, `-3`...) so a collision never breaks
+rendering outright, but a suffixed key is a code smell -- it means two
+different things now render under near-identical anchors, e.g.
+`#entry-VII-remaster-2012` and `...-2012-2`, and links to the second are
+one accidental data reorder away from drifting back to the first. This
+script mirrors that same derivation in Python and fails on any collision
+(slot-level, or within one release's own versions[]), and on any versions[]
+sub-entry with no derivable label at all -- authors should either fix the
+underlying `subtitle`/`title` or add an explicit `id:` rather than ship the
+review depending on the fallback. A release[1:] (inline-or) itself never
+needs checking here -- it always renders at a fixed positional anchor
+(`-or`/`-or-2`/...), never a derived slug.
 
 ## Title/year redundancy
 
 The year shown next to `title` at render time is composed separately by
-`composeDateLabel()` from `title_date`, never baked into `title` itself
-(see the list repos' docs/sources.md for the fuller writeup of why). If
-someone also types the year into `title` (redundant with what
-`title_date` already carries), the displayed title ends up with a
-doubled or confusingly adjacent year, e.g. `Final Fantasy I (1987)
-(1987)`. This check flags any entry whose `title` contains `(<same year
-as title_date>)` anywhere in the string (not just trailing) -- fix by
-removing that redundant year from `title`, not from `title_date`.
+`composeDateLabel()` from `titleDate`, never baked into `title` itself (see
+the list repos' docs/sources.md for the fuller writeup of why). If someone
+also types the year into `title` (redundant with what `titleDate` already
+carries), the displayed title ends up with a doubled or confusingly
+adjacent year, e.g. `Final Fantasy I (1987) (1987)`. This check flags any
+primary release whose `title` contains `(<same year as titleDate>)`
+anywhere in the string (not just trailing) -- fix by removing that
+redundant year from `title`, not from `titleDate`.
 
 site/data/index.js and series-*.js are plain JS object literals (unquoted
 keys, single-quoted strings, trailing commas) -- not valid JSON -- so this
@@ -104,7 +108,7 @@ def load_series(slug):
 
 
 def title_date_key(d):
-    """Mirrors titleDateKey(): full-precision string for a title_date
+    """Mirrors titleDateKey(): full-precision string for a titleDate
     value -- itself if already a string, the year as a string for a plain
     year number, or a {start,end} range's start year."""
     if d is None:
@@ -119,14 +123,23 @@ def title_date_year(d):
     return title_date_key(d)[:4]
 
 
-def dedupe_key(game):
-    byline_parts = game.get("bylineParts")
+def primary_of(slot):
+    """A media[] slot's primary release (releases[0]) -- the checkbox row,
+    equivalent to the old flat games[] entry for every purpose this script
+    cares about (dedupe/entry-key/title-year checks all only ever looked at
+    the top-level entry, never extras/alt/alts, and that's unchanged: they
+    still only look at releases[0], never releases[1:] or versions[])."""
+    return slot["releases"][0]
+
+
+def dedupe_key(release):
+    byline_parts = release.get("bylineParts")
     if byline_parts is not None:
         subtitle_key = "".join((p.get("text") or "") for p in byline_parts)
     else:
-        tags = game.get("tags")
+        tags = release.get("tags")
         subtitle_key = " · ".join(tags) if tags else ""
-    return f"{game.get('title', '')}|{subtitle_key}|{title_date_key(game.get('title_date'))}"
+    return f"{release.get('title', '')}|{subtitle_key}|{title_date_key(release.get('titleDate'))}"
 
 
 # ---------------------------------------------------------------------------
@@ -139,9 +152,9 @@ def dedupe_key(game):
 COMPARED_FIELDS = {
     "description": ("description",),
     "tags": ("tags",),
-    "rating": ("rating",),
-    "length": ("lengthParts", "length"),
-    "platforms": ("platformGroups", "platforms"),
+    "ratings": ("ratings",),
+    "length": ("length",),
+    "platforms": ("platforms",),
     "languages": ("languages",),
 }
 
@@ -195,32 +208,32 @@ def slugify_title(s):
     return s.lower()
 
 
-def entry_slug(game):
+def entry_slug(release):
     """Mirrors entrySlug(): explicit id: wins, else title + release year
-    (from title_date)."""
-    if game.get("id"):
-        return game["id"]
-    year = title_date_year(game.get("title_date"))
-    base = slugify_title(game.get("title") or "")
+    (from titleDate)."""
+    if release.get("id"):
+        return release["id"]
+    year = title_date_year(release.get("titleDate"))
+    base = slugify_title(release.get("title") or "")
     return base + ("-" + year if year else "")
 
 
 def sub_slug(node, parent):
     """Mirrors subSlug(): own subtitle + year if it has one, else own title
     + year if it has one (a cross-reference to a different entry), else the
-    *parent* games[] entry's title + year (a bare inheriting sub-entry with
-    no edition tag), else the legacy bare `label` field."""
+    *parent* release's title + year (a bare inheriting sub-entry with no
+    edition tag), else the legacy bare `label` field."""
     if node.get("id"):
         return node["id"]
     if node.get("subtitle"):
-        yr = title_date_year(node.get("subtitle_date"))
+        yr = title_date_year(node.get("subtitleDate"))
         return slugify_title(node["subtitle"]) + (f"-{yr}" if yr else "")
     has_own = node.get("title") is not None
     title = node.get("title") if has_own else (parent.get("title") if parent else None)
     title_date = (
-        node.get("title_date")
+        node.get("titleDate")
         if has_own
-        else (parent.get("title_date") if parent else None)
+        else (parent.get("titleDate") if parent else None)
     )
     if title:
         yr = title_date_year(title_date)
@@ -240,50 +253,52 @@ def with_dedupe_suffix(base_keys):
 
 
 def check_entry_keys(order):
-    """Fail on any derived pilcrow/status key collision (entry-level, or
-    within one entry's extras/alt.extras), and on any sub-entry with no
-    derivable label at all (a bare `alt: { extras: [...] }` with no parts[]
-    of its own is fine -- it always uses the fixed `-alt` suffix, never a
-    derived one)."""
+    """Fail on any derived pilcrow/status key collision (slot-level, from
+    each media[] slot's primary release; or within one release's own
+    versions[]), and on any versions[] sub-entry with no derivable label at
+    all. A release[1:] (inline-or) itself always uses a fixed positional
+    anchor ('-or'/'-or-2'/...), never a derived slug, so it can't collide
+    the way a versions[] entry can -- only each release's own versions[]
+    needs checking, for every release in the slot, not just the primary."""
     findings = []
     for slug in order:
         series = load_series(slug)
-        games = series.get("games", [])
-        entry_keys = with_dedupe_suffix([entry_slug(g) for g in games])
+        media = series.get("media", [])
+        primaries = [primary_of(m) for m in media]
+        entry_keys = with_dedupe_suffix([entry_slug(p) for p in primaries])
         seen_entries = {}
         for i, key in enumerate(entry_keys):
             seen_entries.setdefault(key, []).append(i)
         for key, idxs in seen_entries.items():
             if len(idxs) > 1:
                 findings.append(
-                    f"series-{slug}.js: duplicate entry key '{slug}-{key}' at games{idxs} "
+                    f"series-{slug}.js: duplicate entry key '{slug}-{key}' at media{idxs} "
                     "-- add an explicit id: to one of them"
                 )
 
-        for i, game in enumerate(games):
-            sub_groups = []
-            if game.get("extras"):
-                sub_groups.append(("x", game["extras"]))
-            alt = game.get("alt")
-            if alt and alt.get("extras"):
-                sub_groups.append(("alt-x", alt["extras"]))
-            for tag, nodes in sub_groups:
-                base = [sub_slug(n, game) for n in nodes]
+        for i, slot in enumerate(media):
+            releases = slot.get("releases", [])
+            for ri, release in enumerate(releases):
+                versions = release.get("versions")
+                if not versions:
+                    continue
+                where = f"media[{i}].releases[{ri}]"
+                base = [sub_slug(n, release) for n in versions]
                 sub_keys = with_dedupe_suffix(base)
                 seen_sub = {}
                 for j, key in enumerate(sub_keys):
                     if not base[j]:
                         findings.append(
-                            f"series-{slug}.js games[{i}].{'extras' if tag == 'x' else 'alt.extras'}[{j}]: "
-                            "no derivable label for its pilcrow key -- add a subtitle/title (or a parent "
-                            "title to inherit) or an explicit id:"
+                            f"series-{slug}.js {where}.versions[{j}]: no derivable label for "
+                            "its pilcrow key -- add a subtitle/title (or a parent title to "
+                            "inherit) or an explicit id:"
                         )
                     seen_sub.setdefault(key, []).append(j)
                 for key, idxs in seen_sub.items():
                     if len(idxs) > 1:
                         findings.append(
-                            f"series-{slug}.js games[{i}].{'extras' if tag == 'x' else 'alt.extras'}: "
-                            f"duplicate derived key '{key}' at indices {idxs} -- add an explicit id: to one of them"
+                            f"series-{slug}.js {where}.versions: duplicate derived key '{key}' "
+                            f"at indices {idxs} -- add an explicit id: to one of them"
                         )
     return findings
 
@@ -297,11 +312,11 @@ def check_title_year_redundancy(entries):
     findings = []
     for slug, idx, game in entries:
         title = game.get("title")
-        year = title_date_year(game.get("title_date"))
+        year = title_date_year(game.get("titleDate"))
         if title and year and f"({year})" in title:
             findings.append(
-                f"series-{slug}.js games[{idx}]: title {title!r} redundantly "
-                f"repeats its own title_date year ({year}) -- remove it from "
+                f"series-{slug}.js media[{idx}]: title {title!r} redundantly "
+                f"repeats its own titleDate year ({year}) -- remove it from "
                 "title, composeDateLabel() already composes it for display"
             )
     return findings
@@ -320,12 +335,12 @@ def main():
         )
         return 1
 
-    entries = []  # (slug, index, game)
+    entries = []  # (slug, index, primary_release)
     try:
         for slug in order:
             series = load_series(slug)
-            for idx, game in enumerate(series.get("games", [])):
-                entries.append((slug, idx, game))
+            for idx, slot in enumerate(series.get("media", [])):
+                entries.append((slug, idx, primary_of(slot)))
     except (ParseError, IndexError, ValueError) as e:
         print(f"check-dedup-drift: {e}", file=sys.stderr)
         return 1
@@ -341,7 +356,7 @@ def main():
             snapshots = [field_snapshot(g, raw_keys, label) for _, _, g in members]
             if any(snap != snapshots[0] for snap in snapshots[1:]):
                 where = ", ".join(
-                    f"series-{slug}.js games[{idx}]" for slug, idx, _ in members
+                    f"series-{slug}.js media[{idx}]" for slug, idx, _ in members
                 )
                 entry_title = members[0][2].get("title", "?")
                 findings.append(f"  {entry_title!r} ({where}): {label} differs")

@@ -37,7 +37,9 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from js_literal import ParseError, parse_value
+from js_literal import ParseError, parse_value, parse_value_after
+
+_PLATFORM_ICONS_RE = re.compile(r"window\.PLATFORM_ICONS\s*=\s*")
 
 ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "site" / "data"
@@ -276,6 +278,64 @@ def check(label, instance, schema_ref, store, findings):
         findings.append((label, errors))
 
 
+def load_name_override_keys():
+    """Keys platform-icons.js flags `nameOverride: true` for -- the only
+    keys a series entry's platforms[].name is allowed to use (PlatformItem's
+    `name` is a full-label override; every other key must compose via
+    `paren` instead, per platform-icons.schema.json's own field
+    description). Cross-file, so not expressible as a plain JSON Schema
+    keyword: depends on platform-icons.js's own content, not just the
+    series schema. Returns None if platform-icons.js isn't present (e.g. a
+    repo checked before init-list.py seeds it) -- the caller skips the
+    check rather than failing every series file for a missing dependency.
+    """
+    path = DATA / "platform-icons.js"
+    if not path.exists():
+        return None
+    # platform-icons.js carries no `// schema:` directive of its own (it's
+    # vendored from vertex-order/platforms, checked there, not re-declared
+    # per consuming repo), so this reads window.PLATFORM_ICONS directly
+    # instead of going through find_declarations.
+    try:
+        instance = parse_value_after(path.read_text(encoding="utf-8"), _PLATFORM_ICONS_RE)
+    except ParseError:
+        return None
+    return {p["key"] for p in instance if p.get("nameOverride")}
+
+
+def check_name_overrides(label, instance, allowed_keys, findings):
+    """A platforms[] item's `name` (full label override) is only legitimate
+    on a key platform-icons.js flags nameOverride:true for -- everywhere
+    else, the same result should come from `paren` (composed onto the
+    catalog's own base label) or the boolean flags (terminated/jpTag/
+    nonJpTag/noResults, which already auto-append their own tooltip text).
+    Walks every release and its versions[] (versions don't recurse
+    further, per MediaDetails/VersionDetails)."""
+    errors = []
+
+    def walk_platforms(node, where):
+        for pl in node.get("platforms") or []:
+            key = pl.get("key")
+            if "name" in pl and key not in allowed_keys:
+                errors.append(
+                    f"{where}.platforms[]: `name` used on key {key!r}, not flagged "
+                    f"nameOverride:true in platform-icons.js -- use `paren` (or the "
+                    f"terminated/jpTag/nonJpTag/noResults auto-text) instead"
+                )
+
+    def walk_version(node, where):
+        walk_platforms(node, where)
+        for i, ver in enumerate(node.get("versions") or []):
+            walk_version(ver, f"{where}.versions[{i}]")
+
+    for si, slot in enumerate(instance.get("media") or []):
+        for ri, rel in enumerate(slot.get("releases") or []):
+            walk_version(rel, f"$.media[{si}].releases[{ri}]")
+
+    if errors:
+        findings.append((label, errors))
+
+
 def main():
     if not DATA.is_dir():
         print("validate-data: no site/data/ -- nothing to check")
@@ -284,6 +344,7 @@ def main():
     store = SchemaStore(SCHEMAS)
     findings = []
     checked = 0
+    allowed_name_override_keys = load_name_override_keys()
 
     for path in sorted(DATA.glob("*.js")):
         text = path.read_text(encoding="utf-8")
@@ -295,6 +356,8 @@ def main():
         for schema_ref, instance in decls:
             check(path.name, instance, schema_ref, store, findings)
             checked += 1
+            if schema_ref.startswith("series.schema.json") and allowed_name_override_keys is not None:
+                check_name_overrides(path.name, instance, allowed_name_override_keys, findings)
 
     if findings:
         total = sum(len(errs) for _, errs in findings)
