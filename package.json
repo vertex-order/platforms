@@ -1,7 +1,7 @@
 {
   "name": "vertex-order-kit",
   "private": true,
-  "description": "Build-time only. Node drives scripts/ssr-render.js (`just build`'s SSR step) via jsdom; react/react-dom are pinned to the exact versions site/support.js loads from unpkg at runtime (site/support.js REACT_URL/REACT_DOM_URL), so the prerendered markup matches what the client re-renders. Never shipped to the browser. dependencies/devDependencies split is: needed to produce the build artifact (jsdom/react/react-dom) vs. needed only to lint it (stylelint) -- `npm install` here always installs both regardless (nothing in this repo's pipeline ever does a --omit=dev install), so the split documents intent rather than gating what gets installed.",
+  "description": "Build-time only. Node drives scripts/ssr-render.js (`just build`'s SSR step) via jsdom; react/react-dom are pinned to the exact versions site/support.js loads from unpkg at runtime (site/support.js REACT_URL/REACT_DOM_URL), so the prerendered markup matches what the client re-renders. Never shipped to the browser. dependencies/devDependencies split is: needed to produce the build artifact (jsdom/react/react-dom) vs. needed only to lint/format-check (everything else) -- `npm install` here always installs both regardless (nothing in this repo's pipeline ever does a --omit=dev install), so the split documents intent rather than gating what gets installed. All exact-pinned (no `^`) so Dependabot (see .github/dependabot.yml, 7-day cooldown) proposes one reviewable bump at a time instead of silently floating.",
   "engines": {
     "node": ">=24"
   },
@@ -11,6 +11,12 @@
     "react-dom": "18.3.1"
   },
   "devDependencies": {
+    "@action-validator/cli": "0.6.0",
+    "@action-validator/core": "0.6.0",
+    "@taplo/cli": "0.7.0",
+    "ajv-cli": "5.0.0",
+    "oxlint": "1.82.0",
+    "prettier": "3.9.6",
     "stylelint": "17.15.0",
     "stylelint-config-recommended": "18.0.0"
   }

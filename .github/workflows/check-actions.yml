@@ -3,12 +3,10 @@
 #
 # Fail a PR (or a push to main that bypassed the pre-commit guard) whose
 # .github/workflows/*.yml doesn't validate against the real published
-# GitHub Actions schemas. Run via `npx` -- not a project dependency, so
-# the version is pinned in the command itself (and in justfile's
-# check-actions/.githooks/pre-commit, which must match). Not `actionlint`
-# itself (that npm package is wasm-wrapped with no CLI bin);
-# @action-validator/cli is a separate, real implementation that has one.
-# See `just check-actions` and docs/tooling.md.
+# GitHub Actions schemas. @action-validator/cli (+ @action-validator/core)
+# is a real devDependency -- see docs/tooling.md. Not `actionlint` itself
+# (that npm package is wasm-wrapped with no CLI bin); @action-validator/cli
+# is a separate, real implementation that has one. See `just check-actions`.
 #
 # Only checks .github/workflows/*.yml this repo actually owns
 # (scripts/sync.py --unvendored) -- see check-ruff.yml's comment, same
@@ -45,10 +43,14 @@ jobs:
         with:
           node-version-file: ".node-version"
 
+      - name: Install dependencies
+        if: steps.vendored.outputs.skip != 'true'
+        run: npm install --no-fund --no-audit
+
       - name: Validate .github/workflows/*.yml
         if: steps.vendored.outputs.skip != 'true'
         run: |
           files=$(python3 scripts/sync.py --unvendored .github/workflows/*.yml)
           for f in $files; do
-            npx --yes -p @action-validator/core@0.6.0 -p @action-validator/cli@0.6.0 action-validator "$f" || exit 1
+            npx action-validator "$f" || exit 1
           done

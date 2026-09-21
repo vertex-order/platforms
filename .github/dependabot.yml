@@ -16,9 +16,11 @@ updates:
     commit-message:
       prefix: "chore"
 
-  # package.json's build-time-only deps for scripts/ssr-render.js (jsdom,
-  # and react/react-dom pinned to match site/support.js's own CDN load —
-  # see that script's header comment). svgo still runs via `npx`, not a
+  # package.json's build-time deps for scripts/ssr-render.js (jsdom, and
+  # react/react-dom pinned to match site/support.js's own CDN load — see
+  # that script's header comment) and the dev-only lint/format tools
+  # (stylelint, prettier, oxlint, @action-validator/*, @taplo/cli,
+  # ajv-cli — see docs/tooling.md). svgo still runs via `npx`, not a
   # manifest entry, so it's not covered here.
   - package-ecosystem: npm
     directory: "/"
@@ -28,6 +30,20 @@ updates:
       default-days: 7
     groups:
       npm:
+        patterns:
+          - "*"
+    commit-message:
+      prefix: "chore"
+
+  # pyproject.toml/uv.lock's one dev dependency: ruff (see docs/tooling.md).
+  - package-ecosystem: uv
+    directory: "/"
+    schedule:
+      interval: weekly
+    cooldown:
+      default-days: 7
+    groups:
+      uv:
         patterns:
           - "*"
     commit-message:

@@ -2,11 +2,10 @@
 # don't edit the copy there.
 #
 # Fail a PR (or a push to main that bypassed the pre-commit guard) whose
-# scripts/*.py doesn't pass ruff's lint + format check. Run via `uvx` --
-# not a project dependency, so there's no requirements.txt/pyproject.toml
-# pin here; the version is pinned in the command itself (and in
-# justfile's check-ruff/.githooks/pre-commit, which must match). See
-# `just check-ruff` and docs/tooling.md.
+# scripts/*.py doesn't pass ruff's lint + format check. ruff is a real
+# dev dependency (pyproject.toml [dependency-groups].dev, see
+# docs/tooling.md) -- `uv run` uses the locked version from uv.lock and
+# reads uv.toml's exclude-newer automatically. See `just check-ruff`.
 #
 # Only checks scripts/*.py this repo actually owns (scripts/sync.py
 # --unvendored): a file matching some [subscribe.*] spec is a vendored
@@ -25,10 +24,6 @@ on:
 jobs:
   ruff:
     runs-on: ubuntu-latest
-    env:
-      # uvx never discovers a project uv.toml on its own (confirmed by
-      # testing, not assumed) -- this points it at uv.toml's exclude-newer.
-      UV_CONFIG_FILE: uv.toml
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -52,5 +47,5 @@ jobs:
         if: steps.vendored.outputs.skip != 'true'
         run: |
           files=$(python3 scripts/sync.py --unvendored scripts/*.py)
-          uvx ruff@0.16 check $files
-          uvx ruff@0.16 format --check $files
+          uv run ruff check $files
+          uv run ruff format --check $files

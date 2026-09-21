@@ -2,13 +2,11 @@
 # don't edit the copy there.
 #
 # Fail a PR (or a push to main that bypassed the pre-commit guard) whose
-# schemas/*.schema.json isn't well-formed JSON Schema (2020-12). Run via
-# `npx` -- not a project dependency, so the version is pinned in the
-# command itself (and in justfile's check-schemas/.githooks/pre-commit,
-# which must match). An independent cross-check scripts/validate-data.py's
-# own hand-rolled validator can't give itself. --strict=false only
-# silences ajv's advisory nag about this repo's two union-type fields, not
-# a real error. See `just check-schemas` and docs/tooling.md.
+# schemas/*.schema.json isn't well-formed JSON Schema (2020-12). ajv-cli
+# is a real devDependency -- see docs/tooling.md. An independent
+# cross-check scripts/validate-data.py's own hand-rolled validator can't
+# give itself. --strict=false only silences ajv's advisory nag about this
+# repo's two union-type fields, not a real error. See `just check-schemas`.
 #
 # Skipped entirely if schemas/*.schema.json is all vendored
 # (scripts/sync.py --unvendored) -- e.g. a full list repo, where the whole
@@ -50,6 +48,10 @@ jobs:
         with:
           node-version-file: ".node-version"
 
+      - name: Install dependencies
+        if: steps.vendored.outputs.skip != 'true'
+        run: npm install --no-fund --no-audit
+
       - name: Validate schemas/*.schema.json
         if: steps.vendored.outputs.skip != 'true'
-        run: npx --yes ajv-cli@5.0.0 compile -s "schemas/*.schema.json" --spec=draft2020 --strict=false
+        run: npx ajv compile -s "schemas/*.schema.json" --spec=draft2020 --strict=false

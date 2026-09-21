@@ -1,0 +1,18 @@
+# Owned by vertex-order/kit — edit here. Vendored elsewhere via sync.toml;
+# don't edit the copy there.
+#
+# Not a distributable package -- `[project]` is here only because uv (and
+# Dependabot's "uv" ecosystem, see .github/dependabot.yml) requires it to
+# declare a dev-dependency group. `dependencies = []`/`name`/`version`
+# are unused placeholders; the real content is `[dependency-groups].dev`.
+# `requires-python` matches scripts/sync.py's actual documented minimum
+# (tomllib, stdlib since 3.11) -- not whatever interpreter happened to be
+# on the machine that first ran `uv init` here.
+[project]
+name = "vertex-order-kit"
+version = "0.1.0"
+requires-python = ">=3.11"
+dependencies = []
+
+[dependency-groups]
+dev = ["ruff==0.16.7"]

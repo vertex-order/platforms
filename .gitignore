@@ -13,6 +13,9 @@ build/
 # npm deps for scripts/ssr-render.js (build-time only, never shipped)
 node_modules/
 
+# uv-managed venv for ruff (dev tool only, never shipped)
+.venv/
+
 # auto-generated thumbnail cache
 .thumbnail
 
