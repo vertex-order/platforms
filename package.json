@@ -15,7 +15,7 @@
     "@action-validator/core": "0.6.0",
     "@taplo/cli": "0.7.0",
     "ajv-cli": "5.0.0",
-    "oxlint": "1.82.0",
+    "oxlint": "1.83.0",
     "prettier": "3.9.6",
     "stylelint": "17.15.0",
     "stylelint-config-recommended": "18.0.0"
