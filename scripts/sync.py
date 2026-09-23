@@ -62,6 +62,7 @@ from __future__ import annotations
 import argparse
 import filecmp
 import shutil
+import stat
 import subprocess
 import sys
 import tempfile
@@ -184,7 +185,12 @@ def sync_one(name, sub, *, check, drift):
             for rel, srcfile in files_for(tree, spec):
                 seen.add(rel)
                 dst = ROOT / rel
-                same = dst.is_file() and filecmp.cmp(srcfile, dst, shallow=False)
+                same = (
+                    dst.is_file()
+                    and filecmp.cmp(srcfile, dst, shallow=False)
+                    and stat.S_IMODE(dst.stat().st_mode)
+                    == stat.S_IMODE(srcfile.stat().st_mode)
+                )
                 if same:
                     continue
                 drift.append(f"{rel}  ({name} @ {ref})")
