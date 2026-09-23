@@ -8,36 +8,38 @@ duplicate stable entry/pilcrow keys.
 
 A release can be legitimately hand-cross-listed in two series (e.g. a
 Picture Book tie-in also listed under its parent game's series). Only each
-media[] slot's *primary* release (`releases[0]`) is ever cross-listed this
-way -- site/page.dc.html dedupes these at render time (`dupGroups`, from
-each slot's primary) so checking one checkbox checks both. That relies on
-the two hand-typed copies staying in sync -- nothing enforces it. This
-script finds every group of primary releases sharing page.dc.html's dedupe
-key (title|subtitleKey|titleDate) and fails if their
-description/tags/ratings/length/platforms/languages disagree. It
-intentionally does not look inside releases[1:] or versions[] (inline-or/
+media[] slot's `primary` release is ever cross-listed this way --
+site/page.dc.html dedupes these at render time (`dupGroups`, from each
+slot's title/titleDate + its primary's tags/bylineParts) so checking one
+checkbox checks both. That relies on the two hand-typed copies staying in
+sync -- nothing enforces it. This script finds every group of slots sharing
+page.dc.html's dedupe key (title|subtitleKey|titleDate) and fails if their
+versionDesc/tags/ratings/length/platforms/languages (all read off
+`primary`) or mediaDesc (read off the slot itself) disagree. It
+intentionally does not look inside `alts` or `versions[]` (inline-or/
 other-version sub-entries) -- only each slot's primary release.
 
 ## Entry-key collisions
 
 site/page.dc.html derives a stable pilcrow/checked-state key per media[]
-slot (`entrySlug`/`subSlug`/`withDedupeSuffix`) from its primary release's
-`title` + titleDate's year (or an explicit `id:`), and for a versions[]
-sub-entry (on any release, not just the primary) from its own
-`subtitle`/`title` + year, or (for a bare inheriting sub-entry with
-neither) its *own release's* `title` + year. That derivation has its own
-last-resort dedupe suffix (`-2`, `-3`...) so a collision never breaks
-rendering outright, but a suffixed key is a code smell -- it means two
-different things now render under near-identical anchors, e.g.
-`#entry-VII-remaster-2012` and `...-2012-2`, and links to the second are
-one accidental data reorder away from drifting back to the first. This
-script mirrors that same derivation in Python and fails on any collision
-(slot-level, or within one release's own versions[]), and on any versions[]
-sub-entry with no derivable label at all -- authors should either fix the
-underlying `subtitle`/`title` or add an explicit `id:` rather than ship the
-review depending on the fallback. A release[1:] (inline-or) itself never
-needs checking here -- it always renders at a fixed positional anchor
-(`-or`/`-or-2`/...), never a derived slug.
+slot (`entrySlug`/`subSlug`/`withDedupeSuffix`) from the slot's own `title`
++ titleDate's year (or an explicit `id:`), and for a versions[] sub-entry
+(on the primary or any alt) from its own `subtitle`/`title` + year, or (for
+a bare inheriting sub-entry with neither) its *own release's* `title` + year
+-- which itself falls back to the slot's title/titleDate when that release
+has no title override (the chained inheritance: version -> its release ->
+the slot). That derivation has its own last-resort dedupe suffix (`-2`,
+`-3`...) so a collision never breaks rendering outright, but a suffixed key
+is a code smell -- it means two different things now render under
+near-identical anchors, e.g. `#entry-VII-remaster-2012` and `...-2012-2`,
+and links to the second are one accidental data reorder away from drifting
+back to the first. This script mirrors that same derivation in Python and
+fails on any collision (slot-level, or within one release's own
+versions[]), and on any versions[] sub-entry with no derivable label at
+all -- authors should either fix the underlying `subtitle`/`title` or add
+an explicit `id:` rather than ship the review depending on the fallback. An
+alt itself never needs checking here -- it always renders at a fixed
+positional anchor (`-or`/`-or-2`/...), never a derived slug.
 
 ## Title/year redundancy
 
@@ -123,23 +125,22 @@ def title_date_year(d):
     return title_date_key(d)[:4]
 
 
-def primary_of(slot):
-    """A media[] slot's primary release (releases[0]) -- the checkbox row,
-    equivalent to the old flat games[] entry for every purpose this script
-    cares about (dedupe/entry-key/title-year checks all only ever looked at
-    the top-level entry, never extras/alt/alts, and that's unchanged: they
-    still only look at releases[0], never releases[1:] or versions[])."""
-    return slot["releases"][0]
+def resolve_title_source(node, fallback):
+    """Mirrors resolveTitleSource(): a node with its own `title` is its own
+    title source; otherwise fall back one hop (to its release for a
+    versions[] item, or to the slot for a release)."""
+    return node if node.get("title") is not None else fallback
 
 
-def dedupe_key(release):
-    byline_parts = release.get("bylineParts")
+def dedupe_key(slot):
+    primary = slot["primary"]
+    byline_parts = primary.get("bylineParts")
     if byline_parts is not None:
         subtitle_key = "".join((p.get("text") or "") for p in byline_parts)
     else:
-        tags = release.get("tags")
+        tags = primary.get("tags")
         subtitle_key = " · ".join(tags) if tags else ""
-    return f"{release.get('title', '')}|{subtitle_key}|{title_date_key(release.get('titleDate'))}"
+    return f"{slot.get('title', '')}|{subtitle_key}|{title_date_key(slot.get('titleDate'))}"
 
 
 # ---------------------------------------------------------------------------
@@ -150,7 +151,8 @@ def dedupe_key(release):
 # ---------------------------------------------------------------------------
 
 COMPARED_FIELDS = {
-    "description": ("description",),
+    "versionDesc": ("versionDesc",),
+    "mediaDesc": ("mediaDesc",),
     "tags": ("tags",),
     "ratings": ("ratings",),
     "length": ("length",),
@@ -192,10 +194,13 @@ def normalize_description(desc):
     return out
 
 
-def field_snapshot(game, raw_keys, label):
-    if label == "description":
-        return tuple(normalize_description(game.get(k)) for k in raw_keys)
-    return tuple(game.get(k) for k in raw_keys)
+def field_snapshot(slot, raw_keys, label):
+    primary = slot["primary"]
+    if label == "versionDesc":
+        return (normalize_description(primary.get("versionDesc")),)
+    if label == "mediaDesc":
+        return (normalize_description(slot.get("mediaDesc")),)
+    return tuple(primary.get(k) for k in raw_keys)
 
 
 def slugify_title(s):
@@ -208,13 +213,13 @@ def slugify_title(s):
     return s.lower()
 
 
-def entry_slug(release):
-    """Mirrors entrySlug(): explicit id: wins, else title + release year
-    (from titleDate)."""
-    if release.get("id"):
-        return release["id"]
-    year = title_date_year(release.get("titleDate"))
-    base = slugify_title(release.get("title") or "")
+def entry_slug(slot):
+    """Mirrors entrySlug(): explicit id: wins, else the slot's own title +
+    year (from titleDate)."""
+    if slot.get("id"):
+        return slot["id"]
+    year = title_date_year(slot.get("titleDate"))
+    base = slugify_title(slot.get("title") or "")
     return base + ("-" + year if year else "")
 
 
@@ -241,6 +246,29 @@ def sub_slug(node, parent):
     return slugify_title(node.get("label") or "")
 
 
+def version_date_key(node, title_src):
+    """Mirrors versionDateKey(): a versions[] item's own real-world release
+    date -- its own subtitleDate, else its own titleDate override, else (a
+    bare inheriting entry with neither) title_src's titleDate."""
+    if node.get("subtitleDate") is not None:
+        return title_date_key(node.get("subtitleDate"))
+    if node.get("titleDate") is not None:
+        return title_date_key(node.get("titleDate"))
+    return title_date_key(title_src.get("titleDate"))
+
+
+def sort_versions(versions, title_src):
+    """Mirrors sortVersions(): reverse release order, pinned entries hoisted
+    ahead of every unpinned one, each group keeping that same reverse-date
+    order relative to each other. Two stable sorts (date first, then
+    pinned) rather than a single comparator, same trick as the JS version's
+    tuple-free comparator relies on stability for."""
+    by_date = sorted(
+        versions, key=lambda v: version_date_key(v, title_src), reverse=True
+    )
+    return sorted(by_date, key=lambda v: 0 if v.get("pinned") else 1)
+
+
 def with_dedupe_suffix(base_keys):
     """Mirrors withDedupeSuffix(): -2, -3... on repeats, in order."""
     seen = {}
@@ -254,18 +282,17 @@ def with_dedupe_suffix(base_keys):
 
 def check_entry_keys(order):
     """Fail on any derived pilcrow/status key collision (slot-level, from
-    each media[] slot's primary release; or within one release's own
+    each media[] slot's own title/titleDate; or within one release's own
     versions[]), and on any versions[] sub-entry with no derivable label at
-    all. A release[1:] (inline-or) itself always uses a fixed positional
-    anchor ('-or'/'-or-2'/...), never a derived slug, so it can't collide
-    the way a versions[] entry can -- only each release's own versions[]
-    needs checking, for every release in the slot, not just the primary."""
+    all. An alt itself always uses a fixed positional anchor
+    ('-or'/'-or-2'/...), never a derived slug, so it can't collide the way a
+    versions[] entry can -- only each release's own versions[] needs
+    checking, for the primary and every alt, not just the primary."""
     findings = []
     for slug in order:
         series = load_series(slug)
         media = series.get("media", [])
-        primaries = [primary_of(m) for m in media]
-        entry_keys = with_dedupe_suffix([entry_slug(p) for p in primaries])
+        entry_keys = with_dedupe_suffix([entry_slug(m) for m in media])
         seen_entries = {}
         for i, key in enumerate(entry_keys):
             seen_entries.setdefault(key, []).append(i)
@@ -277,13 +304,20 @@ def check_entry_keys(order):
                 )
 
         for i, slot in enumerate(media):
-            releases = slot.get("releases", [])
-            for ri, release in enumerate(releases):
+            releases = [("primary", slot["primary"])] + [
+                (f"alts[{ai}]", alt) for ai, alt in enumerate(slot.get("alts") or [])
+            ]
+            for rlabel, release in releases:
                 versions = release.get("versions")
                 if not versions:
                     continue
-                where = f"media[{i}].releases[{ri}]"
-                base = [sub_slug(n, release) for n in versions]
+                where = f"media[{i}].{rlabel}"
+                # Mirrors page.dc.html's resolveTitleSource: a release with
+                # no title override has its own versions[] inherit from the
+                # slot instead, not from this title-less node itself.
+                versions_parent = resolve_title_source(release, slot)
+                versions = sort_versions(versions, versions_parent)
+                base = [sub_slug(n, versions_parent) for n in versions]
                 sub_keys = with_dedupe_suffix(base)
                 seen_sub = {}
                 for j, key in enumerate(sub_keys):
@@ -335,12 +369,12 @@ def main():
         )
         return 1
 
-    entries = []  # (slug, index, primary_release)
+    entries = []  # (slug, index, slot)
     try:
         for slug in order:
             series = load_series(slug)
             for idx, slot in enumerate(series.get("media", [])):
-                entries.append((slug, idx, primary_of(slot)))
+                entries.append((slug, idx, slot))
     except (ParseError, IndexError, ValueError) as e:
         print(f"check-dedup-drift: {e}", file=sys.stderr)
         return 1
@@ -377,7 +411,7 @@ def main():
             for finding in findings:
                 print(finding)
             print(
-                "Fix: reconcile the duplicate entries so description/tags/rating/length/platforms/languages match."
+                "Fix: reconcile the duplicate entries so versionDesc/mediaDesc/tags/rating/length/platforms/languages match."
             )
         if key_findings:
             print(f"check-dedup-drift: {len(key_findings)} entry-key finding(s):")
