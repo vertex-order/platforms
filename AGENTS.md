@@ -23,7 +23,7 @@ and confirm with the user before proceeding.
 ## What this repo is
 
 A staging ground for tuning how platform icons render in the
-[Vertex Order](https://vertex-order.github.io) game listings — nothing here
+[Vertex Order](https://order.vertexprojects.org) game listings — nothing here
 ships to the listings directly. [`site/data/platform-icons.js`](site/data/platform-icons.js)
 holds the record (`window.PLATFORM_ICONS`): one entry per platform, each an
 `icon` (Bootstrap Icon class), an `iconImg` (path under `images/platforms/`),

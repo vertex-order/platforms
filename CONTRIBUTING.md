@@ -23,7 +23,7 @@ edit, preview in a browser, open a PR.
 ## What this repo is
 
 A staging ground for working out how platform icons should render in the
-[Vertex Order](https://vertex-order.github.io) game listings — the pixel
+[Vertex Order](https://order.vertexprojects.org) game listings — the pixel
 sizes, weights, and the light/dark colour treatment — without touching the
 real site.
 

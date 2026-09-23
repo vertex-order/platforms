@@ -2,7 +2,7 @@
 
 # NOTICE — third-party assets
 
-© 2026 Vertex Industries, with help from the community. This repo is [MIT](LICENSE); the third-party marks below are used under fair use and keep their own terms.
+© 2026 [Vertex Projects](https://vertexprojects.org), with help from the community. This repo is [MIT](LICENSE); the third-party marks below are used under fair use and keep their own terms.
 
 Not affiliated with any of the below brands or companies. Icons considered fair use and only used for communicating historical platform availability at a glance.
 
@@ -29,7 +29,7 @@ Each section carries:
 
 Text-label entries render as type, not an asset — no
 attribution needed. Any icon not credited on the project page is original to
-this project — **Vertex Industries, with help from the community** — and
+this project — **[Vertex Projects](https://vertexprojects.org), with help from the community** — and
 released under **[MIT](LICENSE)** with the rest of the repo.
 
 `_TBD_` marks a field not yet verified.
@@ -68,7 +68,7 @@ released under **[MIT](LICENSE)** with the rest of the repo.
 - **Asset:** `images/platforms/arcade.svg`
 - **Exact URL:** original to this project
 - **License:** MIT (this repo)
-- **Attribution:** Vertex Industries, with help from the community
+- **Attribution:** [Vertex Projects](https://vertexprojects.org), with help from the community
 
 
 ### Blu-ray
@@ -144,7 +144,7 @@ released under **[MIT](LICENSE)** with the rest of the repo.
 - **Asset:** `images/platforms/fan-audiobook.svg`
 - **Exact URL:** original to this project
 - **License:** MIT (this repo)
-- **Attribution:** Vertex Industries, with help from the community
+- **Attribution:** [Vertex Projects](https://vertexprojects.org), with help from the community
 
 ### Fan game movie video
 
@@ -152,7 +152,7 @@ released under **[MIT](LICENSE)** with the rest of the repo.
 - **Asset:** `images/platforms/fan-movie.svg`
 - **Exact URL:** original to this project
 - **License:** MIT (this repo)
-- **Attribution:** Vertex Industries, with help from the community
+- **Attribution:** [Vertex Projects](https://vertexprojects.org), with help from the community
 
 ### Fan playthrough video
 
@@ -160,7 +160,7 @@ released under **[MIT](LICENSE)** with the rest of the repo.
 - **Asset:** `images/platforms/fan-playthrough.svg`
 - **Exact URL:** original to this project
 - **License:** MIT (this repo)
-- **Attribution:** Vertex Industries, with help from the community
+- **Attribution:** [Vertex Projects](https://vertexprojects.org), with help from the community
 
 ### Fan story recap video
 
@@ -168,7 +168,7 @@ released under **[MIT](LICENSE)** with the rest of the repo.
 - **Asset:** `images/platforms/fan-recap.svg`
 - **Exact URL:** original to this project
 - **License:** MIT (this repo)
-- **Attribution:** Vertex Industries, with help from the community
+- **Attribution:** [Vertex Projects](https://vertexprojects.org), with help from the community
 
 ### Fan Translation
 
@@ -176,7 +176,7 @@ released under **[MIT](LICENSE)** with the rest of the repo.
 - **Asset:** `images/platforms/fan-translation.svg`
 - **Exact URL:** original to this project
 - **License:** MIT (this repo)
-- **Attribution:** Vertex Industries, with help from the community
+- **Attribution:** [Vertex Projects](https://vertexprojects.org), with help from the community
 
 ### Game Boy Advance
 
@@ -244,7 +244,7 @@ released under **[MIT](LICENSE)** with the rest of the repo.
 - **Asset:** `images/platforms/mobile-phone.svg`
 - **Exact URL:** original to this project
 - **License:** MIT (this repo)
-- **Attribution:** Vertex Industries, with help from the community
+- **Attribution:** [Vertex Projects](https://vertexprojects.org), with help from the community
 
 ### MSX
 
@@ -571,7 +571,7 @@ released under **[MIT](LICENSE)** with the rest of the repo.
 - **Asset:** `images/platforms/windows-phone.svg`
 - **Exact URL:** original to this project
 - **License:** MIT (this repo)
-- **Attribution:** Vertex Industries, with help from the community
+- **Attribution:** [Vertex Projects](https://vertexprojects.org), with help from the community
 
 ### WonderSwan Color
 

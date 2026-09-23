@@ -36,7 +36,7 @@
   <p style="color: var(--color-neutral-600); font-size: 11px; margin: var(--space-3) 0 0;">Last Updated: {{ lastUpdatedText }}.</p>
 </sc-if>
 
-<p style="color: var(--color-neutral-600); font-size: 11px; margin: var(--space-2) 0 0;">&copy; {{ copyrightYearsStr }} Vertex Industries, with help from the community.
+<p style="color: var(--color-neutral-600); font-size: 11px; margin: var(--space-2) 0 0;">&copy; {{ copyrightYearsStr }} <a href="https://vertexprojects.org" target="_blank" rel="noopener" style="color: inherit;">Vertex Projects</a>, with help from the community.
   <sc-for list="{{ license }}" as="part" hint-placeholder-count="0"><sc-if value="{{ part.strong }}" hint-placeholder-val="{{ false }}"><strong style="color: var(--color-neutral-400); font-weight: 500;">{{ part.strong }}</strong></sc-if><sc-if value="{{ part.emLink }}" hint-placeholder-val="{{ false }}"><em><a href="{{ part.emLinkUrl }}" target="_blank" rel="noopener" style="color: inherit;">{{ part.emLink }}</a></em></sc-if><sc-if value="{{ part.em }}" hint-placeholder-val="{{ false }}"><em>{{ part.em }}</em></sc-if><sc-if value="{{ part.url }}" hint-placeholder-val="{{ false }}"><a href="{{ part.url }}" target="_blank" rel="noopener" style="color: var(--color-neutral-500);">{{ part.text }}</a></sc-if><sc-if value="{{ part.plainText }}" hint-placeholder-val="{{ false }}">{{ part.plainText }}</sc-if></sc-for>
   <sc-if value="{{ noticeUrl }}" hint-placeholder-val="{{ false }}"> See <a href="{{ noticeUrl }}" target="_blank" rel="noopener" style="color: var(--color-neutral-500);">NOTICE</a> for third-party parts.</sc-if>
 </p>

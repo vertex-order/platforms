@@ -3,7 +3,7 @@
 # platforms
 
 A visual reference for working out how platform icons should render in the
-[Vertex Order](https://vertex-order.github.io) game listings — sizes,
+[Vertex Order](https://order.vertexprojects.org) game listings — sizes,
 weights, and the light/dark colour treatment — without editing the real
 site.
 
