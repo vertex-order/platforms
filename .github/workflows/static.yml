@@ -1,8 +1,9 @@
 # Owned by vertex-order/kit — edit here. Vendored elsewhere via sync.toml;
 # don't edit the copy there.
 #
-# Deploy the static site in site/ to GitHub Pages.
-name: Deploy static content to Pages
+# Build site/ and push build/ into vertex-order/site's
+# public/<this-repo-name>/, instead of self-deploying to Pages.
+name: Sync site to Pages repo
 
 on:
   push:
@@ -11,22 +12,15 @@ on:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
 
 jobs:
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  sync:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          path: project
 
       - name: Install just
         uses: extractions/setup-just@53165ef7e734c5c07cb06b3c8e7b647c5aa16db3 # v4
@@ -34,19 +28,33 @@ jobs:
       - name: Install Node
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
-          node-version-file: ".node-version"
+          node-version-file: project/.node-version
 
       - name: Build
+        working-directory: project
         run: just build
 
-      - name: Setup Pages
-        uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+      - name: Checkout site
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          path: "build"
+          repository: vertex-order/site
+          token: ${{ secrets.SITE_DEPLOY_TOKEN }}
+          path: site-repo
 
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
+      - name: Sync build/ into public/<repo>/
+        run: |
+          mkdir -p "site-repo/public/${{ github.event.repository.name }}"
+          rsync -a --delete project/build/ "site-repo/public/${{ github.event.repository.name }}/"
+
+      - name: Commit and push
+        working-directory: site-repo
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add "public/${{ github.event.repository.name }}"
+          if git diff --cached --quiet; then
+            echo "No changes"
+          else
+            git commit -m "chore: sync ${{ github.event.repository.name }} from ${{ github.event.repository.name }}"
+            git push
+          fi
