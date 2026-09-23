@@ -12,6 +12,14 @@ Guidance for AI coding tools working in a **full checkout** of this repo
 > [`.claude/CLAUDE.md`](.claude/CLAUDE.md) and the header comment of
 > [`site/components.js`](site/components.js).
 
+## Verify identity before acting
+
+Before any action that will be publicly attributed — a commit, a `gh`
+comment, a PR/issue operation, a push — confirm the git identity configured
+for this repo (`git config user.name` / `user.email`) matches the account
+`gh` is currently authenticated as (`gh api user -q .login`). If they
+differ, stop and confirm with the user before proceeding.
+
 ## What this repo is
 
 A staging ground for tuning how platform icons render in the
