@@ -60,8 +60,8 @@ copy the number you landed on into the real site's data as-is.
 ## Quick start
 
 ```sh
-git clone https://github.com/vertex-order/platforms
-cd platforms
+git clone https://github.com/vertex-order/platforms vertex-order-platforms
+cd vertex-order-platforms
 # open site/page.dc.html in a browser — done, no build step
 ```
 
