@@ -297,7 +297,9 @@ def load_name_override_keys():
     # per consuming repo), so this reads window.PLATFORM_ICONS directly
     # instead of going through find_declarations.
     try:
-        instance = parse_value_after(path.read_text(encoding="utf-8"), _PLATFORM_ICONS_RE)
+        instance = parse_value_after(
+            path.read_text(encoding="utf-8"), _PLATFORM_ICONS_RE
+        )
     except ParseError:
         return None
     return {p["key"] for p in instance if p.get("nameOverride")}
@@ -356,8 +358,13 @@ def main():
         for schema_ref, instance in decls:
             check(path.name, instance, schema_ref, store, findings)
             checked += 1
-            if schema_ref.startswith("series.schema.json") and allowed_name_override_keys is not None:
-                check_name_overrides(path.name, instance, allowed_name_override_keys, findings)
+            if (
+                schema_ref.startswith("series.schema.json")
+                and allowed_name_override_keys is not None
+            ):
+                check_name_overrides(
+                    path.name, instance, allowed_name_override_keys, findings
+                )
 
     if findings:
         total = sum(len(errs) for _, errs in findings)
