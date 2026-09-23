@@ -95,5 +95,7 @@ paths = [
   ".github/workflows/check-syntax.yml",
   ".github/workflows/sync-repin.yml",
   ".github/workflows/static.yml",
-  ".github/dependabot.yml",
 ]
+# .github/dependabot.yml deliberately not vendored/present -- everything it
+# would watch here (package.json, .github/workflows/*.yml) is a vendored
+# copy from kit, not owned here; see kit's dependabot.yml header comment.
