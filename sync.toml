@@ -34,7 +34,7 @@ paths = [
 
 [subscribe.kit]
 repo = "vertex-order/kit"
-ref = "ea7d14a79b997a82ec7ccce103a929be87ae10ad"
+ref = "1d10b385f1e2386c9ad2318f1d1d549c86f1d290"
 paths = [
   "docs/cache.md",
   "docs/tooling.md",
@@ -81,6 +81,7 @@ paths = [
   ".github/workflows/autofix.yml",
   ".github/workflows/autofix-apply.yml",
   ".github/workflows/check-generated.yml",
+  ".github/workflows/dependabot-automerge.yml",
   ".github/workflows/check-vendored.yml",
   ".github/workflows/check-data.yml",
   ".github/workflows/check-ruff.yml",

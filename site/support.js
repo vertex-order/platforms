@@ -1142,10 +1142,20 @@
   }
 
   // src/cdn.ts
-  var REACT_URL = "https://unpkg.com/react@18.3.1/umd/react.production.min.js";
-  var REACT_SRI = "sha384-DGyLxAyjq0f9SPpVevD6IgztCFlnMF6oW/XQGmfe+IsZ8TqEiDrcHkMLKI6fiB/Z";
-  var REACT_DOM_URL = "https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js";
-  var REACT_DOM_SRI = "sha384-gTGxhz21lVGYNMcdJOyq01Edg0jhn/c22nsx0kyqP0TxaV5WVdsSH1fSDUf5YJj1";
+  //
+  // React 19 dropped UMD builds entirely -- unpkg has no
+  // react@19/umd/react.production.min.js to load as a classic <script>
+  // anymore. These now point at esm.sh's ES module build instead, loaded
+  // via <link rel=modulepreload integrity=...> (for a hard-enforced
+  // integrity check in browsers that support it) followed by a dynamic
+  // import() of the same URL (see loadReactUmd below). Unlike the old
+  // single-file UMD bundle, these are just the entry points into a small
+  // module graph (react.mjs, react-dom.mjs, scheduler) -- only the entry
+  // fetch itself is integrity-checked, not every transitive import.
+  var REACT_URL = "https://esm.sh/react@19.3.0";
+  var REACT_SRI = "sha384-gq3XRS6InsfZ3Lv6d+6mBuySvNkEX/1Ciw3jSlg9gL82444AmhVcwtYbpJfKbDqf";
+  var REACT_DOM_URL = "https://esm.sh/react-dom@19.3.0/client";
+  var REACT_DOM_SRI = "sha384-p4FQDUEGwuQqD58o1+ZGDAQ7+hkNAiUKaJK/6iK2E/9dxO6TafEZMQadHMnx8NY9";
   var BABEL_URL = "https://unpkg.com/@babel/standalone@7.29.0/babel.min.js";
   var BABEL_SRI = "sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y";
   function cdnScriptFor(url, sri) {
@@ -1837,15 +1847,45 @@
       document.head.appendChild(s);
     });
   }
+  // React/ReactDOM ship as ES modules only (see the REACT_URL comment
+  // above), so unlike loadScript above this can't just append a classic
+  // <script src>. modulepreload gets the entry fetch integrity-checked
+  // (best-effort -- unenforced in browsers that don't support integrity on
+  // modulepreload, not broken, just unchecked there); the follow-up
+  // import() of the exact same URL then resolves from that same fetch.
+  // Skipped for a non-http(s) src (the SSR harness overrides REACT_URL to
+  // a bare specifier via window.__resources -- see ssr-lib.js) since
+  // neither modulepreload nor integrity mean anything there.
+  function preloadModule(src, integrity) {
+    return new Promise((resolve2, reject) => {
+      if (!integrity || !/^https?:/.test(src)) {
+        resolve2();
+        return;
+      }
+      const link = document.createElement("link");
+      link.rel = "modulepreload";
+      link.href = src;
+      link.integrity = integrity;
+      link.crossOrigin = "anonymous";
+      link.onload = () => resolve2();
+      link.onerror = () => reject(new Error(`failed to preload ${src}`));
+      document.head.appendChild(link);
+    });
+  }
   function loadReactUmd() {
     const w = window;
     if (w.React && w.ReactDOM) return Promise.resolve();
     const react = cdnScriptFor(REACT_URL, REACT_SRI);
     const reactDom = cdnScriptFor(REACT_DOM_URL, REACT_DOM_SRI);
     return Promise.all([
-      loadScript(react.src, react.integrity),
-      loadScript(reactDom.src, reactDom.integrity)
-    ]).then(() => void 0);
+      preloadModule(react.src, react.integrity),
+      preloadModule(reactDom.src, reactDom.integrity)
+    ]).then(() => Promise.all([import(react.src), import(reactDom.src)])).then(
+      ([React, ReactDOM]) => {
+        w.React = React;
+        w.ReactDOM = ReactDOM;
+      }
+    );
   }
   function init() {
     const runtime = createRuntime(document);

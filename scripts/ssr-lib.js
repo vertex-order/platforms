@@ -22,14 +22,12 @@ const SSR_ORIGIN = "https://ssr-render.internal";
 
 // Exact CDN URLs site/support.js hardcodes (REACT_URL / REACT_DOM_URL) --
 // keep in sync if that pin ever moves.
-const REACT_CDN_URL =
-  "https://unpkg.com/react@18.3.1/umd/react.production.min.js";
-const REACT_DOM_CDN_URL =
-  "https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js";
+const REACT_CDN_URL = "https://esm.sh/react@19.3.0";
+const REACT_DOM_CDN_URL = "https://esm.sh/react-dom@19.3.0/client";
 const REACT_SRI =
-  "sha384-DGyLxAyjq0f9SPpVevD6IgztCFlnMF6oW/XQGmfe+IsZ8TqEiDrcHkMLKI6fiB/Z";
+  "sha384-gq3XRS6InsfZ3Lv6d+6mBuySvNkEX/1Ciw3jSlg9gL82444AmhVcwtYbpJfKbDqf";
 const REACT_DOM_SRI =
-  "sha384-gTGxhz21lVGYNMcdJOyq01Edg0jhn/c22nsx0kyqP0TxaV5WVdsSH1fSDUf5YJj1";
+  "sha384-p4FQDUEGwuQqD58o1+ZGDAQ7+hkNAiUKaJK/6iK2E/9dxO6TafEZMQadHMnx8NY9";
 
 const MIME_BY_EXT = {
   ".js": "application/javascript",
@@ -49,35 +47,16 @@ function fileResponse(absPath) {
 
 // Resolves a same-origin resource (support.js, data/*.js, dynamically
 // injected series-*.js, every *.dc.html a dc-import fetches) straight off
-// build/ on disk, plus the two pinned React/ReactDOM CDN URLs from
-// node_modules -- no network dependency. Returns null for anything else
+// build/ on disk -- no network dependency. Returns null for anything else
 // (e.g. the bootstrap-icons CDN stylesheet), which callers fall back to
 // the real network for, harmlessly.
+//
+// React/ReactDOM used to be interceptable here too (classic <script src>
+// loads jsdom's resource loader governs), back when they were UMD. Now
+// support.js loads them via dynamic import(), which jsdom's page scripts
+// can't do at all -- see installReact below for how this sidesteps that
+// instead of trying to intercept it.
 function resolveLocal(url, buildDir) {
-  if (url === REACT_CDN_URL) {
-    return fileResponse(
-      path.resolve(
-        __dirname,
-        "..",
-        "node_modules",
-        "react",
-        "umd",
-        "react.production.min.js",
-      ),
-    );
-  }
-  if (url === REACT_DOM_CDN_URL) {
-    return fileResponse(
-      path.resolve(
-        __dirname,
-        "..",
-        "node_modules",
-        "react-dom",
-        "umd",
-        "react-dom.production.min.js",
-      ),
-    );
-  }
   if (url.startsWith(SSR_ORIGIN + "/")) {
     const pathname = new URL(url).pathname;
     return fileResponse(path.join(buildDir, decodeURIComponent(pathname)));
@@ -85,8 +64,37 @@ function resolveLocal(url, buildDir) {
   return null;
 }
 
+// support.js's loadReactUmd() loads React/ReactDOM via dynamic import() of
+// an ESM CDN URL -- fine in a real browser, but jsdom's page-script
+// execution has no importModuleDynamically callback wired at all (unlike
+// a plain Node script), so any import() called from inside a <script src>
+// jsdom runs throws ERR_VM_DYNAMIC_IMPORT_CALLBACK_MISSING, no matter what
+// URL or specifier it's given. Rather than fight that, this uses a real,
+// unsandboxed Node require() -- running here, in ssr-lib.js's own process,
+// not inside jsdom's realm -- to load the exact npm-installed versions and
+// hand the finished modules straight to window.React/window.ReactDOM
+// before any page script runs. loadReactUmd() already early-returns when
+// both are present, so its own CDN-loading path (and the modulepreload
+// link it would otherwise create) never runs during SSR at all -- a real
+// visitor's browser, which has no such restriction, still goes through it
+// completely normally.
+function installReact(window) {
+  // react-dom's client renderer (unlike plain react) reads bare `window`/
+  // `document` at call time -- e.g. resolveUpdatePriority(), invoked from
+  // deep inside a require()'d file, not something a per-file realm wrapper
+  // would reach. Aliasing them onto Node's real global makes every plain
+  // require() in the chain (react-dom/client and whatever it requires in
+  // turn) resolve the same bare identifiers a real browser would provide,
+  // no matter how deeply nested.
+  global.window = window;
+  global.document = window.document;
+  window.React = require("react");
+  window.ReactDOM = require("react-dom/client");
+}
+
 // Governs <script src>/<link>/<iframe> element loads -- NOT plain fetch()
-// calls, which dc-import/x-import use directly (see installFetchShim).
+// calls, which dc-import/x-import use directly (see installFetchShim), NOR
+// dynamic import() (see installReactModuleOverride above).
 function makeInterceptor(buildDir) {
   return requestInterceptor(
     (request) => resolveLocal(request.url, buildDir) || undefined,
@@ -94,15 +102,18 @@ function makeInterceptor(buildDir) {
 }
 
 // jsdom drops the integrity attribute when it's set via the IDL property
-// -- restore it by exact src match so a serialized page keeps real SRI
-// protection on the CDN scripts.
+// -- restore it by exact src/href match so a serialized page keeps real
+// SRI protection on the CDN scripts/preloads. React/ReactDOM now load via
+// <link rel=modulepreload>, not <script src> -- both selectors stay so
+// this still covers Babel's classic <script src> too.
 function restoreSri(document) {
   const bySrc = {
     [REACT_CDN_URL]: REACT_SRI,
     [REACT_DOM_CDN_URL]: REACT_DOM_SRI,
   };
-  document.querySelectorAll("script[src]").forEach((el) => {
-    const sri = bySrc[el.getAttribute("src")];
+  document.querySelectorAll("script[src], link[href]").forEach((el) => {
+    const attr = el.tagName === "LINK" ? "href" : "src";
+    const sri = bySrc[el.getAttribute(attr)];
     if (sri && !el.getAttribute("integrity")) el.setAttribute("integrity", sri);
   });
 }
@@ -157,6 +168,7 @@ function bootDom(html, { url, buildDir }) {
     beforeParse(window) {
       installFetchShim(window, buildDir);
       installMatchMediaShim(window);
+      installReact(window);
     },
   });
   return dom;
@@ -215,6 +227,7 @@ module.exports = {
   restoreSri,
   installFetchShim,
   installMatchMediaShim,
+  installReact,
   bootDom,
   waitForStableElement,
 };

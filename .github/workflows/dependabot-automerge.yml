@@ -1,0 +1,34 @@
+# Owned by vertex-order/kit — edit here. Vendored elsewhere via sync.toml;
+# don't edit the copy there.
+#
+# Enables GitHub's native auto-merge on every dependabot PR, regardless of
+# update type (patch/minor/major) — it does not merge anything itself.
+# Auto-merge only actually merges once every required status check on the
+# branch protection rule passes, so this is exactly "merge dependabot PRs
+# once they pass tests" — a non-dependabot PR is never touched (the `if`
+# below), and a dependabot PR whose checks fail just sits there, same as
+# today, until someone looks at it.
+#
+# Requires per-repo, one-time setup this workflow can't do for itself:
+# `Settings > General > Allow auto-merge`, and branch protection on `main`
+# listing the checks that must pass. Without the latter, "auto-merge" would
+# fire the moment the PR opens, before any check has even run.
+name: Dependabot auto-merge
+
+on:
+  pull_request:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  automerge:
+    if: github.actor == 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Enable auto-merge
+        run: gh pr merge --auto --squash "$PR_URL"
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
