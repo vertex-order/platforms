@@ -38,7 +38,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           repository: vertex-order/site
-          token: ${{ secrets.SITE_DEPLOY_TOKEN }}
+          ssh-key: ${{ secrets.SITE_DEPLOY_KEY }}
           path: site-repo
 
       - name: Sync build/ into public/<repo>/
