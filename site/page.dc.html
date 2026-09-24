@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -44,13 +44,15 @@ a:hover { color: var(--color-accent); text-decoration: underline; }
   <span id="top" style="position: absolute; top: 0; left: 0;"></span>
 
   <dc-import name="Metadata" title="{{ metaTitle }}" description="{{ metaDescription }}" hint-size="0,0"></dc-import>
+  <nav aria-label="Site navigation">
   <dc-import name="ThemeToggle" hint-size="36px,36px"></dc-import>
   <dc-import name="BackToTop" hint-size="0,0"></dc-import>
+  </nav>
 
-  <div style="max-width: 760px; margin: 0 auto; padding: calc(var(--space-8) + var(--space-6)) var(--space-4) var(--space-8);">
+  <main style="max-width: 760px; margin: 0 auto; padding: calc(var(--space-8) + var(--space-6)) var(--space-4) var(--space-8);">
     <dc-import name="Intro" notice-url="{{ footerNoticeUrl }}" discussions-url="{{ siteDiscussionsUrl }}" hint-size="auto,220px" style="display: block;"></dc-import>
 
-    <h3 style="font-family: var(--font-heading); font-weight: 500; font-size: 14px; letter-spacing: 0.06em; color: var(--color-neutral-400); margin: 0 0 var(--space-2);">ZOOMED ICONS</h3>
+    <h2 style="font-family: var(--font-heading); font-weight: 500; font-size: 14px; letter-spacing: 0.06em; color: var(--color-neutral-400); margin: 0 0 var(--space-2);">ZOOMED ICONS</h2>
     <div style="position: relative; margin: 0 0 var(--space-8);">
       <div style="position: absolute; inset: 0; pointer-events: none; background-color: var(--color-accent); -webkit-mask-image: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='84'%3E%3Crect x='0' y='14' width='28' height='2' fill='white'/%3E%3Crect x='0' y='50' width='28' height='2' fill='white'/%3E%3C/svg%3E&quot;); mask-image: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='84'%3E%3Crect x='0' y='14' width='28' height='2' fill='white'/%3E%3Crect x='0' y='50' width='28' height='2' fill='white'/%3E%3C/svg%3E&quot;); -webkit-mask-size: 28px 84px; mask-size: 28px 84px; -webkit-mask-repeat: repeat; mask-repeat: repeat;"></div>
       <div style="position: relative; display: flex; flex-wrap: wrap; align-content: flex-start; row-gap: 16px; column-gap: 16px;">
@@ -62,7 +64,7 @@ a:hover { color: var(--color-accent); text-decoration: underline; }
       </div>
     </div>
 
-    <h3 id="page-size-icons" style="font-family: var(--font-heading); font-weight: 500; font-size: 14px; letter-spacing: 0.06em; color: var(--color-neutral-400); margin: 0 0 var(--space-2);">PAGE SIZE ICONS</h3>
+    <h2 id="page-size-icons" style="font-family: var(--font-heading); font-weight: 500; font-size: 14px; letter-spacing: 0.06em; color: var(--color-neutral-400); margin: 0 0 var(--space-2);">PAGE SIZE ICONS</h2>
     <div style="margin: 0 0 var(--space-8);">
       <span style="display: flex; flex-wrap: wrap; align-items: center; gap: 6px;">
         <sc-for list="{{ platformIcons }}" as="pl" hint-placeholder-count="30">
@@ -78,7 +80,7 @@ a:hover { color: var(--color-accent); text-decoration: underline; }
     </div>
 
     <dc-import name="Footer" license="{{ footerLicense }}" notice-url="{{ footerNoticeUrl }}" entities="{{ footerEntities }}" show-affiliate-disclosure="{{ false }}" hint-size="auto,260px" style="display: block;"></dc-import>
-  </div>
+  </main>
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script>
