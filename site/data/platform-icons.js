@@ -6,7 +6,7 @@
 // Sizes/styles here are PAGE size (1x, as PlatformIcon.dc.html renders them);
 // the Zoomed grid shows the same entries at 2x via CSS zoom.
 //
-// `key` is the stable id a series-*.js entry's platformGroups reference
+// `key` is the stable id a group-*.js entry's platformGroups reference
 // (derived from the iconImg filename stem — kit's page.dc.html looks it up
 // here and merges this record under the entry's own fields, so an entry
 // never repeats the icon path/size/style, which live here exactly once).

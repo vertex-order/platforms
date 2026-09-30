@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "platform-icons.schema.json",
-  "description": "The window.PLATFORM_ICONS value in site/data/platform-icons.js -- owned by vertex-order/platforms, vendored into kit and every list repo via sync.toml. `key` is what a series entry's platforms[].key looks up to merge icon/size/style/name in. Render-only props that a per-entry platforms item can also set (href, itemName, terminated, noResults, strikeColor, nonJpTag, muted, scale, prefix) are NOT catalog fields -- they never belong in this file, only in a series entry's own platforms item.",
+  "description": "The window.PLATFORM_ICONS value in site/data/platform-icons.js -- owned by vertex-order/platforms, vendored into kit and every list repo via sync.toml. `key` is what a group entry's platforms[].key looks up to merge icon/size/style/name in. Render-only props that a per-entry platforms item can also set (href, itemName, terminated, noResults, strikeColor, nonJpTag, muted, scale, prefix) are NOT catalog fields -- they never belong in this file, only in a group entry's own platforms item.",
   "type": "array",
   "items": {
     "type": "object",
@@ -22,7 +22,7 @@
       },
       "name": {
         "type": "string",
-        "description": "Catalog label: every variant this platform has ever meant, e.g. 'Xbox One (Physical; Digital; Enhanced; Xbox One X Enhanced; 360 Compatibility)'. A series entry never inherits this whole -- only its base label (stripped of a trailing \"(...)\") via its own `paren`."
+        "description": "Catalog label: every variant this platform has ever meant, e.g. 'Xbox One (Physical; Digital; Enhanced; Xbox One X Enhanced; 360 Compatibility)'. A group entry never inherits this whole -- only its base label (stripped of a trailing \"(...)\") via its own `paren`."
       },
       "jpTag": {
         "type": "boolean",
@@ -30,7 +30,7 @@
       },
       "nameOverride": {
         "type": "boolean",
-        "description": "Marks this key as one where a series entry's own `name` (a full label override, not paren-composed) is legitimate -- e.g. `book`'s entries name a specific medium (Manga/Novel/Short Stories) `paren` can't produce since it can only append to the base label, never replace it. scripts/validate-data.py fails any `name` usage on a key without this flag: `paren` (or nothing) should be enough for every other key -- add the flag here, in the closely-reviewed catalog, rather than looser per-entry `name` usage."
+        "description": "Marks this key as one where a group entry's own `name` (a full label override, not paren-composed) is legitimate -- e.g. `book`'s entries name a specific medium (Manga/Novel/Short Stories) `paren` can't produce since it can only append to the base label, never replace it. scripts/validate-data.py fails any `name` usage on a key without this flag: `paren` (or nothing) should be enough for every other key -- add the flag here, in the closely-reviewed catalog, rather than looser per-entry `name` usage."
       },
       "searchSuffix": {
         "type": "string",
