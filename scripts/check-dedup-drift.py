@@ -6,8 +6,8 @@ duplicate stable entry/pilcrow keys.
 
 ## Dedup drift
 
-A release can be legitimately hand-cross-listed in two series (e.g. a
-Picture Book tie-in also listed under its parent game's series). Only each
+A release can be legitimately hand-cross-listed in two groups (e.g. a
+Picture Book tie-in also listed under its parent game's group). Only each
 media[] slot's `primary` release is ever cross-listed this way --
 site/page.dc.html dedupes these at render time (`dupGroups`, from each
 slot's title/titleDate + its primary's tags/bylineParts) so checking one
@@ -53,7 +53,7 @@ primary release whose `title` contains `(<same year as titleDate>)`
 anywhere in the string (not just trailing) -- fix by removing that
 redundant year from `title`, not from `titleDate`.
 
-site/data/index.js and series-*.js are plain JS object literals (unquoted
+site/data/index.js and group-*.js are plain JS object literals (unquoted
 keys, single-quoted strings, trailing commas) -- not valid JSON -- so this
 shares scripts/js_literal.py's hand-rolled parser for the subset actually
 in use (no template literals, no spread/computed keys).
@@ -77,27 +77,57 @@ DATA = SITE / "data"
 
 
 # ---------------------------------------------------------------------------
-# Data loading. Deliberately doesn't depend on the `window.__xxSeriesReg`
+# Data loading. Deliberately doesn't depend on the `window.__xxGroupReg`
 # registry name -- that's franchise-specific and differs per list repo.
 # ---------------------------------------------------------------------------
 
-_SERIES_ORDER_RE = re.compile(r"\bSERIES_ORDER\s*=\s*")
+_GROUP_ORDER_RE = re.compile(r"\bGROUP_ORDER\s*=\s*")
 _ASSIGN_VALUE_RE = re.compile(r"=\s*(?=[{\[])")
+_SITE_CONFIG_RE = re.compile(r"window\.SITE_CONFIG\s*=\s*")
 
 
-def load_series_order():
+def load_group_order():
     text = (DATA / "index.js").read_text(encoding="utf-8")
-    order = _parse_value_after(text, _SERIES_ORDER_RE)
+    order = _parse_value_after(text, _GROUP_ORDER_RE)
     if not isinstance(order, list) or not all(isinstance(s, str) for s in order):
-        raise ParseError("site/data/index.js: SERIES_ORDER is not a list of strings")
+        raise ParseError("site/data/index.js: GROUP_ORDER is not a list of strings")
     return order
 
 
-def load_series(slug):
-    path = DATA / f"series-{slug}.js"
+def load_group(slug):
+    path = DATA / f"group-{slug}.js"
     if not path.exists():
-        raise ParseError(f"{path.name}: listed in SERIES_ORDER but file is missing")
+        raise ParseError(f"{path.name}: listed in GROUP_ORDER but file is missing")
     return _parse_value_after(path.read_text(encoding="utf-8"), _ASSIGN_VALUE_RE)
+
+
+_GROUP_WORDS_CACHE = None
+
+
+def group_label_words():
+    """This repo's own display word for the group concept (SITE_CONFIG.groupLabel/
+    groupLabelPlural in site/data/site.js), lowercased -- defaults to
+    "group"/"groups" when site.js doesn't override them. Used by
+    normalize_description() below to recognize this repo's own authored
+    cross-reference sentences: that display word varies per repo (kit/
+    kingdom-hearts say "group", final-fantasy says "series"), so a hardcoded
+    literal here would silently stop matching for any repo that overrides it."""
+    global _GROUP_WORDS_CACHE
+    if _GROUP_WORDS_CACHE is not None:
+        return _GROUP_WORDS_CACHE
+    path = DATA / "site.js"
+    config = None
+    if path.exists():
+        try:
+            config = _parse_value_after(
+                path.read_text(encoding="utf-8"), _SITE_CONFIG_RE
+            )
+        except (ParseError, IndexError, ValueError):
+            config = None
+    label = str((config or {}).get("groupLabel") or "Group").lower()
+    plural = str((config or {}).get("groupLabelPlural") or (label + "s")).lower()
+    _GROUP_WORDS_CACHE = (label, plural)
+    return _GROUP_WORDS_CACHE
 
 
 # ---------------------------------------------------------------------------
@@ -169,24 +199,28 @@ def _run_text(part):
 
 def normalize_description(desc):
     """A cross-listed entry's description legitimately differs from its
-    sibling in exactly one place: the sentence naming which *other* series
-    it's also found in ("Entry also found in our X series."). Rather than
-    trying to recognize that cross-reference by matching series slugs/titles
-    (fragile -- titles and slugs are both used interchangeably, and neither
-    is available to a plain per-field comparison), drop any top-level
-    paragraph/string mentioning "series" outright before comparing -- it's
-    expected to differ by construction, so it's never real drift."""
+    sibling in exactly one place: the sentence naming which *other* group
+    it's also found in ("Entry also found in our X series."/"...our X
+    group."). Rather than trying to recognize that cross-reference by
+    matching group slugs/titles (fragile -- titles and slugs are both used
+    interchangeably, and neither is available to a plain per-field
+    comparison), drop any top-level paragraph/string mentioning this repo's
+    own group-label word (see group_label_words()) outright before
+    comparing -- it's expected to differ by construction, so it's never real
+    drift."""
     if not isinstance(desc, list):
         return desc
+    label, plural = group_label_words()
     out = []
     for item in desc:
         if isinstance(item, list):
-            text = "".join(_run_text(p) for p in item)
-            if "series" in text.lower():
+            text = "".join(_run_text(p) for p in item).lower()
+            if label in text or plural in text:
                 continue
             out.append(item)
         elif isinstance(item, str):
-            if "series" in item.lower():
+            text = item.lower()
+            if label in text or plural in text:
                 continue
             out.append(item)
         else:
@@ -290,8 +324,8 @@ def check_entry_keys(order):
     checking, for the primary and every alt, not just the primary."""
     findings = []
     for slug in order:
-        series = load_series(slug)
-        media = series.get("media", [])
+        group = load_group(slug)
+        media = group.get("media", [])
         entry_keys = with_dedupe_suffix([entry_slug(m) for m in media])
         seen_entries = {}
         for i, key in enumerate(entry_keys):
@@ -299,7 +333,7 @@ def check_entry_keys(order):
         for key, idxs in seen_entries.items():
             if len(idxs) > 1:
                 findings.append(
-                    f"series-{slug}.js: duplicate entry key '{slug}-{key}' at media{idxs} "
+                    f"group-{slug}.js: duplicate entry key '{slug}-{key}' at media{idxs} "
                     "-- add an explicit id: to one of them"
                 )
 
@@ -323,7 +357,7 @@ def check_entry_keys(order):
                 for j, key in enumerate(sub_keys):
                     if not base[j]:
                         findings.append(
-                            f"series-{slug}.js {where}.versions[{j}]: no derivable label for "
+                            f"group-{slug}.js {where}.versions[{j}]: no derivable label for "
                             "its pilcrow key -- add a subtitle/title (or a parent title to "
                             "inherit) or an explicit id:"
                         )
@@ -331,7 +365,7 @@ def check_entry_keys(order):
                 for key, idxs in seen_sub.items():
                     if len(idxs) > 1:
                         findings.append(
-                            f"series-{slug}.js {where}.versions: duplicate derived key '{key}' "
+                            f"group-{slug}.js {where}.versions: duplicate derived key '{key}' "
                             f"at indices {idxs} -- add an explicit id: to one of them"
                         )
     return findings
@@ -349,7 +383,7 @@ def check_title_year_redundancy(entries):
         year = title_date_year(game.get("titleDate"))
         if title and year and f"({year})" in title:
             findings.append(
-                f"series-{slug}.js media[{idx}]: title {title!r} redundantly "
+                f"group-{slug}.js media[{idx}]: title {title!r} redundantly "
                 f"repeats its own titleDate year ({year}) -- remove it from "
                 "title, composeDateLabel() already composes it for display"
             )
@@ -358,7 +392,7 @@ def check_title_year_redundancy(entries):
 
 def main():
     try:
-        order = load_series_order()
+        order = load_group_order()
     except FileNotFoundError:
         print("check-dedup-drift: no site/data/index.js, nothing to check")
         return 0
@@ -372,8 +406,8 @@ def main():
     entries = []  # (slug, index, slot)
     try:
         for slug in order:
-            series = load_series(slug)
-            for idx, slot in enumerate(series.get("media", [])):
+            group = load_group(slug)
+            for idx, slot in enumerate(group.get("media", [])):
                 entries.append((slug, idx, slot))
     except (ParseError, IndexError, ValueError) as e:
         print(f"check-dedup-drift: {e}", file=sys.stderr)
@@ -390,7 +424,7 @@ def main():
             snapshots = [field_snapshot(g, raw_keys, label) for _, _, g in members]
             if any(snap != snapshots[0] for snap in snapshots[1:]):
                 where = ", ".join(
-                    f"series-{slug}.js media[{idx}]" for slug, idx, _ in members
+                    f"group-{slug}.js media[{idx}]" for slug, idx, _ in members
                 )
                 entry_title = members[0][2].get("title", "?")
                 findings.append(f"  {entry_title!r} ({where}): {label} differs")
@@ -427,7 +461,7 @@ def main():
 
     print(
         f"check-dedup-drift: checked {len(dup_groups)} duplicate group(s) across {len(entries)} entries, "
-        f"{len(order)} series' entry keys, and title/year redundancy, no drift"
+        f"{len(order)} groups' entry keys, and title/year redundancy, no drift"
     )
     return 0
 

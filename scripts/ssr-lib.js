@@ -46,7 +46,7 @@ function fileResponse(absPath) {
 }
 
 // Resolves a same-origin resource (support.js, data/*.js, dynamically
-// injected series-*.js, every *.dc.html a dc-import fetches) straight off
+// injected group-*.js, every *.dc.html a dc-import fetches) straight off
 // build/ on disk -- no network dependency. Returns null for anything else
 // (e.g. the bootstrap-icons CDN stylesheet), which callers fall back to
 // the real network for, harmlessly.

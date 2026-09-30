@@ -2,7 +2,7 @@
 # don't edit the copy there.
 #
 # Fail a PR (or a push to main that bypassed the pre-commit guard) whose
-# site/data/index.js + series-*.js contain cross-listed duplicate game
+# site/data/index.js + group-*.js contain cross-listed duplicate game
 # entries (same dedupeKey per page.dc.html's dupGroups logic) whose
 # description/tags/rating/length/platforms/languages have drifted apart.
 name: Check dedup drift

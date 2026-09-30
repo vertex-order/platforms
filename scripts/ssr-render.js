@@ -134,7 +134,7 @@ async function main() {
 
   // Elements the runtime builds by string-concatenating an absolute base
   // (e.g. data/index.js's dynamically-injected <script src> for each
-  // series file, resolved against SSR_ORIGIN) bake that absolute URL into
+  // group file, resolved against SSR_ORIGIN) bake that absolute URL into
   // the attribute value itself, not just the live resolution — strip it
   // back to relative so nothing in the shipped page ever points at this
   // build-only fake origin. Harmless either way once loaded (the client's

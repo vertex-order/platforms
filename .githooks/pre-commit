@@ -44,7 +44,7 @@ if [ -n "$staged_dc" ]; then
 fi
 
 # 5. Fail a commit that leaves cross-listed duplicate game entries in
-#    site/data/index.js / series-*.js out of sync with each other (same
+#    site/data/index.js / group-*.js out of sync with each other (same
 #    dedupeKey per page.dc.html's dupGroups logic, differing
 #    description/tags/rating/length/platforms/languages). Pure validator —
 #    reads only, never stages anything.

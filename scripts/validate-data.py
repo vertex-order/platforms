@@ -280,14 +280,14 @@ def check(label, instance, schema_ref, store, findings):
 
 def load_name_override_keys():
     """Keys platform-icons.js flags `nameOverride: true` for -- the only
-    keys a series entry's platforms[].name is allowed to use (PlatformItem's
+    keys a group entry's platforms[].name is allowed to use (PlatformItem's
     `name` is a full-label override; every other key must compose via
     `paren` instead, per platform-icons.schema.json's own field
     description). Cross-file, so not expressible as a plain JSON Schema
     keyword: depends on platform-icons.js's own content, not just the
-    series schema. Returns None if platform-icons.js isn't present (e.g. a
+    group schema. Returns None if platform-icons.js isn't present (e.g. a
     repo checked before init-list.py seeds it) -- the caller skips the
-    check rather than failing every series file for a missing dependency.
+    check rather than failing every group file for a missing dependency.
     """
     path = DATA / "platform-icons.js"
     if not path.exists():
@@ -359,7 +359,7 @@ def main():
             check(path.name, instance, schema_ref, store, findings)
             checked += 1
             if (
-                schema_ref.startswith("series.schema.json")
+                schema_ref.startswith("group.schema.json")
                 and allowed_name_override_keys is not None
             ):
                 check_name_overrides(
