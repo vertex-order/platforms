@@ -34,7 +34,7 @@ paths = [
 
 [subscribe.kit]
 repo = "vertex-order/kit"
-ref = "f7d45f5291d9493d35aeb13c0ac5e73f4e83489e"
+ref = "7ee4285d21bd0103005eaba12797ff1957ed7183"
 paths = [
   "docs/cache.md",
   "docs/tooling.md",
@@ -76,6 +76,7 @@ paths = [
   ".gitattributes",
   ".claude/settings.json",
   "CODE_OF_CONDUCT.md",
+  "AGENTS.md",
   ".githooks/pre-commit",
   ".github/workflows/fix-build.yml",
   ".github/workflows/autofix.yml",

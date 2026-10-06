@@ -194,6 +194,11 @@ COMPARED_FIELDS = {
 def _run_text(part):
     if isinstance(part, dict):
         return part.get("text") or part.get("emText") or ""
+    if isinstance(part, list):
+        # A paragraph's TextSpan[] can itself group into TextSpan[][]
+        # "sentences" (see group.schema.json's Prose) -- recurse so this
+        # still reads the real text instead of treating the group as blank.
+        return "".join(_run_text(p) for p in part)
     return part if isinstance(part, str) else ""
 
 

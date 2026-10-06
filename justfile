@@ -80,11 +80,17 @@ sync-restore:
 # parallel job (for a clear per-check pass/fail in the PR UI, and so one
 # failure doesn't block reporting the others) -- this is for a local
 # all-in-one before you push.
-check: check-py check-ruff check-js check-oxlint check-format check-css check-toml check-actions check-schemas check-dedup-drift check-data sync-check
+check: check-py check-ruff check-js check-oxlint check-format check-css check-toml check-actions check-schemas check-dedup-drift check-anchors check-data sync-check
 
 # CI check: fail if cross-listed duplicate game entries in site/data/ have drifted.
 check-dedup-drift:
     python3 scripts/check-dedup-drift.py
+
+# CI check: fail if any '#entry-...' link in site/data/ doesn't resolve to an
+# anchor page.dc.html actually renders (dangling cross-reference, or a wrong
+# guess at a versions[]/alts[] anchor's shape).
+check-anchors:
+    python3 scripts/check-anchors.py
 
 # CI check: fail if any site/data/*.js doesn't match the schema it declares
 # with its own `// schema: <name>.schema.json` comment -- see

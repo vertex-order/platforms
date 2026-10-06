@@ -53,6 +53,14 @@ if [ -n "$staged_data" ]; then
 	python3 "$root/scripts/check-dedup-drift.py"
 fi
 
+# 5a. Fail a commit whose staged site/data/*.js contains a '#entry-...' link
+#     that doesn't resolve to an anchor site/page.dc.html actually renders --
+#     see scripts/check-anchors.py. Pure validator, pure Python, no external
+#     deps -- always runs.
+if [ -n "$staged_data" ]; then
+	python3 "$root/scripts/check-anchors.py"
+fi
+
 # 5b. Fail a commit whose staged site/data/*.js (or a staged
 #     schemas/*.schema.json change, which could newly reject existing data)
 #     doesn't match its schema -- see scripts/validate-data.py. Pure
