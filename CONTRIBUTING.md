@@ -166,7 +166,7 @@ a refresh shows the *bundled* copy — regenerate before you reload.
 
 **Never hand-edit `components.js`.** Working without a shell (e.g. inside a
 design tool)? See the header comment at the top of `components.js` for the
-by-hand procedure, and [`.claude/CLAUDE.md`](.claude/CLAUDE.md).
+by-hand procedure, and [`AGENTS.md`](AGENTS.md).
 
 `PlatformIcon.dc.html` is owned here and pulled by `kit` (and, via kit, by
 every list repo) — it is the whole point of the Page size grid. A change to

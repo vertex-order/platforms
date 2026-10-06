@@ -27,4 +27,4 @@ Plain HTML / CSS / JS, no build step, no Node. Open
 [MIT](LICENSE) — except the platform icons, which are third-party marks used
 under fair use; see [NOTICE.md](NOTICE.md). Contributor guide:
 [CONTRIBUTING.md](CONTRIBUTING.md). Notes for AI coding tools:
-[AGENTS.md](AGENTS.md) and [`.claude/CLAUDE.md`](.claude/CLAUDE.md).
+[AGENTS.md](AGENTS.md).
