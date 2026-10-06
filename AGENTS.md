@@ -10,10 +10,10 @@ vendored everywhere else, never hand-edit a copy** (see
 [Repo-specific notes](#repo-specific-notes). Human contributors: read
 [CONTRIBUTING.md](CONTRIBUTING.md) — it has the task-by-task guide.
 
-> Browser-based design tools (Claude Design etc.) don't see this file: they
-> pull in only the flat `site/` directory plus `.claude/CLAUDE.md`. That
-> environment's instructions live in [`.claude/CLAUDE.md`](.claude/CLAUDE.md)
-> and the header comment of [`site/components.js`](site/components.js).
+> `.claude/CLAUDE.md` is a one-line `@../AGENTS.md` import, so Claude Code
+> reads this same file. Browser-based design tools (Claude Design etc.) pull
+> in only the flat `site/` directory, so they see neither file; the header
+> comment of [`site/components.js`](site/components.js) is their spec.
 
 ## Repos
 

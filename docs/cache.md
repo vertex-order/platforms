@@ -26,7 +26,7 @@ Over `http(s)` — GitHub Pages, `just serve`, and Claude Design's preview —
 this tag is skipped and every `*.dc.html` is fetched fresh, so there's
 nothing to cache-bust: editing a component shows up immediately. See the
 comment at the top of `components.js` itself, and each repo's own
-`.claude/CLAUDE.md` ("Regenerating components.js"), for how it's built and
+`AGENTS.md` ("The one rule that bites"), for how it's built and
 when it actually needs regenerating.
 
 ## `data/theme.css` — the dev-only cache-bust

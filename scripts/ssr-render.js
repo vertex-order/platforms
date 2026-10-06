@@ -42,7 +42,7 @@
 // init, which throws on an opaque origin and takes the whole page down via
 // the DC runtime's error boundary. https:// also means the entry page's own
 // `if (location.protocol === 'file:') document.write(...)` bundling branch
-// (which loads components.js — see CLAUDE.md "Regenerating components.js")
+// (which loads components.js — see AGENTS.md "The one rule that bites")
 // correctly does NOT fire, same as a real deployed page: every *.dc.html
 // and data/*.js is "live"-fetched exactly like production, just intercepted
 // below and served from the local build/ directory instead of the network.

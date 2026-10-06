@@ -72,7 +72,7 @@ def main():
         '//     filename, key "./"+filename, value the file\'s full source as a\n'
         "//     JSON string (2-space indent, non-ASCII kept literal). Do not rename\n"
         "//     the window.__resourceBlobs global — support.js reads it; a different\n"
-        "//     name or shape silently no-ops. Full procedure: .claude/CLAUDE.md.\n"
+        "//     name or shape silently no-ops. Full procedure: AGENTS.md.\n"
         "(function () {\n"
         "  var C = " + body + ";\n"
         "  window.__resourceBlobs = window.__resourceBlobs || {};\n"
