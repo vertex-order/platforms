@@ -10,11 +10,11 @@ A release can be legitimately hand-cross-listed in two groups (e.g. a
 Picture Book tie-in also listed under its parent game's group). Only each
 media[] slot's `primary` release is ever cross-listed this way --
 site/page.dc.html dedupes these at render time (`dupGroups`, from each
-slot's title/titleDate + its primary's tags/bylineParts) so checking one
+slot's title/titleDate + its primary's tags/tagParts) so checking one
 checkbox checks both. That relies on the two hand-typed copies staying in
 sync -- nothing enforces it. This script finds every group of slots sharing
 page.dc.html's dedupe key (title|subtitleKey|titleDate) and fails if their
-versionDesc/tags/ratings/length/platforms/languages (all read off
+versionDesc/tags/by/ratings/length/platforms/languages (all read off
 `primary`) or mediaDesc (read off the slot itself) disagree. It
 intentionally does not look inside `alts` or `versions[]` (inline-or/
 other-version sub-entries) -- only each slot's primary release.
@@ -133,8 +133,8 @@ def group_label_words():
 # ---------------------------------------------------------------------------
 # Dedupe key -- mirrors site/page.dc.html's raw/pre-transform dupGroups
 # construction (~line 772-773) exactly, including its truthiness asymmetry:
-# `g.bylineParts ? ... : ...` is a bare-truthy check in JS, so an empty
-# bylineParts array still takes that branch; `g.tags && g.tags.length` needs
+# `g.tagParts ? ... : ...` is a bare-truthy check in JS, so an empty
+# tagParts array still takes that branch; `g.tags && g.tags.length` needs
 # a non-empty array, so an empty tags array falls through to ''.
 # ---------------------------------------------------------------------------
 
@@ -164,9 +164,9 @@ def resolve_title_source(node, fallback):
 
 def dedupe_key(slot):
     primary = slot["primary"]
-    byline_parts = primary.get("bylineParts")
-    if byline_parts is not None:
-        subtitle_key = "".join((p.get("text") or "") for p in byline_parts)
+    tag_parts = primary.get("tagParts")
+    if tag_parts is not None:
+        subtitle_key = "".join((p.get("text") or "") for p in tag_parts)
     else:
         tags = primary.get("tags")
         subtitle_key = " · ".join(tags) if tags else ""
@@ -184,6 +184,7 @@ COMPARED_FIELDS = {
     "versionDesc": ("versionDesc",),
     "mediaDesc": ("mediaDesc",),
     "tags": ("tags",),
+    "by": ("by",),
     "ratings": ("ratings",),
     "length": ("length",),
     "platforms": ("platforms",),
@@ -239,6 +240,11 @@ def field_snapshot(slot, raw_keys, label):
         return (normalize_description(primary.get("versionDesc")),)
     if label == "mediaDesc":
         return (normalize_description(slot.get("mediaDesc")),)
+    if label == "by":
+        # Resolved credits: the primary's own `by` (null = none) wins,
+        # else the slot's, so one copy can set it on the slot and the
+        # other on the primary without being flagged.
+        return (primary["by"] if "by" in primary else slot.get("by"),)
     return tuple(primary.get(k) for k in raw_keys)
 
 
@@ -266,7 +272,7 @@ def sub_slug(node, parent):
     """Mirrors subSlug(): own subtitle + year if it has one, else own title
     + year if it has one (a cross-reference to a different entry), else the
     *parent* release's title + year (a bare inheriting sub-entry with no
-    edition tag), else the legacy bare `label` field."""
+    edition tag)."""
     if node.get("id"):
         return node["id"]
     if node.get("subtitle"):
@@ -282,7 +288,7 @@ def sub_slug(node, parent):
     if title:
         yr = title_date_year(title_date)
         return slugify_title(title) + (f"-{yr}" if yr else "")
-    return slugify_title(node.get("label") or "")
+    return ""
 
 
 def version_date_key(node, title_src):
@@ -450,7 +456,7 @@ def main():
             for finding in findings:
                 print(finding)
             print(
-                "Fix: reconcile the duplicate entries so versionDesc/mediaDesc/tags/rating/length/platforms/languages match."
+                "Fix: reconcile the duplicate entries so versionDesc/mediaDesc/tags/by/rating/length/platforms/languages match."
             )
         if key_findings:
             print(f"check-dedup-drift: {len(key_findings)} entry-key finding(s):")
