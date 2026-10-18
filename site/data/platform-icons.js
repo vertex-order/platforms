@@ -34,6 +34,7 @@ window.PLATFORM_ICONS = [
     { key: 'xbox-one', iconImg: 'images/platforms/xbox-one.svg', iconSize: 16, imgStyle: 'width: auto; height: 16px;', name: 'Xbox One (Physical; Digital; Enhanced; Xbox One X Enhanced; 360 Compatibility)' },
     { key: 'xbox-360', iconImg: 'images/platforms/xbox-360.svg', iconSize: 16, imgStyle: 'width: auto; height: 16px;', name: 'Xbox 360 (Physical; Xbox Live Arcade)' },
     { key: 'xbox-cloud', iconImg: 'images/platforms/xbox-cloud.svg', iconSize: 16, imgStyle: 'width: auto; height: 16px;', name: 'Xbox Cloud Gaming' },
+    { key: 'stadia', iconImg: 'images/platforms/stadia.svg', iconSize: 16, imgStyle: 'width: auto; height: 16px;', name: 'Google Stadia' },
     { key: 'playstation-vr2', iconImg: 'images/platforms/playstation-vr2.svg', iconSize: 8.05, imgStyle: 'width: auto; height: 8.05px;', name: 'PlayStation VR2 (PS5)' },
     { key: 'playstation5', iconImg: 'images/platforms/playstation5.svg', iconSize: 8.05, imgStyle: 'width: auto; height: 8.05px;', name: 'PlayStation 5 (Physical; Digital; PS4 Compatibility; Pro Enhanced)' },
     { key: 'playstation-vr', iconImg: 'images/platforms/playstation-vr.svg', iconSize: 8.05, imgStyle: 'width: auto; height: 8.05px;', name: 'PlayStation VR (PS4; PS5 Compatibility)' },

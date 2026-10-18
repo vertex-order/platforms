@@ -531,6 +531,15 @@ released under **[MIT](LICENSE)** with the rest of the repo.
 - **Attribution:** [Nintendo](https://wikipedia.org/wiki/Nintendo)
 - **Modification:** Cropped "NES" and the "C" from Classic to form "NES C". Cropped the "S" from "NES" and put in front to make "SNES C".
 
+### Stadia
+
+- **Shown as:** Stadia
+- **Asset:** `images/platforms/stadia.svg`
+- **Exact URL:** https://commons.wikimedia.org/wiki/File:Stadia_logo.svg
+- **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:Stadia_logo.svg) (Wikimedia Commons declares the logo uncopyrightable, public domain, and notes it may be trademarked; our use of the mark is fair use)
+- **Attribution:** [Google](https://wikipedia.org/wiki/Google_Stadia)
+- **Alternative:** https://simpleicons.org/?q=stadia (not used: Simple Icons' own disclaimer says its CC0 licence does not mean every icon is CC0, and Stadia has no per-icon licence data)
+
 ### Steam
 
 - **Shown as:** Steam
