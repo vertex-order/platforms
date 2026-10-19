@@ -36,9 +36,9 @@ released under **[MIT](LICENSE)** with the rest of the repo.
 
 ---
 
-### Amazon App Store
+### Amazon Appstore
 
-- **Shown as:** Amazon App Store
+- **Shown as:** Amazon Appstore
 - **Asset:** `images/platforms/amazon.svg`
 - **Exact URL:** https://icons.getbootstrap.com/icons/amazon/
 - **License:** Fair use; [MIT](https://github.com/twbs/bootstrap/blob/main/LICENSE)

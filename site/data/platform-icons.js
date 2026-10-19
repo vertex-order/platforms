@@ -72,7 +72,7 @@ window.PLATFORM_ICONS = [
     { key: 'android2', iconImg: 'images/platforms/android2.svg', iconSize: 16, imgStyle: 'width: auto; height: 16px;', name: 'Android' },
     { key: 'apple', iconImg: 'images/platforms/apple.svg', iconSize: 16, imgStyle: 'width: auto; height: 16px;', name: 'iOS' },
     { key: 'apple-arcade', iconImg: 'images/platforms/apple-arcade.svg', iconSize: 16, imgStyle: 'width: auto; height: 16px;', name: 'Apple Arcade' },
-    { key: 'amazon', iconImg: 'images/platforms/amazon.svg', iconSize: 16, imgStyle: 'width: auto; height: 16px;', name: 'Amazon App Store' },
+    { key: 'amazon', iconImg: 'images/platforms/amazon.svg', iconSize: 16, imgStyle: 'width: auto; height: 16px;', name: 'Amazon Appstore' },
     { key: 'facebook', iconImg: 'images/platforms/facebook.svg', iconSize: 16, imgStyle: 'width: auto; height: 16px;', name: 'Facebook (Messenger)' },
     { key: 'windows-phone', iconImg: 'images/platforms/windows-phone.svg', iconSize: 17.25, imgStyle: 'width: auto; height: 17.25px;', name: 'Windows Phone' },
     { key: 'mobile-phone', iconImg: 'images/platforms/mobile-phone.svg', iconSize: 16.75, imgStyle: 'width: auto; height: 16.75px;', name: 'Mobile Phones' },
