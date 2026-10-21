@@ -35,7 +35,7 @@
 </style>
 </helmet>
 <sc-if value="{{ linked }}" hint-placeholder-val="{{ false }}">
-  <a href="{{ href }}" hreflang="{{ hreflang }}" target="_blank" rel="noopener" title="{{ itemName }}" style="display: flex; align-items: center; flex-shrink: 0; color: var(--color-neutral-300); opacity: 0.85; position: relative; zoom: {{ scale }};" style-hover="opacity: 1; color: var(--color-accent-300);">
+  <a href="{{ href }}" hrefLang="{{ hreflang }}" target="_blank" rel="noopener" title="{{ itemName }}" style="display: flex; align-items: center; flex-shrink: 0; color: var(--color-neutral-300); opacity: 0.85; position: relative; zoom: {{ scale }};" style-hover="opacity: 1; color: var(--color-accent-300);">
     <span style="display: flex; align-items: center; flex-shrink: 0; opacity: {{ contentOpacity }};">
       <sc-if value="{{ prefix }}" hint-placeholder-val="{{ false }}"><span style="font-size: 11px; margin-right: 2px;">{{ prefix }}</span></sc-if>
       <sc-if value="{{ iconImg }}" hint-placeholder-val="{{ false }}"><img src="{{ iconImg }}" alt="{{ itemName }}" class="dc-plat-img" width="{{ iconSize }}" height="{{ iconSize }}" style="flex-shrink: 0; max-width: none; {{ imgStyle }}"></sc-if>
