@@ -77,7 +77,6 @@ window.PLATFORM_ICONS = [
     { key: 'apple-ipad', iconImg: 'images/platforms/apple.svg', iconSize: 16, imgStyle: 'width: auto; height: 16px;', suffix: 'iPad', suffixFontSize: '9px', suffixGap: 1, name: 'Apple iPad' },
     { key: 'apple-arcade', iconImg: 'images/platforms/apple-arcade.svg', iconSize: 16, imgStyle: 'width: auto; height: 16px;', name: 'Apple Arcade' },
     { key: 'apple-tv', iconImg: 'images/platforms/apple.svg', iconSize: 16, imgStyle: 'width: auto; height: 16px;', suffix: 'TV', suffixFontSize: '9px', suffixGap: 1, name: 'Apple TV' },
-    { key: 'apple-ipod', iconImg: 'images/platforms/apple.svg', iconSize: 16, imgStyle: 'width: auto; height: 16px;', suffix: 'iPod', suffixFontSize: '9px', suffixGap: 1, name: 'Apple iPod' },
     { key: 'amazon', iconImg: 'images/platforms/amazon.svg', iconSize: 16, imgStyle: 'width: auto; height: 16px;', name: 'Amazon Appstore (Fire OS + legacy Android)' },
     { key: 'facebook', iconImg: 'images/platforms/facebook.svg', iconSize: 16, imgStyle: 'width: auto; height: 16px;', name: 'Facebook', exampleParen: 'Messenger' },
     { key: 'windows-phone', iconImg: 'images/platforms/windows-phone.svg', iconSize: 17.25, imgStyle: 'width: auto; height: 17.25px;', name: 'Windows Phone' },
