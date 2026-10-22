@@ -178,6 +178,15 @@ released under **[MIT](LICENSE)** with the rest of the repo.
 - **License:** MIT (this repo)
 - **Attribution:** [Vertex Projects](https://vertexprojects.org), with help from the community
 
+### G-cluster TV
+
+- **Shown as:** G-cluster TV
+- **Asset:** `images/platforms/g-cluster.svg`
+- **Exact URL:** https://www.broadmedia.co.jp/technology/cloudgame/img/1-g-cluster.png
+- **License:** Fair use; Trademark (the logo is Broadmedia's own; the source offers no open licence, and no public-domain copy of it was found)
+- **Attribution:** [Broadmedia Corporation](https://www.broadmedia.co.jp/)
+- **Modification:** Cropped the swoosh mark from the logo (the "G-cluster" wordmark is dropped) and traced it from the 370 × 280 PNG into a single vector path.
+
 ### Game Boy Advance
 
 - **Shown as:** Game Boy Advance
@@ -214,15 +223,6 @@ released under **[MIT](LICENSE)** with the rest of the repo.
 - **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:LaserDisc_logo.svg); [Trademark](https://commons.wikimedia.org/wiki/File:LaserDisc_logo.svg)
 - **Attribution:** [LaserDisc](https://wikipedia.org/wiki/LaserDisc)
 - **Modification:** Cropped each word down to its first letter to make the "LD" acronym.
-
-### LG TV
-
-- **Shown as:** LG TV
-- **Asset:** `images/platforms/lg.svg`
-- **Exact URL:** https://commons.wikimedia.org/wiki/File:LG_logo_(2014).svg
-- **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:LG_logo_(2014).svg); [Trademark](https://commons.wikimedia.org/wiki/File:LG_logo_(2014).svg)
-- **Attribution:** [LG Electronics](https://wikipedia.org/wiki/LG_Electronics)
-- **Modification:** Removed the "LG" wordmark to keep the round logo only, cropped to the circle, and cut the face out of the disc as transparent so it reads in the single-colour icon tint.
 
 ### Linux
 
@@ -512,15 +512,6 @@ released under **[MIT](LICENSE)** with the rest of the repo.
 - **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:PlayStation_VR2_logo.svg); [Trademark](https://commons.wikimedia.org/wiki/File:PlayStation_VR2_logo.svg)
 - **Attribution:** [Sony](https://wikipedia.org/wiki/Sony)
 - **Modification:** Cropped from the source icon. "P" and "S" from "PlayStation", and "VR2", to make "PSVR2" acronym.
-
-### Sharp TV
-
-- **Shown as:** Sharp TV
-- **Asset:** `images/platforms/sharp.svg`
-- **Exact URL:** https://commons.wikimedia.org/wiki/File:Logo_of_the_Sharp_Corporation.svg
-- **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:Logo_of_the_Sharp_Corporation.svg); [Trademark](https://commons.wikimedia.org/wiki/File:Logo_of_the_Sharp_Corporation.svg)
-- **Attribution:** [Sharp Corporation](https://wikipedia.org/wiki/Sharp_Corporation)
-- **Modification:** Cropped the wordmark down to its first letter, the stylised "S", which matches the S of the company's favicon, and merged it into one path.
 
 ### Sharp X1
 
