@@ -22,7 +22,7 @@
       },
       "name": {
         "type": "string",
-        "description": "Catalog label: every variant this platform has ever meant, e.g. 'Xbox One (Physical; Digital; Enhanced; Xbox One X Enhanced; 360 Compatibility)'. A group entry never inherits this whole -- only its base label (stripped of a trailing \"(...)\") via its own `paren`."
+        "description": "The platform's full label, e.g. 'Xbox One' or 'Amazon Appstore (Fire OS + legacy Android)'; used as is. A group entry's own `paren` appends after it, and its own `name` replaces it only on a `nameOverride` key."
       },
       "jpTag": {
         "type": "boolean",
@@ -38,6 +38,8 @@
       },
       "suffix": { "type": "string" },
       "suffixFontSize": { "type": "string" },
+      "exampleParen": { "type": "string", "description": "Sample parenthetical for the Platforms page mockup only; not a default, never used in listings." },
+      "suffixGap": { "type": "number", "description": "Pixels between the icon and its suffix; default 3. Smaller for a logo with open space on its right edge (Apple, X)." },
       "suffixOffsetY": { "type": "number" },
       "suffixSmallCaps": { "type": "boolean" },
       "icon": {
