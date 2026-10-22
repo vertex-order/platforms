@@ -19,6 +19,9 @@ The literal is extracted with scripts/js_literal.py (a real JSON parser
 can't read these files -- unquoted keys, single-quoted strings, trailing
 commas, comments).
 
+Also fails on non-Latin text with no `lang` (`--warn-lang` downgrades it to a
+warning, for a repo adopting the check): see check_lang_coverage.
+
 Implements exactly the JSON Schema (2020-12) keywords schemas/*.schema.json
 actually use: type, enum, const, properties, additionalProperties (bool or
 schema), required, items, minItems, uniqueItems, minLength, minProperties,
@@ -34,6 +37,7 @@ python3 scripts/validate-data.py
 import json
 import re
 import sys
+import unicodedata
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -338,6 +342,508 @@ def check_name_overrides(label, instance, allowed_keys, findings):
         findings.append((label, errors))
 
 
+def check_contents_orders(label, instance, findings):
+    """A release's `contents[]` sort keys are all-or-nothing, like a group's
+    section orders: if any part sets `narrativeOrder` (or `chronoOrder`),
+    every part in that list must."""
+    errors = []
+
+    def walk(node, where):
+        if isinstance(node, dict):
+            parts = node.get("contents")
+            if isinstance(parts, list):
+                for field in ("narrativeOrder", "chronoOrder"):
+                    have = [
+                        i
+                        for i, p in enumerate(parts)
+                        if isinstance(p, dict) and field in p
+                    ]
+                    if have and len(have) != len(parts):
+                        missing = [i for i in range(len(parts)) if i not in have]
+                        errors.append(
+                            f"{where}.contents[]: `{field}` is set on some parts but not "
+                            f"on part(s) {missing} -- set it on every part or none"
+                        )
+            for k, v in node.items():
+                walk(v, f"{where}.{k}")
+        elif isinstance(node, list):
+            for i, v in enumerate(node):
+                walk(v, f"{where}[{i}]")
+
+    walk(instance, "$")
+    if errors:
+        findings.append((label, errors))
+
+
+def check_platform_link_modes(label, instance, findings):
+    """A platforms[] item links out in at most one way: a stated `url`, a
+    computed `search`, or `opensContents` (toggles the release's contents[]
+    list instead of linking). Setting two is ambiguous, so it fails, and
+    `opensContents` fails on a release with no contents[] to open."""
+    errors = []
+    modes = ("url", "search", "opensContents")
+
+    def walk(node, where):
+        if isinstance(node, dict):
+            for k, v in node.items():
+                if k == "platforms" and isinstance(v, list):
+                    for i, pl in enumerate(v):
+                        if not isinstance(pl, dict):
+                            continue
+                        used = [m for m in modes if pl.get(m) not in (None, False, "")]
+                        if pl.get("opensContents") and not node.get("contents"):
+                            errors.append(
+                                f"{where}.platforms[{i}] (key {pl.get('key')!r}): "
+                                f"`opensContents` needs a `contents[]` list on the same "
+                                f"release (a primary or alt, not a version)"
+                            )
+                        if len(used) > 1:
+                            errors.append(
+                                f"{where}.platforms[{i}] (key {pl.get('key')!r}): "
+                                f"{' and '.join('`' + m + '`' for m in used)} are "
+                                f"mutually exclusive -- use only one"
+                            )
+                walk(v, f"{where}.{k}")
+        elif isinstance(node, list):
+            for i, v in enumerate(node):
+                walk(v, f"{where}[{i}]")
+
+    walk(instance, "$")
+    if errors:
+        findings.append((label, errors))
+
+
+# Section orders: the three sort orders a group's `sections[]` can exist in,
+# with the section field a slot sets and the sort-key field a section carries.
+SECTION_ORDERS = {
+    "narrative": ("narrativeSection", "narrativeOrder"),
+    "chrono": ("chronoSection", "chronoOrder"),
+    "release": ("releaseSection", "releaseOrder"),
+}
+
+
+def check_sections(label, instance, findings):
+    """A group's `sections[]` and its slots' `<order>Section` fields are
+    cross-field rules JSON Schema can't express:
+
+    - section ids are unique within the group;
+    - a section's `orders` is exactly the set of orders it carries a
+      `<order>Order` value for (no missing value, no stray one);
+    - per order, all-or-nothing: if any section lists the order, every
+      media[] slot sets that order's section field, to the id of a section
+      that lists the order, and every such section is used by at least one
+      slot; if no section lists the order, no slot sets the field.
+    Structural problems (wrong types, unknown keys) are the schema pass's
+    job -- this skips anything malformed rather than double-reporting."""
+    errors = []
+    sections = instance.get("sections")
+    sections = sections if isinstance(sections, list) else []
+    slots = instance.get("media")
+    slots = slots if isinstance(slots, list) else []
+
+    seen = set()
+    for i, sec in enumerate(sections):
+        if not isinstance(sec, dict):
+            continue
+        sid = sec.get("id")
+        where = f"$.sections[{i}]" + (f" ({sid!r})" if isinstance(sid, str) else "")
+        if isinstance(sid, str):
+            if sid in seen:
+                errors.append(f"{where}: duplicate section id")
+            seen.add(sid)
+        orders = sec.get("orders")
+        orders = (
+            [o for o in orders if o in SECTION_ORDERS]
+            if isinstance(orders, list)
+            else []
+        )
+        for order, (_, key_field) in SECTION_ORDERS.items():
+            has_value = key_field in sec
+            if order in orders and not has_value:
+                errors.append(
+                    f"{where}: lists {order!r} in `orders` but has no `{key_field}`"
+                )
+            elif order not in orders and has_value:
+                errors.append(
+                    f"{where}: has `{key_field}` but does not list {order!r} in `orders`"
+                )
+
+    for order, (slot_field, _) in SECTION_ORDERS.items():
+        listing = {
+            sec["id"]
+            for sec in sections
+            if isinstance(sec, dict)
+            and isinstance(sec.get("id"), str)
+            and isinstance(sec.get("orders"), list)
+            and order in sec["orders"]
+        }
+        used = set()
+        for i, slot in enumerate(slots):
+            if not isinstance(slot, dict):
+                continue
+            where = f"$.media[{i}]" + (
+                f" ({slot['title']!r})" if isinstance(slot.get("title"), str) else ""
+            )
+            value = slot.get(slot_field)
+            if listing:
+                if value is None:
+                    errors.append(
+                        f"{where}: no `{slot_field}` -- the {order} order has sections, "
+                        f"so every entry needs one of {sorted(listing)}"
+                    )
+                elif value in listing:
+                    used.add(value)
+                elif value in seen:
+                    errors.append(
+                        f"{where}: `{slot_field}` {value!r} is a section that does not "
+                        f"list {order!r} in `orders` (listing it: {sorted(listing)})"
+                    )
+                else:
+                    errors.append(
+                        f"{where}: `{slot_field}` {value!r} is not a section id of this "
+                        f"group (listing {order!r}: {sorted(listing)})"
+                    )
+            elif value is not None:
+                errors.append(
+                    f"{where}: `{slot_field}` set, but no section lists {order!r} in "
+                    f"`orders` -- the {order} order is flat"
+                )
+        for sid in sorted(listing - used):
+            errors.append(
+                f"section {sid!r} lists {order!r} but no entry sets "
+                f"`{slot_field}: {sid!r}`"
+            )
+
+    if errors:
+        findings.append((label, errors))
+
+
+MARKERS = ("Mainline", "Essential", "Optional")
+
+
+def _tag_text(tag):
+    return tag if isinstance(tag, str) else tag.get("abbrTerm", "")
+
+
+def check_markers(label, instance, findings, usage):
+    """Tags that rank an entry: `Mainline` (the group's core numbered
+    title), `Essential` and `Optional`. Per entry (its primary): at most
+    one of the three, and it is the first tag. Across the whole list
+    (`usage`, filled here and judged at the end): only one of Essential
+    and Optional, because the entries without the marker are read as the
+    opposite."""
+    errors = []
+    for i, slot in enumerate(instance.get("media") or []):
+        if not isinstance(slot, dict):
+            continue
+        primary = slot.get("primary")
+        if not isinstance(primary, dict):
+            continue
+        tags = [_tag_text(t) for t in (primary.get("tags") or [])]
+        found = [t for t in tags if t in MARKERS]
+        where = f"$.media[{i}]" + (
+            f" ({slot['title']!r})" if isinstance(slot.get("title"), str) else ""
+        )
+        if len(found) > 1:
+            errors.append(
+                f"{where}: more than one of Mainline / Essential / Optional ({', '.join(found)}) -- Mainline already implies Essential; use one"
+            )
+        elif found and tags[0] != found[0]:
+            errors.append(f"{where}: `{found[0]}` must be the first tag")
+        for t in found:
+            if t in ("Essential", "Optional"):
+                usage[t].append(f"{label}: {slot.get('title')}")
+    if errors:
+        findings.append((label, errors))
+
+
+def check_marker_usage(usage, findings):
+    essential, optional = usage["Essential"], usage["Optional"]
+    if not (essential and optional):
+        return
+    fewer, name = (
+        (essential, "Essential")
+        if len(essential) <= len(optional)
+        else (optional, "Optional")
+    )
+    message = (
+        f"this list uses both Essential ({len(essential)}) and Optional "
+        f"({len(optional)}); use only one -- the entries without the marker "
+        f"read as the opposite. The smaller side is {name} (e.g. {fewer[0]})"
+    )
+    findings.append(("tags", [message]))
+
+
+def _walk_tags(node, where="$"):
+    """Yield (path, tag text) for every `tags` list in a group literal --
+    primary, alts[] and versions[] alike."""
+    if isinstance(node, dict):
+        for key, value in node.items():
+            if key == "tags" and isinstance(value, list):
+                for tag in value:
+                    yield f"{where}.tags", _tag_text(tag)
+            else:
+                yield from _walk_tags(value, f"{where}.{key}")
+    elif isinstance(node, list):
+        for i, item in enumerate(node):
+            yield from _walk_tags(item, f"{where}[{i}]")
+
+
+def check_tag_style(label, instance, findings, spellings):
+    """Tag text starts with an uppercase letter or a digit (DLC, MMORPG
+    and 2D pass; "rpg" doesn't). Spellings of each tag are also collected
+    across the whole list (`spellings`, judged at the end): two tags that
+    differ only in case must be written one way."""
+    errors = []
+    seen = set()
+    for path, text in _walk_tags(instance):
+        if not text:
+            continue
+        spellings.setdefault(text.casefold(), {}).setdefault(text, []).append(label)
+        if not (text[0].isupper() or text[0].isdigit()) and (path, text) not in seen:
+            seen.add((path, text))
+            errors.append(
+                f"{path}: tag {text!r} must start with an uppercase letter or a digit"
+            )
+    if errors:
+        findings.append((label, errors))
+
+
+def check_tag_spellings(spellings, findings):
+    errors = []
+    for variants in spellings.values():
+        if len(variants) > 1:
+            counts = ", ".join(
+                f"{text!r} x{len(files)}"
+                for text, files in sorted(variants.items(), key=lambda kv: -len(kv[1]))
+            )
+            errors.append(
+                f"tag spelled more than one way (differs only in case): {counts}"
+            )
+    if errors:
+        findings.append(("tags", errors))
+
+
+# ---------------------------------------------------------------------------
+# Language coverage: text in a non-Latin script must carry a `lang`.
+#
+# Script, not "non-ASCII": accented Latin (é, ñ, ō -- loan words, romaji with
+# macrons) is still Latin and is never flagged. French or romaji in plain
+# Latin can't be told from English, so those rely on explicit tagging and are
+# not checked. An error by default; `--warn-lang` makes them warnings, and
+# `--lang` lists the warnings (docs/data.md, "Language of text and links").
+# ---------------------------------------------------------------------------
+
+_SCRIPT_PREFIXES = (
+    ("CJK UNIFIED", "han"),
+    ("CJK COMPATIBILITY IDEOGRAPH", "han"),
+    ("HIRAGANA", "kana"),
+    ("KATAKANA", "kana"),
+    ("HANGUL", "hangul"),
+    ("CYRILLIC", "cyrillic"),
+    ("GREEK", "greek"),
+    ("ARABIC", "arabic"),
+    ("HEBREW", "hebrew"),
+    ("THAI", "thai"),
+    ("DEVANAGARI", "devanagari"),
+)
+
+# Languages each script can be written in (the primary subtag of the `lang`).
+_SCRIPT_LANGS = {
+    "kana": {"ja"},
+    "hangul": {"ko"},
+    "han": {"ja", "zh", "yue", "ko"},
+    "cyrillic": {"ru", "uk", "bg", "sr", "mk", "be", "kk", "mn", "ky", "tg"},
+    "greek": {"el", "grc"},
+    "arabic": {"ar", "fa", "ur", "ps", "ku"},
+    "hebrew": {"he", "yi"},
+    "thai": {"th"},
+    "devanagari": {"hi", "mr", "ne", "sa"},
+}
+_NON_LATIN_LANGS = set().union(*_SCRIPT_LANGS.values())
+
+# Fields whose text is a span's displayed text (the span's `tip` and
+# `abbrDef` tooltips ride on the same `lang`).
+_SPAN_TEXT_KEYS = (
+    "text",
+    "emText",
+    "emLinkText",
+    "abbrTerm",
+    "tipText",
+    "hintText",
+    "tip",
+    "abbrDef",
+)
+
+
+# Punctuation that English titles borrow (Final Fantasy I・II・III): not text.
+_NEUTRAL = {"・", "･"}
+
+
+# A lone Greek letter in an English title is a symbol (Kingdom Hearts χ), not text.
+_LONE_GREEK = re.compile("(?<![Ͱ-Ͽ])[Ͱ-Ͽ](?![Ͱ-Ͽ])")
+
+
+def _scripts_in(text):
+    text = _LONE_GREEK.sub("", text)
+    found = set()
+    for ch in text:
+        if ord(ch) < 0x250 or ch in _NEUTRAL:
+            continue
+        name = unicodedata.name(ch, "")
+        for prefix, script in _SCRIPT_PREFIXES:
+            if name.startswith(prefix):
+                found.add(script)
+                break
+    return found
+
+
+def _lang_problem(text, lang):
+    """None when `lang` fits `text`; else a short reason. `lang` None means
+    the field has no language set."""
+    scripts = _scripts_in(text)
+    if lang is None:
+        return "non-Latin text with no lang" if scripts else None
+    primary = lang.split("-")[0].lower()
+    latn = any(part.lower() == "latn" for part in lang.split("-")[1:])
+    if latn:
+        return (
+            f"lang {lang!r} says romanized but the text has {'/'.join(sorted(scripts))} characters"
+            if scripts
+            else None
+        )
+    if not scripts:
+        if primary in _NON_LATIN_LANGS:
+            return (
+                f"Latin-only text under lang {lang!r}: romanization is {primary}-Latn"
+            )
+        return None
+    if "kana" in scripts:
+        want = _SCRIPT_LANGS["kana"]
+    elif "hangul" in scripts:
+        want = _SCRIPT_LANGS["hangul"]
+    elif len(scripts) == 1:
+        want = _SCRIPT_LANGS[next(iter(scripts))]
+    else:
+        return None
+    if primary not in want:
+        return f"lang {lang!r} does not fit the {'/'.join(sorted(scripts))} text (expected {'/'.join(sorted(want))})"
+    return None
+
+
+def check_lang_coverage(instance):
+    """Return [(path, text, reason)] for a group literal."""
+    out = []
+
+    def pair(path, text, lang):
+        if isinstance(text, str) and text:
+            problem = _lang_problem(text, lang if isinstance(lang, str) else None)
+            if problem:
+                out.append((path, text, problem))
+
+    def untaggable(path, text):
+        # A bare string with no way to carry a `lang`.
+        if isinstance(text, str) and _scripts_in(text):
+            out.append(
+                (
+                    path,
+                    text,
+                    "non-Latin text in a plain string: use the object form with lang",
+                )
+            )
+
+    def span(path, s):
+        if isinstance(s, str):
+            untaggable(path, s)
+        elif isinstance(s, list):
+            for i, item in enumerate(s):
+                span(f"{path}[{i}]", item)
+        elif isinstance(s, dict):
+            lang = s.get("lang")
+            for key in _SPAN_TEXT_KEYS:
+                pair(f"{path}.{key}", s.get(key), lang)
+
+    def by(path, b):
+        if isinstance(b, str):
+            untaggable(path, b)
+        elif isinstance(b, list):
+            for i, item in enumerate(b):
+                by(f"{path}[{i}]", item)
+        elif isinstance(b, dict):
+            if "name" in b:
+                pair(f"{path}.name", b.get("name"), b.get("lang"))
+            if "names" in b:
+                by(f"{path}.names", b["names"])
+
+    def length(path, v):
+        if isinstance(v, str):
+            untaggable(path, v)
+        elif isinstance(v, list):
+            for i, part in enumerate(v):
+                if isinstance(part, dict):
+                    for key in ("label", "value", "tip"):
+                        pair(f"{path}[{i}].{key}", part.get(key), part.get("lang"))
+
+    def items(path, rows, keys):
+        for i, row in enumerate(rows if isinstance(rows, list) else []):
+            if isinstance(row, dict):
+                for key in keys:
+                    pair(f"{path}[{i}].{key}", row.get(key), row.get("lang"))
+
+    def walk(path, node):
+        if isinstance(node, list):
+            for i, item in enumerate(node):
+                walk(f"{path}[{i}]", item)
+            return
+        if not isinstance(node, dict):
+            return
+        is_group_or_section = "num" in node or "orders" in node
+        if isinstance(node.get("title"), str) and not is_group_or_section:
+            pair(f"{path}.title", node["title"], node.get("titleLang"))
+        if isinstance(node.get("subtitle"), str):
+            pair(f"{path}.subtitle", node["subtitle"], node.get("subtitleLang"))
+        for key in ("mediaDesc", "versionDesc", "note"):
+            if key in node:
+                span(f"{path}.{key}", node[key])
+        if "by" in node:
+            by(f"{path}.by", node["by"])
+        if "length" in node:
+            length(f"{path}.length", node["length"])
+        if "ratings" in node:
+            items(
+                f"{path}.ratings",
+                node["ratings"],
+                ("score", "label", "abbrTerm", "abbrDef"),
+            )
+        if "platforms" in node:
+            items(
+                f"{path}.platforms",
+                node["platforms"],
+                ("name", "paren", "prefix", "suffix", "text"),
+            )
+        if "languages" in node:
+            items(f"{path}.languages", node["languages"], ("tip",))
+        for key, value in node.items():
+            if key in (
+                "tags",
+                "by",
+                "mediaDesc",
+                "versionDesc",
+                "note",
+                "length",
+                "ratings",
+                "platforms",
+                "languages",
+                "searchTitle",
+            ):
+                continue
+            if isinstance(value, (dict, list)):
+                walk(f"{path}.{key}", value)
+
+    walk("$", instance)
+    return out
+
+
 def main():
     if not DATA.is_dir():
         print("validate-data: no site/data/ -- nothing to check")
@@ -348,6 +854,9 @@ def main():
     checked = 0
     allowed_name_override_keys = load_name_override_keys()
 
+    lang_warnings = []
+    marker_usage = {"Essential": [], "Optional": []}
+    tag_spellings = {}
     for path in sorted(DATA.glob("*.js")):
         text = path.read_text(encoding="utf-8")
         try:
@@ -358,13 +867,28 @@ def main():
         for schema_ref, instance in decls:
             check(path.name, instance, schema_ref, store, findings)
             checked += 1
-            if (
-                schema_ref.startswith("group.schema.json")
-                and allowed_name_override_keys is not None
-            ):
-                check_name_overrides(
-                    path.name, instance, allowed_name_override_keys, findings
-                )
+            if schema_ref.startswith("group.schema.json"):
+                check_sections(path.name, instance, findings)
+                check_contents_orders(path.name, instance, findings)
+                check_platform_link_modes(path.name, instance, findings)
+                check_markers(path.name, instance, findings, marker_usage)
+                check_tag_style(path.name, instance, findings, tag_spellings)
+                for where, text, reason in check_lang_coverage(instance):
+                    lang_warnings.append((path.name, where, text, reason))
+                if allowed_name_override_keys is not None:
+                    check_name_overrides(
+                        path.name, instance, allowed_name_override_keys, findings
+                    )
+
+    check_marker_usage(marker_usage, findings)
+    check_tag_spellings(tag_spellings, findings)
+
+    if lang_warnings and "--warn-lang" not in sys.argv:
+        by_file = {}
+        for name, where, text, reason in lang_warnings:
+            by_file.setdefault(name, []).append(f"{where}: {reason}: {text[:60]!r}")
+        for name, errs in by_file.items():
+            findings.append((name, errs))
 
     if findings:
         total = sum(len(errs) for _, errs in findings)
@@ -378,6 +902,15 @@ def main():
     print(
         f"validate-data: checked {checked} declared schema(s) across site/data/*.js, no errors"
     )
+    if lang_warnings:
+        files = {name for name, *_ in lang_warnings}
+        print(
+            f"validate-data: lang: {len(lang_warnings)} warning(s) in {len(files)} file(s) "
+            "(non-Latin text without a matching lang, --warn-lang; --lang lists them)"
+        )
+        if "--lang" in sys.argv:
+            for name, where, text, reason in lang_warnings:
+                print(f"  {name} {where}: {reason}: {text[:70]!r}")
     return 0
 
 

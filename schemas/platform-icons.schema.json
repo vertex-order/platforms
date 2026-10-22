@@ -38,8 +38,14 @@
       },
       "suffix": { "type": "string" },
       "suffixFontSize": { "type": "string" },
-      "exampleParen": { "type": "string", "description": "Sample parenthetical for the Platforms page mockup only; not a default, never used in listings." },
-      "suffixGap": { "type": "number", "description": "Pixels between the icon and its suffix; default 3. Smaller for a logo with open space on its right edge (Apple, X)." },
+      "exampleParen": {
+        "type": "string",
+        "description": "Sample parenthetical for the Platforms page mockup only; not a default, never used in listings."
+      },
+      "suffixGap": {
+        "type": "number",
+        "description": "Pixels between the icon and its suffix; default 3. Smaller for a logo with open space on its right edge (Apple, X)."
+      },
       "suffixOffsetY": { "type": "number" },
       "suffixSmallCaps": { "type": "boolean" },
       "icon": {

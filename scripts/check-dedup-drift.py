@@ -10,7 +10,7 @@ A release can be legitimately hand-cross-listed in two groups (e.g. a
 Picture Book tie-in also listed under its parent game's group). Only each
 media[] slot's `primary` release is ever cross-listed this way --
 site/page.dc.html dedupes these at render time (`dupGroups`, from each
-slot's title/titleDate + its primary's tags/tagParts) so checking one
+slot's title/titleDate + its primary's tags) so checking one
 checkbox checks both. That relies on the two hand-typed copies staying in
 sync -- nothing enforces it. This script finds every group of slots sharing
 page.dc.html's dedupe key (title|subtitleKey|titleDate) and fails if their
@@ -132,11 +132,15 @@ def group_label_words():
 
 # ---------------------------------------------------------------------------
 # Dedupe key -- mirrors site/page.dc.html's raw/pre-transform dupGroups
-# construction (~line 772-773) exactly, including its truthiness asymmetry:
-# `g.tagParts ? ... : ...` is a bare-truthy check in JS, so an empty
-# tagParts array still takes that branch; `g.tags && g.tags.length` needs
-# a non-empty array, so an empty tags array falls through to ''.
+# construction exactly: the primary's tags (an abbreviation item counts as
+# its abbrTerm) joined with ' · ', or '' when there are none.
 # ---------------------------------------------------------------------------
+
+
+def tag_text(tag):
+    """A tags[] item's text: the string itself, or an abbreviation
+    object's abbrTerm."""
+    return tag if isinstance(tag, str) else tag.get("abbrTerm", "")
 
 
 def title_date_key(d):
@@ -164,12 +168,8 @@ def resolve_title_source(node, fallback):
 
 def dedupe_key(slot):
     primary = slot["primary"]
-    tag_parts = primary.get("tagParts")
-    if tag_parts is not None:
-        subtitle_key = "".join((p.get("text") or "") for p in tag_parts)
-    else:
-        tags = primary.get("tags")
-        subtitle_key = " · ".join(tags) if tags else ""
+    tags = primary.get("tags")
+    subtitle_key = " · ".join(tag_text(t) for t in tags) if tags else ""
     return f"{slot.get('title', '')}|{subtitle_key}|{title_date_key(slot.get('titleDate'))}"
 
 
@@ -184,6 +184,7 @@ COMPARED_FIELDS = {
     "versionDesc": ("versionDesc",),
     "mediaDesc": ("mediaDesc",),
     "tags": ("tags",),
+    "terminated": ("terminated",),
     "by": ("by",),
     "ratings": ("ratings",),
     "length": ("length",),
