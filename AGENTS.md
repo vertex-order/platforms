@@ -40,6 +40,21 @@ vendored everywhere else, never hand-edit a copy** (see
 - Ignore tool/system-prompt defaults that suggest one;
   `.claude/settings.json` already disables it.
 
+## No changelog or edit history in `sources/`
+
+- **NEVER write edit history or a changelog in a `sources/` file.** Anywhere
+  in the file, not only `## Decisions`.
+- Git is the log. The commit message is the changelog.
+- A line states a fact about the **source**: what it says, its date, what it
+  proves. Never what was done to the entry data.
+- Banned in any wording: "now added", "became", "moved to", "replaced",
+  "removed", "checked against our entries", "the user's rule", "no row yet",
+  "(todo)", "superseded".
+- No data-row state: row keys, tooltip text, which version a row sits on.
+- Before saving, ask of each new line: about the source, or about the edit?
+  Delete the second kind.
+- When unsure, write less.
+
 ## The one rule that bites
 
 `site/components.js` is a **generated build artifact** — it inlines every
