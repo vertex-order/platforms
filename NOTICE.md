@@ -183,7 +183,7 @@ released under **[MIT](LICENSE)** with the rest of the repo.
 - **Shown as:** G-cluster TV
 - **Asset:** `images/platforms/g-cluster.svg`
 - **Exact URL:** https://www.broadmedia.co.jp/technology/cloudgame/img/1-g-cluster.png
-- **License:** Fair use; Trademark (the logo is Broadmedia's own; the source offers no open licence, and no public-domain copy of it was found)
+- **License:** Fair use; Trademark. This is Broadmedia's own artwork, used only to identify the platform; copyright and trademark stay with Broadmedia. The source offers no open licence, and no public-domain copy of it was found.
 - **Attribution:** [Broadmedia Corporation](https://www.broadmedia.co.jp/)
 - **Modification:** Cropped the swoosh mark from the logo (the "G-cluster" wordmark is dropped) and traced it from the 370 × 280 PNG into a single vector path.
 
@@ -209,7 +209,7 @@ released under **[MIT](LICENSE)** with the rest of the repo.
 - **Shown as:** Hikari TV Games
 - **Asset:** `images/platforms/hikari-tv-games.svg`
 - **Exact URL:** https://web.archive.org/web/20190907060402/http://game.hikaritv.net/about/index.html (the service's header logo, `common/images/share/img_header_logo.gif`)
-- **License:** Fair use; Trademark (the logo is the service's own; the source offers no open licence, and no public-domain copy of it was found)
+- **License:** Fair use; Trademark. This is NTT Plala's own artwork (Hikari TV Games), used only to identify the platform; copyright and trademark stay with NTT Plala. The source offers no open licence, and no public-domain copy of it was found.
 - **Attribution:** [NTT Plala](https://wikipedia.org/wiki/NTT_Plala) (Hikari TV Games, ended 2023-09-30)
 - **Modification:** Kept only the gamepad-with-a-star mark from the logo ("ひかりTV" and "ゲーム" are dropped) and redrew it as vector shapes from the 294 × 38 GIF, with the D-pad and buttons as transparent holes so it reads in the single-colour icon tint.
 - **Alternative:** the Hikari TV wordmark, public domain on Commons: https://commons.wikimedia.org/wiki/File:Hikari-TV_logo.svg
@@ -522,6 +522,15 @@ released under **[MIT](LICENSE)** with the rest of the repo.
 - **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:PlayStation_VR2_logo.svg); [Trademark](https://commons.wikimedia.org/wiki/File:PlayStation_VR2_logo.svg)
 - **Attribution:** [Sony](https://wikipedia.org/wiki/Sony)
 - **Modification:** Cropped from the source icon. "P" and "S" from "PlayStation", and "VR2", to make "PSVR2" acronym.
+
+### Sharp TV
+
+- **Shown as:** Sharp TV
+- **Asset:** `images/platforms/sharp.svg`
+- **Exact URL:** https://commons.wikimedia.org/wiki/File:Logo_of_the_Sharp_Corporation.svg
+- **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:Logo_of_the_Sharp_Corporation.svg); [Trademark](https://commons.wikimedia.org/wiki/File:Logo_of_the_Sharp_Corporation.svg)
+- **Attribution:** [Sharp Corporation](https://wikipedia.org/wiki/Sharp_Corporation)
+- **Modification:** Cropped the wordmark down to its first letter, the stylised "S", which matches the S of the company's favicon, and merged it into one path.
 
 ### Sharp X1
 

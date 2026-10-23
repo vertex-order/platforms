@@ -80,6 +80,7 @@ window.PLATFORM_ICONS = [
     { key: 'mobile-phone', iconImg: 'images/platforms/mobile-phone.svg', iconSize: 16.75, imgStyle: 'width: auto; height: 16.75px;', name: 'Mobile Phones' },
     { key: 'android-tv', iconImg: 'images/platforms/android2.svg', iconSize: 16, imgStyle: 'width: auto; height: 16px;', suffix: 'TV', suffixFontSize: '9px', suffixGap: 1, name: 'Android TV' },
     { key: 'apple-tv', iconImg: 'images/platforms/apple.svg', iconSize: 16, imgStyle: 'width: auto; height: 16px;', suffix: 'TV', suffixFontSize: '9px', suffixGap: 1, name: 'Apple TV' },
+    { key: 'sharp-tv', iconImg: 'images/platforms/sharp.svg', iconSize: 11.865, imgStyle: 'width: auto; height: 11.865px;', suffix: 'TV', suffixFontSize: '9px', suffixGap: 1, name: 'Sharp TV' },
     { key: 'g-cluster-tv', iconImg: 'images/platforms/g-cluster.svg', iconSize: 12, imgStyle: 'width: auto; height: 12px;', suffix: 'TV', suffixFontSize: '9px', suffixGap: 1, name: 'G-cluster TV' },
     { key: 'hikari-tv-games', iconImg: 'images/platforms/hikari-tv-games.svg', iconSize: 12.308, imgStyle: 'width: auto; height: 12.308px;', suffix: 'TV', suffixFontSize: '9px', suffixGap: 1, name: 'Hikari TV Games' },
     { key: 'facebook', iconImg: 'images/platforms/facebook.svg', iconSize: 16, imgStyle: 'width: auto; height: 16px;', name: 'Facebook', exampleParen: 'Messenger' },
