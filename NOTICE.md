@@ -559,6 +559,15 @@ released under **[MIT](LICENSE)** with the rest of the repo.
 - **Attribution:** [Nintendo](https://wikipedia.org/wiki/Nintendo)
 - **Modification:** Cropped "NES" and the "C" from Classic to form "NES C". Cropped the "S" from "NES" and put in front to make "SNES C".
 
+### Sony PocketStation
+
+- **Shown as:** Sony PocketStation
+- **Asset:** `images/platforms/pocketstation.svg`
+- **Exact URL:** https://commons.wikimedia.org/wiki/File:PocketStation_logo.svg
+- **License:** Fair use; [Public domain](https://commons.wikimedia.org/wiki/File:PocketStation_logo.svg); [Trademark](https://commons.wikimedia.org/wiki/File:PocketStation_logo.svg)
+- **Attribution:** [Sony Interactive Entertainment](https://wikipedia.org/wiki/Sony_Interactive_Entertainment)
+- **Modification:** Reduced to the letters "P" and "S" of the wordmark, set side by side, with a redrawn curved line under them from the start of the P to the end of the S, in place of the wordmark's long blue curve.
+
 ### Stadia
 
 - **Shown as:** Stadia
