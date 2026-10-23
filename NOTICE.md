@@ -204,6 +204,16 @@ released under **[MIT](LICENSE)** with the rest of the repo.
 - **License:** Fair use; [CC0 1.0 Universal](https://github.com/simple-icons/simple-icons/blob/develop/LICENSE.md)
 - **Attribution:** [GOG](https://wikipedia.org/wiki/GOG.com); [Simple Icons contributors](https://github.com/simple-icons/simple-icons)
 
+### Hikari TV Games
+
+- **Shown as:** Hikari TV Games
+- **Asset:** `images/platforms/hikari-tv-games.svg`
+- **Exact URL:** https://web.archive.org/web/20190907060402/http://game.hikaritv.net/about/index.html (the service's header logo, `common/images/share/img_header_logo.gif`)
+- **License:** Fair use; Trademark (the logo is the service's own; the source offers no open licence, and no public-domain copy of it was found)
+- **Attribution:** [NTT Plala](https://wikipedia.org/wiki/NTT_Plala) (Hikari TV Games, ended 2023-09-30)
+- **Modification:** Kept only the gamepad-with-a-star mark from the logo ("ひかりTV" and "ゲーム" are dropped) and redrew it as vector shapes from the 294 × 38 GIF, with the D-pad and buttons as transparent holes so it reads in the single-colour icon tint.
+- **Alternative:** the Hikari TV wordmark, public domain on Commons: https://commons.wikimedia.org/wiki/File:Hikari-TV_logo.svg
+
 ### iOS
 
 - **Shown as:** iOS
