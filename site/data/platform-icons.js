@@ -72,7 +72,7 @@ window.PLATFORM_ICONS = [
     { key: 'sharp-x1', iconImg: 'images/platforms/sharp-x1.svg', iconSize: 10.25, imgStyle: 'width: auto; height: 10.25px;', name: 'Sharp X1', exampleParen: 'Physical; Japan Only', jpTag: true },
     { key: 'pc8801', iconImg: 'images/platforms/pc8801.svg', iconSize: 8.875, imgStyle: 'width: auto; height: 8.875px;', suffix: 'mkII SR', suffixFontSize: '9.75px', suffixOffsetY: 1, name: 'NEC PC-8801mkII SR', exampleParen: 'Physical; Japan Only', jpTag: true },
     { key: 'globe', iconImg: 'images/platforms/globe.svg', iconSize: 16, imgStyle: 'width: auto; height: 16px;', name: 'Browser' },
-    { key: 'android2', iconImg: 'images/platforms/android2.svg', iconSize: 16, imgStyle: 'width: auto; height: 16px;', name: 'Android' },
+    { key: 'android', iconImg: 'images/platforms/android2.svg', iconSize: 16, imgStyle: 'width: auto; height: 16px;', name: 'Android' },
     { key: 'apple', iconImg: 'images/platforms/apple.svg', iconSize: 16, imgStyle: 'width: auto; height: 16px;', name: 'iPhone / iPad (iOS)' },
     { key: 'apple-ipad', iconImg: 'images/platforms/apple.svg', iconSize: 16, imgStyle: 'width: auto; height: 16px;', suffix: 'iPad', suffixFontSize: '9px', suffixGap: 1, name: 'Apple iPad' },
     { key: 'apple-arcade', iconImg: 'images/platforms/apple-arcade.svg', iconSize: 16, imgStyle: 'width: auto; height: 16px;', name: 'Apple Arcade' },
