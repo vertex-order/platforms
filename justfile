@@ -31,6 +31,7 @@ build: fix
         if [ -f build/index.html ]; then npm install --no-fund --no-audit --silent && node scripts/ssr-render.js build; fi; \
         if [ -f build/index.html ] && [ -f tests/site/verify-ssr.js ]; then node tests/site/verify-ssr.js build; fi; \
         if [ -f build/index.html ] && [ -f tests/site/verify-anchor-nav.js ]; then node tests/site/verify-anchor-nav.js build; fi; \
+        if [ -f build/index.html ] && [ -f tests/site/verify-more-platforms.js ]; then node tests/site/verify-more-platforms.js build; fi; \
     else \
         echo "just build: node not on PATH — skipped SSR prerender (build/index.html ships blank-then-hydrate). Install Node (https://nodejs.org, or see .node-version) to get it locally."; \
     fi
@@ -49,7 +50,7 @@ check-tokens:
     node tests/site/check-var-fallbacks.js
 
 # Kit's full test suite: the fast checks above, plus `build`, which itself
-# runs tests/site/verify-ssr.js and verify-anchor-nav.js against the real build
+# runs tests/site/verify-ssr.js, verify-anchor-nav.js and verify-more-platforms.js against the real build
 # output when present.
 test: check-tokens build
 

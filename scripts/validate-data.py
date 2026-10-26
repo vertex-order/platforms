@@ -375,6 +375,44 @@ def check_contents_orders(label, instance, findings):
         findings.append((label, errors))
 
 
+def check_more_platforms(label, instance, findings):
+    """`more: true` on a platforms[] item hides the row behind a "+N" chip, and
+    only a `contents[]` part has the chip. It fails anywhere else, and on a
+    part whose rows are all `more` (nothing would show in the compact line)."""
+    errors = []
+
+    def walk(node, where, in_part):
+        if isinstance(node, dict):
+            for k, v in node.items():
+                if k == "platforms" and isinstance(v, list):
+                    rows = [pl for pl in v if isinstance(pl, dict)]
+                    if in_part:
+                        if rows and all(pl.get("more") for pl in rows):
+                            errors.append(
+                                f"{where}.platforms: every row is `more`; leave the "
+                                f"original platform(s) without it"
+                            )
+                    else:
+                        for i, pl in enumerate(v):
+                            if isinstance(pl, dict) and pl.get("more"):
+                                errors.append(
+                                    f"{where}.platforms[{i}] (key {pl.get('key')!r}): "
+                                    f"`more` is only for a `contents[]` part's platforms"
+                                )
+                if k == "contents" and isinstance(v, list):
+                    for i, part in enumerate(v):
+                        walk(part, f"{where}.contents[{i}]", True)
+                else:
+                    walk(v, f"{where}.{k}", False)
+        elif isinstance(node, list):
+            for i, v in enumerate(node):
+                walk(v, f"{where}[{i}]", in_part)
+
+    walk(instance, "$", False)
+    if errors:
+        findings.append((label, errors))
+
+
 def check_platform_link_modes(label, instance, findings):
     """A platforms[] item links out in at most one way: a stated `url`, a
     computed `search`, or `opensContents` (toggles the release's contents[]
@@ -871,6 +909,7 @@ def main():
                 check_sections(path.name, instance, findings)
                 check_contents_orders(path.name, instance, findings)
                 check_platform_link_modes(path.name, instance, findings)
+                check_more_platforms(path.name, instance, findings)
                 check_markers(path.name, instance, findings, marker_usage)
                 check_tag_style(path.name, instance, findings, tag_spellings)
                 for where, text, reason in check_lang_coverage(instance):
