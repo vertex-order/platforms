@@ -47,7 +47,7 @@ window.PLATFORM_ICONS = [
     { key: 'playstation-vita', iconImg: 'images/platforms/playstation-vita.svg', iconSize: 8.49, imgStyle: 'width: auto; height: 8.49px;', name: 'PlayStation Vita', exampleParen: 'Physical; Digital' },
     { key: 'playstation-portable', iconImg: 'images/platforms/playstation-portable.svg', iconSize: 8.24, imgStyle: 'width: auto; height: 8.24px;', name: 'PlayStation Portable (PSP)', exampleParen: 'Physical; Digital; Universal Media Disk' },
     { key: 'pocketstation', iconImg: 'images/platforms/pocketstation.svg', iconSize: 11.62, imgStyle: 'width: auto; height: 11.62px;', name: 'Sony PocketStation', exampleParen: 'Physical; Japan Only', jpTag: true },
-    { key: 'playstation-plus', iconImg: 'images/platforms/playstation-plus.svg', iconSize: 16, imgStyle: 'width: auto; height: 16px;', name: 'PlayStation Plus', exampleParen: 'PS Plus' },
+    { key: 'playstation-plus-cloud', iconImg: 'images/platforms/playstation-plus.svg', iconSize: 16, imgStyle: 'width: auto; height: 16px;', name: 'PlayStation Plus (Cloud)', exampleParen: 'PS5; PSPortal' },
     { key: 'nintendo-switch-2', iconImg: 'images/platforms/nintendo-switch-2.svg', iconSize: 16, imgStyle: 'width: auto; height: 16px;', name: 'Nintendo Switch 2', exampleParen: 'Physical; Digital' },
     { key: 'nintendo-switch', iconImg: 'images/platforms/nintendo-switch.svg', iconSize: 16, imgStyle: 'width: auto; height: 16px;', name: 'Nintendo Switch', exampleParen: 'Physical; Digital' },
     { key: 'nintendo-wii-u', iconImg: 'images/platforms/nintendo-wii-u.svg', iconSize: 10.99, imgStyle: 'width: auto; height: 10.99px;', name: 'Nintendo Wii U', exampleParen: 'Physical; Virtual Console; WiiWare' },
