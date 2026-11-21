@@ -55,6 +55,18 @@ vendored everywhere else, never hand-edit a copy** (see
   Delete the second kind.
 - When unsure, write less.
 
+## Before any web or API fetch
+
+- Read [docs/capture.md](docs/capture.md), then
+  `python3 -I -X utf8 scripts/capture.py lookup <url>` **before** WebFetch,
+  curl, a MediaWiki/Wayback request or any parser download. A HIT or a
+  BLOCKED means: do not fetch.
+- Store every fetch (`capture.py fetch` / `save`), failures included.
+  Re-fetching burns quotas and risks banning the user's residential IP.
+- The cache is `../_captures/`, outside git. When the user pastes a filename
+  saved in `_captures/_user/`, run `capture.py ingest "<filename>"` without
+  being asked.
+
 ## The one rule that bites
 
 `site/components.js` is a **generated build artifact** — it inlines every

@@ -34,9 +34,10 @@ paths = [
 
 [subscribe.kit]
 repo = "vertex-order/kit"
-ref = "b1f38ba79bdbd8b53ccac818c6feb82e0901c3b1"
+ref = "fef1f262a713429f98804d2d6291cd26a747fe9a"
 paths = [
   "docs/cache.md",
+  "docs/capture.md",
   "docs/tooling.md",
   ".prettierignore",
   "uv.toml",
@@ -56,6 +57,8 @@ paths = [
   "scripts/ssr-render.js",
   "scripts/ssr-lib.js",
   "scripts/sync.py",
+  "scripts/capture.py",
+  "scripts/capture-hook.py",
   "scripts/js_literal.py",
   "scripts/validate-data.py",
   "scripts/check-dedup-drift.py",
