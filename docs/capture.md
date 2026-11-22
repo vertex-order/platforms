@@ -47,6 +47,10 @@ Saved web pages and API results, used as evidence for `sources/`.
 2. Give the user the clickable URL and say: save the page into
    `_captures/_user/` (browser default filename is fine; keep any
    search-term or page-number prefix they add).
+   - **Always present the URLs to save as a numbered list** (`1.`, `2.`, …),
+     never bullets, one URL per item, each a clickable link, so the user can
+     answer by number (e.g. "saved 1 and 3"). Add what to prefix when it
+     matters (search term, page number) after the URL.
 3. The user pastes the saved filename(s) back.
 4. Run `capture.py ingest "<filename>"` (no arguments ingests the whole
    user folder). Do this every time a filename from `_user/` is pasted; do not
