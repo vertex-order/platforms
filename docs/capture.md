@@ -89,6 +89,12 @@ folder holding files.
 - Same URL, different content (search, POST, JS pagination): add a
   `#cap:<what>` fragment to the URL, e.g. `https://x.com/list#cap:page=2`.
   The fragment is part of the lookup key; any other fragment is ignored.
+  Used where the page's state is not in its address (Wii U software lists:
+  `…/wiiu/2#cap:filter=wiiu_disc_all`; Rotten Tomatoes pages).
+- A `note` of `url inferred` means the URL was derived (from the page's own
+  links, its query echo, or the search term in the file name) and checked
+  against at most one live fetch, not recorded when the page was saved.
+  Treat it as likely, not proven.
 - URL normalisation for lookup: `http`/`https` equal, `www.` dropped,
   query parameters sorted, `utm_*`/`fbclid`/`gclid` removed,
   percent-encoding unified, trailing `/` ignored.
@@ -110,13 +116,15 @@ Columns: `file`, `url`, `final_url` (after redirects), `accessed`,
 - `_unsorted/<old folder>/`: captures whose URL is not known (`url` =
   `unknown` in the index). They are still readable by path. Resolve one by
   re-saving through `ingest --url`, or by correcting its index row and
-  moving it.
+  moving it. Empty since the 2026-11 migration.
+- `_trash/`: copies replaced by `--replace` and duplicate saves. Safe to
+  delete; nothing reads it.
 - `_tools/`: parsers for specific sites (Backloggd, Epic, GOG, IGDB, Square
   Enix lists, Xbox). Reuse them; fix a bug in the tool itself. They find
   their inputs through `legacy.py` (the old per-site folders, mapped via
   `_migration/map.tsv`); new captures are found with `capture.py lookup`.
-- `_migration/`: the one-time move from `_reference/captures/` (old path →
-  new path map).
+- `_migration/`: the one-time move from `_reference/captures/` (`map.tsv`:
+  old path → new path, read by `legacy.py`; `migrate.py`).
 - `capture.py check` lists files not in an index, index rows without a file,
   asset folders without a page, and paths over 240 characters.
 
