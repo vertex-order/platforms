@@ -51,6 +51,10 @@ Saved web pages and API results, used as evidence for `sources/`.
      never bullets, one URL per item, each a clickable link, so the user can
      answer by number (e.g. "saved 1 and 3"). Add what to prefix when it
      matters (search term, page number) after the URL.
+   - **Give at most 5 URLs at a time.** For a longer list, present the first
+     group of 5 (numbered 1 to 5), wait for the user to save them and paste
+     the filenames, ingest them, then present the next group of 5 (numbering
+     restarts at 1). Say how many groups remain.
 3. The user pastes the saved filename(s) back.
 4. Run `capture.py ingest "<filename>"` (no arguments ingests the whole
    user folder). Do this every time a filename from `_user/` is pasted; do not
