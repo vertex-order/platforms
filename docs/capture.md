@@ -32,6 +32,10 @@ Saved web pages and API results, used as evidence for `sources/`.
     (WebFetch output, API JSON, one page of a paginated sub-script).
 - Never fetch a page again only to re-parse it. Parse from the cached file;
   fix the parser, not the cache.
+- **On a 403, 429, rate limit or anti-bot page, from any tool: stop.** Do
+  not retry or try another tool. Run `capture.py request <url> --note
+  "<reason>"`, give the user the clickable URL and ask them to save it into
+  `_captures/_user/` (see "When a fetch fails").
 - Do not hit a site harder to "finish" an audit. A ban would cost the whole
   project. Few requests, spaced, cached.
 
