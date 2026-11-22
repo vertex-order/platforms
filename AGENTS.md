@@ -63,6 +63,9 @@ vendored everywhere else, never hand-edit a copy** (see
   BLOCKED means: do not fetch.
 - Store every fetch (`capture.py fetch` / `save`), failures included.
   Re-fetching burns quotas and risks banning the user's residential IP.
+- On a 403, 429, rate limit or anti-bot page (from any tool), stop: run
+  `capture.py request <url> --note "<reason>"`, give the user the clickable
+  URL and ask them to save it into `_captures/_user/`.
 - The cache is `../_captures/`, outside git. When the user pastes a filename
   saved in `_captures/_user/`, run `capture.py ingest "<filename>"` without
   being asked.

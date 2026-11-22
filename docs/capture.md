@@ -37,7 +37,9 @@ Saved web pages and API results, used as evidence for `sources/`.
 
 ## When a fetch fails (user workflow)
 
-1. `capture.py request <url>` queues it and prints what to tell the user.
+1. `capture.py request <url> --note "<reason>"` queues it, records the failure
+   as `blocked` (so no one retries, even if the failure came from WebFetch or
+   curl) and prints what to tell the user.
 2. Give the user the clickable URL and say: save the page into
    `_captures/_user/` (browser default filename is fine; keep any
    search-term or page-number prefix they add).

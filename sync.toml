@@ -34,7 +34,7 @@ paths = [
 
 [subscribe.kit]
 repo = "vertex-order/kit"
-ref = "ab36dc2422ca90df97eceb2236c041f577f07cd2"
+ref = "a8357dae216d5200e17b5830ce31a8c01251f78d"
 paths = [
   "docs/cache.md",
   "docs/capture.md",

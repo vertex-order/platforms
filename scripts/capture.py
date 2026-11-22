@@ -500,6 +500,13 @@ def write_pending(rows):
 
 
 def cmd_request(args):
+    _, hits, _, blocked = find(args.url, root_dir())
+    if hits:
+        d, row = hits[0]
+        print(f"HIT {d / row['file']}: already cached, no need to ask the user to save it.")
+        return 0
+    if not blocked:  # a fetch failed outside `fetch` (WebFetch, curl): mark it so nobody retries
+        record_blocked(args.url, "webfetch", args.note or "fetch failed (blocked or rate limited)")
     rows = read_pending()
     if not any(norm_url(r["url"]).key == norm_url(args.url).key for r in rows):
         rows.append({"url": args.url, "requested": today(), "note": args.note or ""})
