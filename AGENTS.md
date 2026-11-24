@@ -55,6 +55,32 @@ vendored everywhere else, never hand-edit a copy** (see
   Delete the second kind.
 - When unsure, write less.
 
+## Tasks and open questions: `.plan/todo.md`
+
+The user loses track when several things are open at once. Keep them in
+`.plan/todo.md` (local, gitignored; create it if missing), not in chat.
+
+- **Record as you go**: add a task or question the moment it arises, update
+  it as work moves, remove it when settled. Open items only; no history.
+- **Sections**: `## Tasks` (in progress or queued) and `## Open questions`
+  (the user must decide). Keep any other sections a repo's file already has.
+- **Record decisions to confirm.** If you chose something the user might
+  overrule (a default, a skipped step, a dropped URL, an assumption), add it
+  under Open questions: what you chose, and the alternative.
+- **Record failures that carry a decision.** If something the user asked
+  for failed or was blocked (fetch denied, 404, unreadable page, tool
+  error), add a question: what failed and the options (retry, another route,
+  user saves the page, give up). Do not only report it in chat and move on.
+- **One question at a time.** Present the first open question only, never a
+  list of questions or several instruction steps in one message. Give what
+  the user needs to answer it (clickable URLs, the options, a
+  recommendation). After the answer, remove it from the file and present the
+  next one.
+- A group of URLs for the user to save is one question (numbered list, at
+  most 5 per group; see [docs/capture.md](docs/capture.md)).
+- The file is the source of truth: when asked "what's open", read it, do not
+  recall from the chat.
+
 ## Before any web or API fetch
 
 - Read [docs/capture.md](docs/capture.md), then
